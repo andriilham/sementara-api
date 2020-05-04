@@ -20,8 +20,8 @@ router.get('/:id', (req, res) => {
   db.getHistory(req.params, res)
 })
 
-router.get('/cal_request/:id', jwtMW, (req, res) => {
-  db.getHistoryCalRequest(req.params, res)
+router.get('/reference/:id', jwtMW, (req, res) => {
+  db.getHistoryReference(req.params, res)
 })
 
 router.get('/engineers/:id', jwtMW, (req, res) => {
@@ -32,13 +32,20 @@ router.get('/cal_steps/:id', jwtMW, (req, res) => {
   db.getHistoryCalStep(req.params, res)
 })
 
+router.get('/request_step/:id', (req, res) => {
+  db.getHistoryRequestStep(req.params, res)
+})
+
 router.post('/', jwtMW, (req, res) => {
   db.newHistory(req.body, res)
 })
 
-router.put('/:id', jwtMW, (req, res) => {
-  db.updateHistory(req.body, res)
-})
+/////////////////////////////////////////////////////////////////////////////////////////////
+// NO UPDATE FEATURE IN HISTORY
+
+// router.put('/:id', jwtMW, (req, res) => {
+//   db.updateHistory(req.body, res)
+// })
 
 /////////////////////////////////////////////////////////////////////////////////////////////
 // EXTREAMLY DANGEROUS, USE THIS WISELY
