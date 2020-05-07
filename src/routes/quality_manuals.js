@@ -2,7 +2,7 @@
 const express = require('express')
 var router = express.Router()
 const multer = require('multer')
-var db = require('../models/procedures')
+var db = require('../models/quality_manuals')
 const exjwt = require('express-jwt')
 var path = require('path')
 
@@ -11,9 +11,9 @@ const jwtMW = exjwt({
   secret: process.env.APP_TOKEN_SECRET
 });
 
-const storageProcedures = multer.diskStorage({
+const storageQualityManuals = multer.diskStorage({
   destination: function (req, file, cb) {
-    cb(null, 'src/uploads/procedures/');
+    cb(null, 'src/uploads/quality_manuals/');
   },
   filename: function (req, file, cb) {
     cb(null, req.body.id.replace(new RegExp("/", 'g'), "") + '_v' + req.body.version + '_' + req.body.name + path.extname(file.originalname));
@@ -21,37 +21,40 @@ const storageProcedures = multer.diskStorage({
 })
 
 function fileFilter(req, file, cb) {
-  if (file.mimetype === 'application/pdf' || file.mimetype === 'application/msword') {
+  const AVAILABLE_MIMETYPE = [
+    "application/pdf",
+  ]
+  if (AVAILABLE_MIMETYPE.includes(file.mimetype)) {
     cb(null, true)
   } else {
-    cb({ message: 'Only for documents (pdf/doc).' }, false)
+    cb({ message: 'Only for documents (pdf).' }, false)
   }
 };
 
 /////////////////////////////////////////////////////////////////////////////////////////////
-// API Calibration Procedures => /api/procedures/
+// API Quality Manuals => /api/quality_manuals/
 
 router.get('/', jwtMW, (req, res) => {
-  db.getProcedureAll(req.body, res)
+  db.getQualityManualAll(req.body, res)
 })
 
 router.get('/:id', (req, res) => {
-  db.getProcedure(req.params, res)
+  db.getQualityManual(req.params, res)
 })
 
 router.get('/type/:id', jwtMW, (req, res) => {
-  db.getProcedureType(req.params, res)
+  db.getQualityManualType(req.params, res)
 })
 
 router.get('/pic/:id', jwtMW, (req, res) => {
-  db.getProcedurePIC(req.params, res)
+  db.getQualityManualPIC(req.params, res)
 })
 
 router.post('/', jwtMW, (req, res) => {
   var upload = multer({
-    storage: storageProcedures,
+    storage: storageQualityManuals,
     limits: {
-      fileSize: 5 * 1024 * 1024
+      fileSize: 10 * 1024 * 1024
     },
     fileFilter: fileFilter
   }).single('file')
@@ -74,15 +77,15 @@ router.post('/', jwtMW, (req, res) => {
     // File name key used while in production and filename in development
     req.body.file = req.file.filename
 
-    db.newProcedure(req.body, res)
+    db.newQualityManual(req.body, res)
   })
 })
 
 router.put('/:id', jwtMW, (req, res) => {
   var upload = multer({
-    storage: storageProcedures,
+    storage: storageQualityManuals,
     limits: {
-      fileSize: 5 * 1024 * 1024
+      fileSize: 10 * 1024 * 1024
     },
     fileFilter: fileFilter
   }).single('file')
@@ -105,7 +108,7 @@ router.put('/:id', jwtMW, (req, res) => {
     // File name key used while in production and filename in development
     req.body.file = req.file ? req.file.filename : req.body.file
 
-    db.updateProcedure(req.body, res)
+    db.updateQualityManual(req, res)
   })
 })
 
@@ -113,11 +116,11 @@ router.put('/:id', jwtMW, (req, res) => {
 // EXTREAMLY DANGEROUS, USE THIS WISELY
 
 router.delete('/ever/:id', jwtMW, (req, res) => {
-  db.deleteProcedure(req.params, res)
+  db.deleteQualityManual(req.params, res)
 })
 
 router.delete('/all/ever', jwtMW, (req, res) => {
-  db.deleteProcedureAll(req.params, res)
+  db.deleteQualityManualAll(req.params, res)
 })
 
 module.exports = router

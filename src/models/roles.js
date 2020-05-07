@@ -9,10 +9,10 @@ const c = new Client({
 module.exports = {
 
   /////////////////////////////////////////////////////////////////////////////////////////////
-  // TEST TYPE MODELS
+  // ROLE MODELS
 
-  getTestTypeAll: function (req, res) {
-    c.query("SELECT * FROM `test_type`", null, { metadata: true, useArray: true }, function (err, rows) {
+  getRoleAll: function (req, res) {
+    c.query("SELECT * FROM `roles`", null, { metadata: true, useArray: true }, function (err, rows) {
       if (err) {
         res.status(500).send({ message: "Error 500: Internal Server Error" });
         console.log(err);
@@ -23,7 +23,7 @@ module.exports = {
       rows.forEach(function (items) {
         data.push({
           id: items[0],
-          type_name: items[1],
+          name: items[1]
         });
       });
       if (data.length < 1) {
@@ -34,8 +34,8 @@ module.exports = {
     });
     c.end();
   },
-  getTestType: function (req, res) {
-    c.query("SELECT * FROM `test_type` WHERE id=?", [req.id], { metadata: true, useArray: true }, function (err, rows) {
+  getRole: function (req, res) {
+    c.query("SELECT * FROM `roles` WHERE id=?", [req.id], { metadata: true, useArray: true }, function (err, rows) {
       if (err) {
         res.status(500).send({ message: "Error 500: Internal Server Error" });
         console.log(err);
@@ -46,7 +46,7 @@ module.exports = {
       rows.forEach(function (items) {
         data.push({
           id: items[0],
-          type_name: items[1],
+          name: items[1]
         });
       });
       if (data.length < 1) {
@@ -57,13 +57,14 @@ module.exports = {
     });
     c.end();
   },
-  newTestType: function (req, res) {
-    var request = [req.id, req.type_name];
+  newRole: function (req, res) {
+    const waktu = new Date().toISOString();
+    var request = [req.id, req.name];
     if (request.includes(undefined) || request.includes("")) {
       res.send({ message: 'Bad Request: Parameters cannot empty.' });
       return
     }
-    c.query("INSERT INTO `test_type`(`id`, `type_name`) VALUES (?, ?)", request, { metadata: true, useArray: true }, function (err, rows) {
+    c.query("INSERT INTO `roles` (`id`, `name`) VALUES (?, ?)", request, { metadata: true, useArray: true }, function (err, rows) {
       if (err) {
         res.status(500).send({ message: "Error 500: Internal Server Error" });
         console.log(err);
@@ -73,19 +74,20 @@ module.exports = {
       res.json({
         affectedRows: rows.info.affectedRows,
         err: null,
-        message: "Test Type has registered successfully",
+        message: "Role has registered successfully",
         success: true
       });
     });
     c.end();
   },
-  updateTestType: function (req, res) {
-    var request = [req.type_name, req.id];
+  updateRole: function (req, res) {
+    const waktu = new Date().toISOString();
+    var request = [req.body.name, req.params.id];
     if (request.includes(undefined) || request.includes("")) {
       res.send({ message: 'Bad Request: Parameters cannot empty.' });
       return
     }
-    c.query("UPDATE `test_type` SET `type_name`=? WHERE `id`=?", request, { metadata: true, useArray: true }, function (err, rows) {
+    c.query("UPDATE `roles` SET `name`=? WHERE `id`=?", request, { metadata: true, useArray: true }, function (err, rows) {
       if (err) {
         res.status(500).send({ message: "Error 500: Internal Server Error" });
         console.log(err);
@@ -95,19 +97,19 @@ module.exports = {
       res.json({
         affectedRows: rows.info.affectedRows,
         err: null,
-        message: "Test Type has updated successfully",
+        message: "Role has updated successfully",
         success: true
       });
     });
     c.end();
   },
-  deleteTestType: function (req, res) {
+  deleteRole: function (req, res) {
     var request = [req.id];
     if (request.includes(undefined) || request.includes("")) {
       res.send({ message: 'Bad Request: Parameters cannot empty.' });
       return
     }
-    c.query("DELETE FROM `test_type` WHERE `id`=?", request, { metadata: true, useArray: true }, function (err, rows) {
+    c.query("DELETE FROM `roles` WHERE `id`=?", request, { metadata: true, useArray: true }, function (err, rows) {
       if (err) {
         res.status(500).send({ message: "Error 500: Internal Server Error" });
         console.log(err);
@@ -120,15 +122,15 @@ module.exports = {
         res.json({
           affectedRows: rows.info.affectedRows,
           err: null,
-          message: "Test Type has deleted successfully",
+          message: "Role has deleted successfully",
           success: true
         });
       }
     });
     c.end();
   },
-  deleteTestTypeAll: function (req, res) {
-    c.query("DELETE FROM `test_type`", null, { metadata: true, useArray: true }, function (err, rows) {
+  deleteRoleAll: function (req, res) {
+    c.query("DELETE FROM `roles`", null, { metadata: true, useArray: true }, function (err, rows) {
       if (err) {
         res.status(500).send({ message: "Error 500: Internal Server Error" });
         console.log(err);
@@ -140,7 +142,7 @@ module.exports = {
       } else {
         res.json({
           affectedRows: rows.info.affectedRows,
-          message: "All Test Type has deleted successfully :[",
+          message: "All Role has deleted successfully :[",
           success: true
         });
       }

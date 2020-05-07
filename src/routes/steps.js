@@ -1,7 +1,7 @@
 
 const express = require('express')
 var router = express.Router()
-var db = require('../models/raw_data')
+var db = require('../models/steps')
 const exjwt = require('express-jwt')
 
 // Instantiating the express-jwt middleware
@@ -10,41 +10,37 @@ const jwtMW = exjwt({
 });
 
 /////////////////////////////////////////////////////////////////////////////////////////////
-// API Raw Data => /api/raw_data/
+// API Steps => /api/steps/
 
 router.get('/', jwtMW, (req, res) => {
-  db.getRawDataAll(req.body, res)
+  db.getStepAll(req.body, res)
 })
 
 router.get('/:id', (req, res) => {
-  db.getRawData(req.params, res)
+  db.getStep(req.params, res)
 })
 
-router.get('/cal_request/:id', jwtMW, (req, res) => {
-  db.getRawDataCalRequest(req.params, res)
-})
-
-router.get('/test_items/:id', jwtMW, (req, res) => {
-  db.getRawDataTestItem(req.params, res)
+router.get('/reference/:id', (req, res) => {
+  db.getStepReference(req.params, res)
 })
 
 router.post('/', jwtMW, (req, res) => {
-  db.newRawData(req.body, res)
+  db.newStep(req.body, res)
 })
 
 router.put('/:id', jwtMW, (req, res) => {
-  db.updateRawData(req.body, res)
+  db.updateStep(req.body, res)
 })
 
 /////////////////////////////////////////////////////////////////////////////////////////////
 // EXTREAMLY DANGEROUS, USE THIS WISELY
 
 router.delete('/ever/:id', jwtMW, (req, res) => {
-  db.deleteRawData(req.params, res)
+  db.deleteStep(req.params, res)
 })
 
 router.delete('/all/ever', jwtMW, (req, res) => {
-  db.deleteRawDataAll(req.params, res)
+  db.deleteStepAll(req.params, res)
 })
 
 module.exports = router

@@ -9,10 +9,10 @@ const c = new Client({
 module.exports = {
 
   /////////////////////////////////////////////////////////////////////////////////////////////
-  // TEST ENGINEER MODELS
+  // USERS MODELS
 
-  getEngineerAll: function (req, res) {
-    c.query("SELECT * FROM `test_engineers`", null, { metadata: true, useArray: true }, function (err, rows) {
+  getUserAll: function (req, res) {
+    c.query("SELECT * FROM `users`", null, { metadata: true, useArray: true }, function (err, rows) {
       if (err) {
         res.status(500).send({ message: "Error 500: Internal Server Error" });
         console.log(err);
@@ -24,10 +24,10 @@ module.exports = {
         data.push({
           id: items[0],
           name: items[1],
-          lab: items[2],
-          // password: items[3],
-          email: items[4],
-          role: items[5],
+          // password: items[2],
+          role: items[3],
+          telp: items[4],
+          email: items[5],
           photo: items[6],
           registered: items[7],
           updated: items[8]
@@ -41,8 +41,8 @@ module.exports = {
     });
     c.end();
   },
-  getEngineer: function (req, res) {
-    c.query("SELECT * FROM `test_engineers` WHERE `id`=?", [req.id], { metadata: true, useArray: true }, function (err, rows) {
+  getUser: function (req, res) {
+    c.query("SELECT * FROM `users` WHERE `id`=?", [req.id], { metadata: true, useArray: true }, function (err, rows) {
       if (err) {
         res.status(500).send({ message: "Error 500: Internal Server Error" });
         console.log(err);
@@ -54,10 +54,10 @@ module.exports = {
         data.push({
           id: items[0],
           name: items[1],
-          lab: items[2],
-          // password: items[3],
-          email: items[4],
-          role: items[5],
+          // password: items[2],
+          role: items[3],
+          telp: items[4],
+          email: items[5],
           photo: items[6],
           registered: items[7],
           updated: items[8]
@@ -71,8 +71,8 @@ module.exports = {
     });
     c.end();
   },
-  getEngineerRole: function (req, res) {
-    c.query("SELECT * FROM `test_engineers` WHERE `role`=?", [req.id], { metadata: true, useArray: true }, function (err, rows) {
+  getUserRole: function (req, res) {
+    c.query("SELECT * FROM `users` WHERE `role`=?", [req.id], { metadata: true, useArray: true }, function (err, rows) {
       if (err) {
         res.status(500).send({ message: "Error 500: Internal Server Error" });
         console.log(err);
@@ -84,10 +84,10 @@ module.exports = {
         data.push({
           id: items[0],
           name: items[1],
-          lab: items[2],
-          // password: items[3],
-          email: items[4],
-          role: items[5],
+          // password: items[2],
+          role: items[3],
+          telp: items[4],
+          email: items[5],
           photo: items[6],
           registered: items[7],
           updated: items[8]
@@ -101,9 +101,9 @@ module.exports = {
     });
     c.end();
   },
-  getEngineerSearch: function (req, res) {
+  getUserSearch: function (req, res) {
     var request = ["%" + req.id + "%", "%" + req.id + "%"];
-    c.query("SELECT * FROM `test_engineers` WHERE `id` LIKE ? OR `name` LIKE ?", request, { metadata: true, useArray: true }, function (err, rows) {
+    c.query("SELECT * FROM `users` WHERE `id` LIKE ? OR `name` LIKE ?", request, { metadata: true, useArray: true }, function (err, rows) {
       if (err) {
         res.status(500).send({ message: "Error 500: Internal Server Error" });
         console.log(err);
@@ -115,10 +115,10 @@ module.exports = {
         data.push({
           id: items[0],
           name: items[1],
-          lab: items[2],
-          // password: items[3],
-          email: items[4],
-          role: items[5],
+          // password: items[2],
+          role: items[3],
+          telp: items[4],
+          email: items[5],
           photo: items[6],
           registered: items[7],
           updated: items[8]
@@ -132,14 +132,14 @@ module.exports = {
     });
     c.end();
   },
-  newEngineer: function (req, password, res) {
+  newUser: function (req, password, res) {
     const waktu = new Date().toISOString();
-    var request = [req.id, req.name, req.lab, password, req.email, waktu, waktu];
+    var request = [req.id, req.name, password, req.telp, req.email, waktu, waktu];
     if (request.includes(undefined) || request.includes("")) {
       res.send({ message: 'Bad Request: Parameters cannot empty.' });
       return
     }
-    c.query("INSERT INTO `test_engineers`(`id`, `name`, `lab`, `password`, `email`, `role`, `registered`, `updated`) VALUES (?, ?, ?, ?, ?, '1', ?, ?)", request, { metadata: true, useArray: true }, function (err, rows) {
+    c.query("INSERT INTO `users`(`id`, `name`, `password`, `telp`, `email`, `role`, `registered`, `updated`) VALUES (?, ?, ?, ?, ?, ?, ?, ?)", request, { metadata: true, useArray: true }, function (err, rows) {
       if (err) {
         res.status(500).send({ message: "Error 500: Internal Server Error" });
         console.log(err);
@@ -149,20 +149,20 @@ module.exports = {
       res.json({
         affectedRows: rows.info.affectedRows,
         err: null,
-        message: "Engineer has registered successfully",
+        message: "User has registered successfully",
         success: true
       });
     });
     c.end();
   },
-  updateEngineer: function (req, res) {
+  updateUser: function (req, res) {
     const waktu = new Date().toISOString();
-    var request = [req.name, req.lab, req.email, waktu, req.id];
+    var request = [req.name, req.telp, req.email, waktu, req.id];
     if (request.includes(undefined) || request.includes("")) {
       res.send({ message: 'Bad Request: Parameters cannot empty.' });
       return
     }
-    c.query("UPDATE `test_engineers` SET `name`=?, `lab`=?, `email`=?, `updated`=? WHERE `id`=?", request, { metadata: true, useArray: true }, function (err, rows) {
+    c.query("UPDATE `users` SET `name`=?, `telp`=?, `email`=?, `updated`=? WHERE `id`=?", request, { metadata: true, useArray: true }, function (err, rows) {
       if (err) {
         res.status(500).send({ message: "Error 500: Internal Server Error" });
         console.log(err);
@@ -172,20 +172,20 @@ module.exports = {
       res.json({
         affectedRows: rows.info.affectedRows,
         err: null,
-        message: "Engineer has updated successfully",
+        message: "User has updated successfully",
         success: true
       });
     });
     c.end();
   },
-  updateEngineerPhoto: function (req, res) {
+  updateUserPhoto: function (req, res) {
     const waktu = new Date().toISOString();
     var request = [req.body.photo, waktu, req.params.id];
     if (request.includes(undefined) || request.includes("")) {
       res.send({ message: 'Bad Request: Parameters cannot empty.' });
       return
     }
-    c.query("UPDATE `test_engineers` SET `photo`=?, `updated`=? WHERE `id`=?", request, { metadata: true, useArray: true }, function (err, rows) {
+    c.query("UPDATE `users` SET `photo`=?, `updated`=? WHERE `id`=?", request, { metadata: true, useArray: true }, function (err, rows) {
       if (err) {
         res.status(500).send({ message: "Error 500: Internal Server Error" });
         console.log(err);
@@ -201,14 +201,14 @@ module.exports = {
     });
     c.end();
   },
-  deactivateEngineer: function (req, res) {
+  deactivateUser: function (req, res) {
     const waktu = new Date().toISOString();
     var request = [waktu, req.id];
     if (request.includes(undefined) || request.includes("")) {
       res.send({ message: 'Bad Request: Parameters cannot empty.' });
       return
     }
-    c.query("UPDATE `test_engineers` SET `status`='9', `updated`=? WHERE `id`=?", request, { metadata: true, useArray: true }, function (err, rows) {
+    c.query("UPDATE `users` SET `status`='9', `updated`=? WHERE `id`=?", request, { metadata: true, useArray: true }, function (err, rows) {
       if (err) {
         res.status(500).send({ message: "Error 500: Internal Server Error" });
         console.log(err);
@@ -221,20 +221,20 @@ module.exports = {
         res.json({
           affectedRows: rows.info.affectedRows,
           err: null,
-          message: "Engineer has deactivate successfully",
+          message: "User has deactivate successfully",
           success: true
         });
       }
     });
     c.end();
   },
-  deleteEngineer: function (req, res) {
+  deleteUser: function (req, res) {
     var request = [req.id];
     if (request.includes(undefined) || request.includes("")) {
       res.send({ message: 'Bad Request: Parameters cannot empty.' });
       return
     }
-    c.query("DELETE FROM `test_engineers` WHERE `id`=?", request, { metadata: true, useArray: true }, function (err, rows) {
+    c.query("DELETE FROM `users` WHERE `id`=?", request, { metadata: true, useArray: true }, function (err, rows) {
       if (err) {
         res.status(500).send({ message: "Error 500: Internal Server Error" });
         console.log(err);
@@ -247,15 +247,15 @@ module.exports = {
         res.json({
           affectedRows: rows.info.affectedRows,
           err: null,
-          message: "Engineer has deleted successfully",
+          message: "User has deleted successfully",
           success: true
         });
       }
     });
     c.end();
   },
-  deleteEngineerAll: function (req, res) {
-    c.query("DELETE FROM `test_engineers`", null, { metadata: true, useArray: true }, function (err, rows) {
+  deleteUserAll: function (req, res) {
+    c.query("DELETE FROM `users`", null, { metadata: true, useArray: true }, function (err, rows) {
       if (err) {
         res.status(500).send({ message: "Error 500: Internal Server Error" });
         console.log(err);
@@ -267,7 +267,7 @@ module.exports = {
       } else {
         res.json({
           affectedRows: rows.info.affectedRows,
-          message: "All Engineer has deleted successfully :[",
+          message: "All User has deleted successfully :[",
           success: true
         });
       }

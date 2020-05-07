@@ -12,7 +12,7 @@ module.exports = {
   // HISTORY MODELS
 
   getHistoryAll: function (req, res) {
-    c.query("SELECT h.`reference_id`, e.`name`, s.`step_name`, s.`info`, s.`step_number`, h.`message`, h.`created` FROM `history` h LEFT OUTER JOIN `cal_steps` s ON h.`cal_step_id`=s.`id` LEFT OUTER JOIN `test_engineers` e ON h.`test_engineer_id`=e.`id` ORDER BY h.`created` DESC", null, { metadata: true, useArray: true }, function (err, rows) {
+    c.query("SELECT h.`reference_id`, e.`name`, s.`name`, s.`info`, s.`step_number`, h.`message`, h.`created` FROM `history` h LEFT OUTER JOIN `steps` s ON h.`step_id`=s.`id` LEFT OUTER JOIN `users` e ON h.`user_id`=e.`id` ORDER BY h.`created` DESC", null, { metadata: true, useArray: true }, function (err, rows) {
       if (err) {
         res.status(500).send({ message: "Error 500: Internal Server Error" });
         console.log(err);
@@ -40,7 +40,7 @@ module.exports = {
     c.end();
   },
   getHistory: function (req, res) {
-    c.query("SELECT h.`reference_id`, e.`name`, s.`step_name`, s.`info`, s.`step_number`, h.`message`, h.`created` FROM `history` h LEFT OUTER JOIN `cal_steps` s ON h.`cal_step_id`=s.`id` LEFT OUTER JOIN `test_engineers` e ON h.`test_engineer_id`=e.`id` WHERE h.`id`=? ORDER BY h.`created` DESC", [req.id], { metadata: true, useArray: true }, function (err, rows) {
+    c.query("SELECT h.`reference_id`, e.`name`, s.`name`, s.`info`, s.`step_number`, h.`message`, h.`created` FROM `history` h LEFT OUTER JOIN `steps` s ON h.`step_id`=s.`id` LEFT OUTER JOIN `users` e ON h.`user_id`=e.`id` WHERE h.`id`=? ORDER BY h.`created` DESC", [req.id], { metadata: true, useArray: true }, function (err, rows) {
       if (err) {
         res.status(500).send({ message: "Error 500: Internal Server Error" });
         console.log(err);
@@ -68,7 +68,7 @@ module.exports = {
     c.end();
   },
   getHistoryReference: function (req, res) {
-    c.query("SELECT h.`reference_id`, e.`name`, s.`step_name`, s.`info`, s.`step_number`, h.`message`, h.`created` FROM `history` h LEFT OUTER JOIN `cal_steps` s ON h.`cal_step_id`=s.`id` LEFT OUTER JOIN `test_engineers` e ON h.`test_engineer_id`=e.`id` WHERE h.`reference_id`=? ORDER BY h.`created` DESC", [req.id], { metadata: true, useArray: true }, function (err, rows) {
+    c.query("SELECT h.`reference_id`, e.`name`, s.`name`, s.`info`, s.`step_number`, h.`message`, h.`created` FROM `history` h LEFT OUTER JOIN `steps` s ON h.`step_id`=s.`id` LEFT OUTER JOIN `users` e ON h.`user_id`=e.`id` WHERE h.`reference_id`=? ORDER BY h.`created` DESC", [req.id], { metadata: true, useArray: true }, function (err, rows) {
       if (err) {
         res.status(500).send({ message: "Error 500: Internal Server Error" });
         console.log(err);
@@ -95,8 +95,8 @@ module.exports = {
     });
     c.end();
   },
-  getHistoryEngineer: function (req, res) {
-    c.query("SELECT h.`reference_id`, e.`name`, s.`step_name`, s.`info`, s.`step_number`, h.`message`, h.`created` FROM `history` h LEFT OUTER JOIN `cal_steps` s ON h.`cal_step_id`=s.`id` LEFT OUTER JOIN `test_engineers` e ON h.`test_engineer_id`=e.`id` WHERE h.`test_engineer_id`=? ORDER BY h.`created` DESC", [req.id], { metadata: true, useArray: true }, function (err, rows) {
+  getHistoryUser: function (req, res) {
+    c.query("SELECT h.`reference_id`, e.`name`, s.`name`, s.`info`, s.`step_number`, h.`message`, h.`created` FROM `history` h LEFT OUTER JOIN `steps` s ON h.`step_id`=s.`id` LEFT OUTER JOIN `users` e ON h.`user_id`=e.`id` WHERE h.`user_id`=? ORDER BY h.`created` DESC", [req.id], { metadata: true, useArray: true }, function (err, rows) {
       if (err) {
         res.status(500).send({ message: "Error 500: Internal Server Error" });
         console.log(err);
@@ -123,8 +123,8 @@ module.exports = {
     });
     c.end();
   },
-  getHistoryCalStep: function (req, res) {
-    c.query("SELECT h.`reference_id`, e.`name`, s.`step_name`, s.`info`, s.`step_number`, h.`message`, h.`created` FROM `history` h LEFT OUTER JOIN `cal_steps` s ON h.`cal_step_id`=s.`id` LEFT OUTER JOIN `test_engineers` e ON h.`test_engineer_id`=e.`id` WHERE h.`cal_step_id`=? ORDER BY h.`created` DESC", [req.id], { metadata: true, useArray: true }, function (err, rows) {
+  getHistoryStep: function (req, res) {
+    c.query("SELECT h.`reference_id`, e.`name`, s.`name`, s.`info`, s.`step_number`, h.`message`, h.`created` FROM `history` h LEFT OUTER JOIN `steps` s ON h.`step_id`=s.`id` LEFT OUTER JOIN `users` e ON h.`user_id`=e.`id` WHERE h.`step_id`=? ORDER BY h.`created` DESC", [req.id], { metadata: true, useArray: true }, function (err, rows) {
       if (err) {
         res.status(500).send({ message: "Error 500: Internal Server Error" });
         console.log(err);
@@ -152,7 +152,7 @@ module.exports = {
     c.end();
   },
   getHistoryRequestStep: function (req, res) {
-    c.query("SELECT s.`step_number`, s.`step_name` FROM `history` h LEFT OUTER JOIN `cal_steps` s ON h.`cal_step_id`=s.`id` WHERE h.`reference_id`=? ORDER BY h.`created` DESC LIMIT 1", [req.id], { metadata: true, useArray: true }, function (err, rows) {
+    c.query("SELECT s.`step_number`, s.`name` FROM `history` h LEFT OUTER JOIN `steps` s ON h.`step_id`=s.`id` WHERE h.`reference_id`=? ORDER BY h.`created` DESC LIMIT 1", [req.id], { metadata: true, useArray: true }, function (err, rows) {
       if (err) {
         res.status(500).send({ message: "Error 500: Internal Server Error" });
         console.log(err);
@@ -163,7 +163,7 @@ module.exports = {
       rows.forEach(function (items) {
         data.push({
           step_number: items[0],
-          step_name: items[1]
+          name: items[1]
         });
       });
       if (data.length < 1) {
@@ -176,12 +176,12 @@ module.exports = {
   },
   newHistory: function (req, res) {
     const waktu = new Date().toISOString();
-    var request = ['H' + new Date(waktu).valueOf().toString(32).toUpperCase(), req.reference_id, req.test_engineer_id, req.cal_step_id, req.message, waktu];
+    var request = ['H' + new Date(waktu).valueOf().toString(32).toUpperCase(), req.reference_id, req.user_id, req.step_id, req.message, waktu];
     if (request.includes(undefined)) {
       res.send({ message: 'Bad Request: Parameters cannot empty.' });
       return
     }
-    c.query("INSERT INTO `history`(`id`, `reference_id`, `test_engineer_id`, `cal_step_id`, `message`, `created`) VALUES (?, ?, ?, ?, ?, ?)", request, { metadata: true, useArray: true }, function (err, rows) {
+    c.query("INSERT INTO `history`(`id`, `reference_id`, `user_id`, `step_id`, `message`, `created`) VALUES (?, ?, ?, ?, ?, ?)", request, { metadata: true, useArray: true }, function (err, rows) {
       if (err) {
         res.status(500).send({ message: "Error 500: Internal Server Error" });
         console.log(err);
@@ -199,12 +199,12 @@ module.exports = {
   },
   updateHistory: function (req, res) {
     const waktu = new Date().toISOString();
-    var request = [req.reference_id, req.test_engineer_id, req.cal_step_id, req.message, waktu, req.id];
+    var request = [req.reference_id, req.user_id, req.step_id, req.message, waktu, req.id];
     if (request.includes(undefined)) {
       res.send({ message: 'Bad Request: Parameters cannot empty.' });
       return
     }
-    c.query("UPDATE `history` SET `reference_id`=?, `test_engineer_id`=?, `cal_step_id`=?, `message`=?, `created`=? WHERE `id`=?", request, { metadata: true, useArray: true }, function (err, rows) {
+    c.query("UPDATE `history` SET `reference_id`=?, `user_id`=?, `step_id`=?, `message`=?, `created`=? WHERE `id`=?", request, { metadata: true, useArray: true }, function (err, rows) {
       if (err) {
         res.status(500).send({ message: "Error 500: Internal Server Error" });
         console.log(err);

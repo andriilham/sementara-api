@@ -13,7 +13,7 @@ module.exports = {
 
   cekLogin: function (id, pass, callback) {
     var req = [id, pass];
-    c.query("SELECT * FROM `test_engineers` WHERE `id`=? AND `password`=?", req, { metadata: true, useArray: true }, function (err, rows) {
+    c.query("SELECT * FROM `users` WHERE `id`=? AND `password`=?", req, { metadata: true, useArray: true }, function (err, rows) {
       if (err) {
         res.status(500).send({ message: "Error 500: Internal Server Error" });
         console.log(err);
@@ -26,9 +26,9 @@ module.exports = {
           data.push({
             id: items[0],
             name: items[1],
-            lab: items[2],
-            email: items[4],
-            role: items[5],
+            role: items[3],
+            telp: items[4],
+            email: items[5],
             photo: items[6],
             registered: items[7],
             updated: items[8]
@@ -62,7 +62,7 @@ module.exports = {
                 return
               }
             });
-            c.query("UPDATE `test_engineers` SET status='1', `updated`=? WHERE `email`=? AND `id` LIKE 'A%'", [waktu, items[0]], { metadata: true, useArray: true }, function (err, rows) {
+            c.query("UPDATE `users` SET status='1', `updated`=? WHERE `email`=? AND `id` LIKE 'A%'", [waktu, items[0]], { metadata: true, useArray: true }, function (err, rows) {
               if (err) {
                 res.status(500).send({ message: "Error 500: Internal Server Error" });
                 console.log(err);
@@ -83,7 +83,7 @@ module.exports = {
                 return
               }
             });
-            c.query("UPDATE `test_engineers` SET status='1', `updated`=? WHERE `email`=? AND `id` LIKE 'U%'", [waktu, items[0]], { metadata: true, useArray: true }, function (err, rows) {
+            c.query("UPDATE `users` SET status='1', `updated`=? WHERE `email`=? AND `id` LIKE 'U%'", [waktu, items[0]], { metadata: true, useArray: true }, function (err, rows) {
               if (err) {
                 res.status(500).send({ message: "Error 500: Internal Server Error" });
                 console.log(err);
@@ -115,7 +115,7 @@ module.exports = {
       res.send({ message: 'Bad Request: Parameters cannot empty.' });
       return
     }
-    c.query("UPDATE `test_engineers` SET `status`='2', `updated`=? WHERE `id`=? AND `id` LIKE 'U%'", [waktu, req.id], { metadata: true, useArray: true }, function (err, rows) {
+    c.query("UPDATE `users` SET `status`='2', `updated`=? WHERE `id`=? AND `id` LIKE 'U%'", [waktu, req.id], { metadata: true, useArray: true }, function (err, rows) {
       if (err) {
         res.status(500).send({ message: "Error 500: Internal Server Error" });
         console.log(err);
@@ -132,7 +132,7 @@ module.exports = {
     c.end();
   },
   checkVerified: function (req, res) {
-    c.query("SELECT `status` FROM `test_engineers` WHERE `id`=? AND `status`=1", [req.id], { metadata: true, useArray: true }, function (err, rows) {
+    c.query("SELECT `status` FROM `users` WHERE `id`=? AND `status`=1", [req.id], { metadata: true, useArray: true }, function (err, rows) {
       if (err) {
         res.status(500).send({ message: "Error 500: Internal Server Error" });
         console.log(err);
@@ -167,7 +167,7 @@ module.exports = {
       res.send({ message: 'Bad Request: Parameters cannot empty.' });
       return
     }
-    c.query("SELECT `name` FROM `test_engineers` WHERE `email`=? AND `id` LIKE 'U%'", [req.email], { metadata: true, useArray: true }, function (err, rows) {
+    c.query("SELECT `name` FROM `users` WHERE `email`=? AND `id` LIKE 'U%'", [req.email], { metadata: true, useArray: true }, function (err, rows) {
       if (err) {
         res.status(500).send({ message: "Error 500: Internal Server Error" });
         console.log(err);
@@ -230,7 +230,7 @@ module.exports = {
   },
   forgotPassword_editPassword: function (req, password, res) {
     const waktu = new Date().toISOString();
-    c.query("UPDATE `test_engineers` SET `password`=?, `updated`=? WHERE `email`=? AND `id` LIKE 'U%'", [password, waktu, req.email], { metadata: true, useArray: true }, function (err, rows) {
+    c.query("UPDATE `users` SET `password`=?, `updated`=? WHERE `email`=? AND `id` LIKE 'U%'", [password, waktu, req.email], { metadata: true, useArray: true }, function (err, rows) {
       if (err) {
         res.status(500).send({ message: "Error 500: Internal Server Error" });
         console.log(err);
@@ -257,7 +257,7 @@ module.exports = {
   // CHECK REGISTERED
 
   checkUserRegistered: function (req, res) {
-    c.query("SELECT * FROM `test_engineers` WHERE `id`=?", [req.id], { metadata: true, useArray: true }, function (err, rows) {
+    c.query("SELECT * FROM `users` WHERE `id`=?", [req.id], { metadata: true, useArray: true }, function (err, rows) {
       if (err) {
         res.status(500).send({ message: "Error 500: Internal Server Error" });
         console.log(err);

@@ -31,14 +31,14 @@ router.post('/login', (req, res) => {
   console.log(password)
 
   db.cekLogin(email, password, function (err, data) {
-    if (data.length === 1 && (data[0].role === "1" || data[0].role === "2")) {
+    if (data.length === 1 && (data[0].role !== "9")) {
       //If all credentials are correct do this
       let token = jwt.sign({
         id: data[0].id,
         name: data[0].name,
-        lab: data[0].lab,
-        email: data[0].email,
         role: data[0].role,
+        telp: data[0].telp,
+        email: data[0].email,
         photo: data[0].photo,
         registered: data[0].registered,
         updated: data[0].updated

@@ -2,7 +2,7 @@
 const express = require('express')
 var router = express.Router()
 const multer = require('multer')
-var db = require('../models/test_engineers')
+var db = require('../models/users')
 const exjwt = require('express-jwt')
 const crypto = require("crypto")
 
@@ -11,9 +11,9 @@ const jwtMW = exjwt({
   secret: process.env.APP_TOKEN_SECRET
 });
 
-const storageEngineers = multer.diskStorage({
+const storageUsers = multer.diskStorage({
   destination: function (req, file, cb) {
-    cb(null, 'src/uploads/engineers/');
+    cb(null, 'src/uploads/users/');
   },
   filename: function (req, file, cb) {
     cb(null, file.fieldname + '_' + req.params.id);
@@ -36,37 +36,37 @@ const CIPHER_BASE = process.env.APP_CIPHER_BASE
 const HASH_ALGORITHM = process.env.APP_HASH_ALGORITHM
 
 /////////////////////////////////////////////////////////////////////////////////////////////
-// API Test Engineers => /api/engineers/
+// API Users => /api/users/
 
 router.get('/', jwtMW, (req, res) => {
-  db.getEngineerAll(req.body, res)
+  db.getUserAll(req.body, res)
 })
 
 router.get('/:id', (req, res) => {
-  db.getEngineer(req.params, res)
+  db.getUser(req.params, res)
 })
 
 router.get('/role/:id', jwtMW, (req, res) => {
-  db.getEngineerRole(req.params, res)
+  db.getUserRole(req.params, res)
 })
 
 router.get('/search/:id', (req, res) => {
-  db.getEngineerSearch(req.params, res)
+  db.getUserSearch(req.params, res)
 })
 
 router.post('/', jwtMW, (req, res) => {
   console.log(req.body)
   const password = crypto.createHmac(HASH_ALGORITHM, CIPHER_SECRET).update(req.body.password).digest(CIPHER_BASE);
-  db.newEngineer(req.body, password, res)
+  db.newUser(req.body, password, res)
 })
 
 router.put('/:id', jwtMW, (req, res) => {
-  db.updateEngineer(req.body, res)
+  db.updateUser(req.body, res)
 })
 
 router.put('/photo/:id', jwtMW, (req, res) => {
   var upload = multer({
-    storage: storageEngineers,
+    storage: storageUsers,
     limits: {
       fileSize: 1 * 1024 * 1024
     },
@@ -91,7 +91,7 @@ router.put('/photo/:id', jwtMW, (req, res) => {
     // File name key used while in production and filename in development
     req.body.photo = req.file.filename
 
-    db.updateEngineerPhoto(req, res)
+    db.updateUserPhoto(req, res)
   })
 })
 
@@ -99,15 +99,15 @@ router.put('/photo/:id', jwtMW, (req, res) => {
 // EXTREAMLY DANGEROUS, USE THIS WISELY
 
 router.delete('/:id', jwtMW, (req, res) => {
-  db.deactivateEngineer(req.params, res)
+  db.deactivateUser(req.params, res)
 })
 
 router.delete('/ever/:id', jwtMW, (req, res) => {
-  db.deleteEngineer(req.params, res)
+  db.deleteUser(req.params, res)
 })
 
 router.delete('/all/ever', jwtMW, (req, res) => {
-  db.deleteEngineerAll(req.params, res)
+  db.deleteUserAll(req.params, res)
 })
 
 module.exports = router

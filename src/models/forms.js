@@ -23,8 +23,13 @@ module.exports = {
       rows.forEach(function (items) {
         data.push({
           id: items[0],
-          form_name: items[1],
-          file: items[2]
+          name: items[1],
+          effective_date: items[2],
+          pic: items[3],
+          version: items[4],
+          file_pdf: items[5],
+          file_doc: items[6],
+          file_xls: items[7]
         });
       });
       if (data.length < 1) {
@@ -36,7 +41,7 @@ module.exports = {
     c.end();
   },
   getForm: function (req, res) {
-    c.query("SELECT * FROM `forms` WHERE id=?", [req.id], { metadata: true, useArray: true }, function (err, rows) {
+    c.query("SELECT * FROM `forms` WHERE `id`=?", [req.id], { metadata: true, useArray: true }, function (err, rows) {
       if (err) {
         res.status(500).send({ message: "Error 500: Internal Server Error" });
         console.log(err);
@@ -47,8 +52,73 @@ module.exports = {
       rows.forEach(function (items) {
         data.push({
           id: items[0],
-          form_name: items[1],
-          file: items[2]
+          name: items[1],
+          effective_date: items[2],
+          pic: items[3],
+          version: items[4],
+          file_pdf: items[5],
+          file_doc: items[6],
+          file_xls: items[7]
+        });
+      });
+      if (data.length < 1) {
+        res.status(404).send({ message: 'Data not found.' });
+      } else {
+        res.json(data);
+      }
+    });
+    c.end();
+  },
+  getFormType: function (req, res) {
+    const request = ["%" + req.id.toUpperCase() + "%"]
+    c.query("SELECT * FROM `forms` WHERE `id` LIKE ?", request, { metadata: true, useArray: true }, function (err, rows) {
+      if (err) {
+        res.status(500).send({ message: "Error 500: Internal Server Error" });
+        console.log(err);
+        return
+      }
+
+      var data = [];
+      rows.forEach(function (items) {
+        data.push({
+          id: items[0],
+          name: items[1],
+          effective_date: items[2],
+          pic: items[3],
+          version: items[4],
+          file_pdf: items[5],
+          file_doc: items[6],
+          file_xls: items[7]
+        });
+      });
+      if (data.length < 1) {
+        res.status(404).send({ message: 'Data not found.' });
+      } else {
+        res.json(data);
+      }
+    });
+    c.end();
+  },
+  getFormPIC: function (req, res) {
+    const request = ["%" + req.id + "%"]
+    c.query("SELECT * FROM `forms` WHERE `pic` LIKE ?", request, { metadata: true, useArray: true }, function (err, rows) {
+      if (err) {
+        res.status(500).send({ message: "Error 500: Internal Server Error" });
+        console.log(err);
+        return
+      }
+
+      var data = [];
+      rows.forEach(function (items) {
+        data.push({
+          id: items[0],
+          name: items[1],
+          effective_date: items[2],
+          pic: items[3],
+          version: items[4],
+          file_pdf: items[5],
+          file_doc: items[6],
+          file_xls: items[7]
         });
       });
       if (data.length < 1) {
@@ -60,12 +130,12 @@ module.exports = {
     c.end();
   },
   newForm: function (req, res) {
-    var request = [req.id, req.form_name, req.file];
+    var request = [req.id, req.name, req.effective_date, req.pic, req.version, req.file_pdf, req.file_doc, req.file_xls];
     if (request.includes(undefined) || request.includes("")) {
       res.send({ message: 'Bad Request: Parameters cannot empty.' });
       return
     }
-    c.query("INSERT INTO `forms`(`id`, `form_name`, `file`) VALUES (?, ?, ?)", request, { metadata: true, useArray: true }, function (err, rows) {
+    c.query("INSERT INTO `forms`(`id`, `name`, `effective_date`, `pic`, `version`, `file_pdf`, `file_doc`, `file_xls`) VALUES (?, ?, ?, ?, ?, ?, ?, ?)", request, { metadata: true, useArray: true }, function (err, rows) {
       if (err) {
         res.status(500).send({ message: "Error 500: Internal Server Error" });
         console.log(err);
@@ -75,20 +145,19 @@ module.exports = {
       res.json({
         affectedRows: rows.info.affectedRows,
         err: null,
-        message: "Form has registered successfully",
+        message: "Document has registered successfully",
         success: true
       });
     });
     c.end();
   },
   updateForm: function (req, res) {
-    const waktu = new Date().toISOString();
-    var request = [req.form_name, req.file, req.id];
+    var request = [req.body.name, req.body.effective_date, req.body.pic, req.body.version, req.params.id];
     if (request.includes(undefined) || request.includes("")) {
       res.send({ message: 'Bad Request: Parameters cannot empty.' });
       return
     }
-    c.query("UPDATE `forms` SET `form_name`=?, `file`=? WHERE `id`=?", request, { metadata: true, useArray: true }, function (err, rows) {
+    c.query("UPDATE `forms` SET `name`=?, `effective_date`=?, `pic`=?, `version`=? WHERE `id`=?", request, { metadata: true, useArray: true }, function (err, rows) {
       if (err) {
         res.status(500).send({ message: "Error 500: Internal Server Error" });
         console.log(err);
@@ -98,7 +167,73 @@ module.exports = {
       res.json({
         affectedRows: rows.info.affectedRows,
         err: null,
-        message: "Form has updated successfully",
+        message: "Document has updated successfully",
+        success: true
+      });
+    });
+    c.end();
+  },
+  updateFormPDF: function (req, res) {
+    var request = [req.body.file_pdf, req.params.id];
+    if (request.includes(undefined) || request.includes("")) {
+      res.send({ message: 'Bad Request: Parameters cannot empty.' });
+      return
+    }
+    c.query("UPDATE `devices` SET `file_pdf`=? WHERE `id`=?", request, { metadata: true, useArray: true }, function (err, rows) {
+      if (err) {
+        res.status(500).send({ message: "Error 500: Internal Server Error" });
+        console.log(err);
+        return
+      }
+
+      res.json({
+        affectedRows: rows.info.affectedRows,
+        err: null,
+        message: "Form PDF has updated successfully",
+        success: true
+      });
+    });
+    c.end();
+  },
+  updateFormDOC: function (req, res) {
+    var request = [req.body.file_doc, req.params.id];
+    if (request.includes(undefined) || request.includes("")) {
+      res.send({ message: 'Bad Request: Parameters cannot empty.' });
+      return
+    }
+    c.query("UPDATE `devices` SET `file_doc`=? WHERE `id`=?", request, { metadata: true, useArray: true }, function (err, rows) {
+      if (err) {
+        res.status(500).send({ message: "Error 500: Internal Server Error" });
+        console.log(err);
+        return
+      }
+
+      res.json({
+        affectedRows: rows.info.affectedRows,
+        err: null,
+        message: "Form DOC has updated successfully",
+        success: true
+      });
+    });
+    c.end();
+  },
+  updateFormXLS: function (req, res) {
+    var request = [req.body.file_xls, req.params.id];
+    if (request.includes(undefined) || request.includes("")) {
+      res.send({ message: 'Bad Request: Parameters cannot empty.' });
+      return
+    }
+    c.query("UPDATE `devices` SET `file_xls`=? WHERE `id`=?", request, { metadata: true, useArray: true }, function (err, rows) {
+      if (err) {
+        res.status(500).send({ message: "Error 500: Internal Server Error" });
+        console.log(err);
+        return
+      }
+
+      res.json({
+        affectedRows: rows.info.affectedRows,
+        err: null,
+        message: "Form XLS has updated successfully",
         success: true
       });
     });
@@ -123,7 +258,7 @@ module.exports = {
         res.json({
           affectedRows: rows.info.affectedRows,
           err: null,
-          message: "Form has deleted successfully",
+          message: "Document has deleted successfully",
           success: true
         });
       }
@@ -143,7 +278,7 @@ module.exports = {
       } else {
         res.json({
           affectedRows: rows.info.affectedRows,
-          message: "All Form has deleted successfully :[",
+          message: "All Document has deleted successfully :[",
           success: true
         });
       }

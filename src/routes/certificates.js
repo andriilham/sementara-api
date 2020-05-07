@@ -2,8 +2,9 @@
 const express = require('express')
 var router = express.Router()
 const multer = require('multer')
-var db = require('../models/cal_certificates')
+var db = require('../models/certificates')
 const exjwt = require('express-jwt')
+var path = require('path')
 
 // Instantiating the express-jwt middleware
 const jwtMW = exjwt({
@@ -12,23 +13,26 @@ const jwtMW = exjwt({
 
 const storageCertificates = multer.diskStorage({
   destination: function (req, file, cb) {
-    cb(null, 'src/uploads/cal_certificates/');
+    cb(null, 'src/uploads/certificates/');
   },
   filename: function (req, file, cb) {
-    cb(null, file.fieldname + '_' + new Date().valueOf() + '_' + file.originalname);
+    cb(null, req.body.id.replace(new RegExp("/", 'g'), "") + '_' + req.body.effective_date + + path.extname(file.originalname));
   }
 })
 
 function fileFilter(req, file, cb) {
-  if (file.mimetype === 'application/pdf' || file.mimetype === 'application/msword') {
+  const AVAILABLE_MIMETYPE = [
+    "application/pdf",
+  ]
+  if (AVAILABLE_MIMETYPE.includes(file.mimetype)) {
     cb(null, true)
   } else {
-    cb({ message: 'Only for documents (pdf/doc).' }, false)
+    cb({ message: 'Only for documents (pdf).' }, false)
   }
 };
 
 /////////////////////////////////////////////////////////////////////////////////////////////
-// API Calibration Certificates => /api/cal_certificates/
+// API Certificates => /api/certificates/
 
 router.get('/', jwtMW, (req, res) => {
   db.getCertificateAll(req.body, res)
@@ -38,22 +42,18 @@ router.get('/:id', (req, res) => {
   db.getCertificate(req.params, res)
 })
 
-router.get('/devices/:id', (req, res) => {
-  db.getCertificateDevice(req.params, res)
-})
-
-router.get('/engineers/:id', jwtMW, (req, res) => {
-  db.getCertificateEngineer(req.params, res)
+router.get('/test-report/:id', jwtMW, (req, res) => {
+  db.getCertificateTestReport(req.params, res)
 })
 
 router.post('/', jwtMW, (req, res) => {
   var upload = multer({
     storage: storageCertificates,
     limits: {
-      fileSize: 5 * 1024 * 1024
+      fileSize: 10 * 1024 * 1024
     },
     fileFilter: fileFilter
-  }).single('certificate_file')
+  }).single('file')
   upload(req, res, function (err) {
     if (err instanceof multer.MulterError) {
       // A Multer error occurred when uploading.
@@ -64,6 +64,37 @@ router.post('/', jwtMW, (req, res) => {
       res.send(err)
       return
     } else if (req.file == undefined) {
+      res.send({ message: 'No file selected!' })
+      return
+    }
+    // Everything went fine.
+    console.log('Upload success.')
+
+    // File name key used while in production and filename in development
+    req.body.file = req.file.filename
+
+    db.newCertificate(req.body, res)
+  })
+})
+
+router.put('/:id', jwtMW, (req, res) => {
+  var upload = multer({
+    storage: storageCertificates,
+    limits: {
+      fileSize: 10 * 1024 * 1024
+    },
+    fileFilter: fileFilter
+  }).single('file')
+  upload(req, res, function (err) {
+    if (err instanceof multer.MulterError) {
+      // A Multer error occurred when uploading.
+      res.send(err)
+      return
+    } else if (err) {
+      // An unknown error occurred when uploading.
+      res.send(err)
+      return
+    } else if (req.file == undefined && req.body.file === undefined) {
       res.send('index', { message: 'No file selected!' })
       return
     }
@@ -71,14 +102,10 @@ router.post('/', jwtMW, (req, res) => {
     console.log('Upload success.')
 
     // File name key used while in production and filename in development
-    req.body.certificate_file = req.file.filename
+    req.body.file = req.file ? req.file.filename : req.body.file
 
-    db.newCertificate(req.body, res)
+    db.updateCertificate(req, res)
   })
-})
-
-router.put('/:id', jwtMW, (req, res) => {
-  db.updateCertificate(req.body, res)
 })
 
 /////////////////////////////////////////////////////////////////////////////////////////////

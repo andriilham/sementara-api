@@ -1,7 +1,7 @@
 
 const express = require('express')
 var router = express.Router()
-var db = require('../models/measuring_equipment')
+var db = require('../models/standard_levels')
 const exjwt = require('express-jwt')
 
 // Instantiating the express-jwt middleware
@@ -10,41 +10,33 @@ const jwtMW = exjwt({
 });
 
 /////////////////////////////////////////////////////////////////////////////////////////////
-// API Calibration Results => /api/measuring_equipment/
+// API Standard Levels => /api/standard_levels/
 
 router.get('/', jwtMW, (req, res) => {
-  db.getMeasuringEquipmentAll(req.body, res)
+  db.getStandardLevelAll(req.body, res)
 })
 
 router.get('/:id', (req, res) => {
-  db.getMeasuringEquipment(req.params, res)
-})
-
-router.get('/request/:id', jwtMW, (req, res) => {
-  db.getMeasuringEquipmentRequest(req.params, res)
-})
-
-router.get('/device/:id', jwtMW, (req, res) => {
-  db.getMeasuringEquipmentDeviceID(req.params, res)
+  db.getStandardLevel(req.params, res)
 })
 
 router.post('/', jwtMW, (req, res) => {
-  db.newMeasuringEquipment(req.body, res)
+  db.newStandardLevel(req.body, res)
 })
 
 router.put('/:id', jwtMW, (req, res) => {
-  db.updateMeasuringEquipment(req.body, res)
+  db.updateStandardLevel(req, res)
 })
 
 /////////////////////////////////////////////////////////////////////////////////////////////
 // EXTREAMLY DANGEROUS, USE THIS WISELY
 
 router.delete('/ever/:id', jwtMW, (req, res) => {
-  db.deleteMeasuringEquipment(req.params, res)
+  db.deleteStandardLevel(req.params, res)
 })
 
 router.delete('/all/ever', jwtMW, (req, res) => {
-  db.deleteMeasuringEquipmentAll(req.params, res)
+  db.deleteStandardLevelAll(req.params, res)
 })
 
 module.exports = router

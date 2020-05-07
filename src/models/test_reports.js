@@ -9,10 +9,10 @@ const c = new Client({
 module.exports = {
 
   /////////////////////////////////////////////////////////////////////////////////////////////
-  // CALIBRATION SPECIFICATION MODELS
+  // TEST REPORT MODELS
 
-  getCalSpecificationAll: function (req, res) {
-    c.query("SELECT * FROM `cal_specifications`", null, { metadata: true, useArray: true }, function (err, rows) {
+  getTestReportAll: function (req, res) {
+    c.query("SELECT * FROM `test_reports`", null, { metadata: true, useArray: true }, function (err, rows) {
       if (err) {
         res.status(500).send({ message: "Error 500: Internal Server Error" });
         console.log(err);
@@ -23,11 +23,14 @@ module.exports = {
       rows.forEach(function (items) {
         data.push({
           id: items[0],
-          device_id: items[1],
-          test_item_id: items[2],
-          ppm_output: items[3],
-          floor: items[4],
-          resolution: items[5]
+          request_id: items[1],
+          company_name: items[2],
+          device_name: items[3],
+          brand: items[4],
+          model: items[5],
+          test_reference_id: items[6],
+          created: items[7],
+          file: items[8]
         });
       });
       if (data.length < 1) {
@@ -38,8 +41,8 @@ module.exports = {
     });
     c.end();
   },
-  getCalSpecification: function (req, res) {
-    c.query("SELECT * FROM `cal_specifications` WHERE id=?", [req.id], { metadata: true, useArray: true }, function (err, rows) {
+  getTestReport: function (req, res) {
+    c.query("SELECT * FROM `test_reports` WHERE `id`=?", [req.id], { metadata: true, useArray: true }, function (err, rows) {
       if (err) {
         res.status(500).send({ message: "Error 500: Internal Server Error" });
         console.log(err);
@@ -50,11 +53,14 @@ module.exports = {
       rows.forEach(function (items) {
         data.push({
           id: items[0],
-          device_id: items[1],
-          test_item_id: items[2],
-          ppm_output: items[3],
-          floor: items[4],
-          resolution: items[5]
+          request_id: items[1],
+          company_name: items[2],
+          device_name: items[3],
+          brand: items[4],
+          model: items[5],
+          test_reference_id: items[6],
+          created: items[7],
+          file: items[8]
         });
       });
       if (data.length < 1) {
@@ -65,8 +71,9 @@ module.exports = {
     });
     c.end();
   },
-  getCalSpecificationDevice: function (req, res) {
-    c.query("SELECT * FROM `cal_specifications` WHERE device_id=?", [req.id], { metadata: true, useArray: true }, function (err, rows) {
+  getTestReportRequest: function (req, res) {
+    const request = ["%" + req.id.toUpperCase() + "%"]
+    c.query("SELECT * FROM `test_reports` WHERE `request_id` LIKE ?", request, { metadata: true, useArray: true }, function (err, rows) {
       if (err) {
         res.status(500).send({ message: "Error 500: Internal Server Error" });
         console.log(err);
@@ -77,11 +84,14 @@ module.exports = {
       rows.forEach(function (items) {
         data.push({
           id: items[0],
-          device_id: items[1],
-          test_item_id: items[2],
-          ppm_output: items[3],
-          floor: items[4],
-          resolution: items[5]
+          request_id: items[1],
+          company_name: items[2],
+          device_name: items[3],
+          brand: items[4],
+          model: items[5],
+          test_reference_id: items[6],
+          created: items[7],
+          file: items[8]
         });
       });
       if (data.length < 1) {
@@ -92,8 +102,9 @@ module.exports = {
     });
     c.end();
   },
-  getCalSpecificationTestItem: function (req, res) {
-    c.query("SELECT * FROM `cal_specifications` WHERE test_item_id=?", [req.id], { metadata: true, useArray: true }, function (err, rows) {
+  getTestReportTestReference: function (req, res) {
+    const request = ["%" + req.id + "%"]
+    c.query("SELECT * FROM `test_reports` WHERE `test_reference_id` LIKE ?", request, { metadata: true, useArray: true }, function (err, rows) {
       if (err) {
         res.status(500).send({ message: "Error 500: Internal Server Error" });
         console.log(err);
@@ -104,11 +115,14 @@ module.exports = {
       rows.forEach(function (items) {
         data.push({
           id: items[0],
-          device_id: items[1],
-          test_item_id: items[2],
-          ppm_output: items[3],
-          floor: items[4],
-          resolution: items[5]
+          request_id: items[1],
+          company_name: items[2],
+          device_name: items[3],
+          brand: items[4],
+          model: items[5],
+          test_reference_id: items[6],
+          created: items[7],
+          file: items[8]
         });
       });
       if (data.length < 1) {
@@ -119,14 +133,13 @@ module.exports = {
     });
     c.end();
   },
-  newCalSpecification: function (req, res) {
-    const waktu = new Date().toISOString();
-    var request = ['M' + new Date(waktu).valueOf().toString(32).toUpperCase(), req.device_id, req.test_item_id, req.ppm_output, req.floor, req.resolution];
+  newTestReport: function (req, res) {
+    var request = [req.id, req.request_id, req.company_name, req.device_name, req.brand, req.model, req.test_reference_id, req.created, req.file];
     if (request.includes(undefined) || request.includes("")) {
       res.send({ message: 'Bad Request: Parameters cannot empty.' });
       return
     }
-    c.query("INSERT INTO `cal_specifications`(`id`, `device_id`, `test_item_id`, `ppm_output`, `floor`, `resolution`) VALUES (?, ?, ?, ?, ?, ?)", request, { metadata: true, useArray: true }, function (err, rows) {
+    c.query("INSERT INTO `test_reports`(`id`, `request_id`, `company_name`, `device_name`, `brand`, `model`, `test_reference_id`, `created`, `file`) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)", request, { metadata: true, useArray: true }, function (err, rows) {
       if (err) {
         res.status(500).send({ message: "Error 500: Internal Server Error" });
         console.log(err);
@@ -136,19 +149,19 @@ module.exports = {
       res.json({
         affectedRows: rows.info.affectedRows,
         err: null,
-        message: "Calibration Specification has registered successfully",
+        message: "Test Report has registered successfully",
         success: true
       });
     });
     c.end();
   },
-  updateCalSpecification: function (req, res) {
-    var request = [req.device_id, req.test_item_id, req.ppm_output, req.floor, req.resolution, req.id];
+  updateTestReport: function (req, res) {
+    var request = [req.body.request_id, req.body.company_name, req.body.device_name, req.body.brand, req.body.model, req.body.test_reference_id, req.body.created, req.body.file, req.params.id];
     if (request.includes(undefined) || request.includes("")) {
       res.send({ message: 'Bad Request: Parameters cannot empty.' });
       return
     }
-    c.query("UPDATE `cal_specifications` SET `device_id`=?, `test_item_id`=?, `ppm_output`=?, `floor`=?, `resolution`=? WHERE `id`=?", request, { metadata: true, useArray: true }, function (err, rows) {
+    c.query("UPDATE `test_reports` SET `request_id`=?, `company_name`=?, `device_name`=?, `brand`=?, `model`=?, `test_reference_id`=?, `created`=?, `file`=? WHERE `id`=?", request, { metadata: true, useArray: true }, function (err, rows) {
       if (err) {
         res.status(500).send({ message: "Error 500: Internal Server Error" });
         console.log(err);
@@ -158,19 +171,19 @@ module.exports = {
       res.json({
         affectedRows: rows.info.affectedRows,
         err: null,
-        message: "Calibration Specification has updated successfully",
+        message: "Test Report has updated successfully",
         success: true
       });
     });
     c.end();
   },
-  deleteCalSpecification: function (req, res) {
+  deleteTestReport: function (req, res) {
     var request = [req.id];
     if (request.includes(undefined) || request.includes("")) {
       res.send({ message: 'Bad Request: Parameters cannot empty.' });
       return
     }
-    c.query("DELETE FROM `cal_specifications` WHERE `id`=?", request, { metadata: true, useArray: true }, function (err, rows) {
+    c.query("DELETE FROM `test_reports` WHERE `id`=?", request, { metadata: true, useArray: true }, function (err, rows) {
       if (err) {
         res.status(500).send({ message: "Error 500: Internal Server Error" });
         console.log(err);
@@ -183,15 +196,15 @@ module.exports = {
         res.json({
           affectedRows: rows.info.affectedRows,
           err: null,
-          message: "Calibration Specification has deleted successfully",
+          message: "Test Report has deleted successfully",
           success: true
         });
       }
     });
     c.end();
   },
-  deleteCalSpecificationAll: function (req, res) {
-    c.query("DELETE FROM `cal_specifications`", null, { metadata: true, useArray: true }, function (err, rows) {
+  deleteTestReportAll: function (req, res) {
+    c.query("DELETE FROM `test_reports`", null, { metadata: true, useArray: true }, function (err, rows) {
       if (err) {
         res.status(500).send({ message: "Error 500: Internal Server Error" });
         console.log(err);
@@ -203,7 +216,7 @@ module.exports = {
       } else {
         res.json({
           affectedRows: rows.info.affectedRows,
-          message: "All Calibration Specification has deleted successfully :[",
+          message: "All Test Report has deleted successfully :[",
           success: true
         });
       }

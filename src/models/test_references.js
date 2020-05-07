@@ -9,10 +9,10 @@ const c = new Client({
 module.exports = {
 
   /////////////////////////////////////////////////////////////////////////////////////////////
-  // CALIBRATION STEP MODELS
+  // TEST REFERENCE MODELS
 
-  getCalStepAll: function (req, res) {
-    c.query("SELECT * FROM `cal_steps`", null, { metadata: true, useArray: true }, function (err, rows) {
+  getTestReferenceAll: function (req, res) {
+    c.query("SELECT * FROM `test_references`", null, { metadata: true, useArray: true }, function (err, rows) {
       if (err) {
         res.status(500).send({ message: "Error 500: Internal Server Error" });
         console.log(err);
@@ -23,11 +23,11 @@ module.exports = {
       rows.forEach(function (items) {
         data.push({
           id: items[0],
-          step_name: items[1],
-          step_number: items[2],
-          info: items[3],
-          created: items[4],
-          updated: items[5]
+          name: items[1],
+          year: items[2],
+          version: items[3],
+          standard_level_id: items[4],
+          file: items[5]
         });
       });
       if (data.length < 1) {
@@ -38,8 +38,8 @@ module.exports = {
     });
     c.end();
   },
-  getCalStep: function (req, res) {
-    c.query("SELECT * FROM `cal_steps` WHERE id=?", [req.id], { metadata: true, useArray: true }, function (err, rows) {
+  getTestReference: function (req, res) {
+    c.query("SELECT * FROM `test_references` WHERE `id`=?", [req.id], { metadata: true, useArray: true }, function (err, rows) {
       if (err) {
         res.status(500).send({ message: "Error 500: Internal Server Error" });
         console.log(err);
@@ -50,11 +50,11 @@ module.exports = {
       rows.forEach(function (items) {
         data.push({
           id: items[0],
-          step_name: items[1],
-          step_number: items[2],
-          info: items[3],
-          created: items[4],
-          updated: items[5]
+          name: items[1],
+          year: items[2],
+          version: items[3],
+          standard_level_id: items[4],
+          file: items[5]
         });
       });
       if (data.length < 1) {
@@ -65,9 +65,9 @@ module.exports = {
     });
     c.end();
   },
-  getCalStepReference: function (req, res) {
-    const request = ["%" + req.id + "%"]
-    c.query("SELECT * FROM `cal_steps` WHERE id LIKE ?", request, { metadata: true, useArray: true }, function (err, rows) {
+  getTestReferenceType: function (req, res) {
+    const request = ["%" + req.id.toUpperCase() + "%"]
+    c.query("SELECT * FROM `test_references` WHERE `standard_level_id` LIKE ?", request, { metadata: true, useArray: true }, function (err, rows) {
       if (err) {
         res.status(500).send({ message: "Error 500: Internal Server Error" });
         console.log(err);
@@ -78,11 +78,11 @@ module.exports = {
       rows.forEach(function (items) {
         data.push({
           id: items[0],
-          step_name: items[1],
-          step_number: items[2],
-          info: items[3],
-          created: items[4],
-          updated: items[5]
+          name: items[1],
+          year: items[2],
+          version: items[3],
+          standard_level_id: items[4],
+          file: items[5]
         });
       });
       if (data.length < 1) {
@@ -93,14 +93,13 @@ module.exports = {
     });
     c.end();
   },
-  newCalStep: function (req, res) {
-    const waktu = new Date().toISOString();
-    var request = [req.id, req.step_name, req.step_number, req.info, waktu, waktu];
+  newTestReference: function (req, res) {
+    var request = [req.id, req.name, req.year, req.version, req.standard_level_id, req.file];
     if (request.includes(undefined) || request.includes("")) {
       res.send({ message: 'Bad Request: Parameters cannot empty.' });
       return
     }
-    c.query("INSERT INTO `cal_steps`(`id`, `step_name`, `step_number`, `created`, `updated`) VALUES (?, ?, ?, ?, ?, ?)", request, { metadata: true, useArray: true }, function (err, rows) {
+    c.query("INSERT INTO `test_references`(`id`, `name`, `year`, `version`, `standard_level_id`, `file`) VALUES (?, ?, ?, ?, ?, ?)", request, { metadata: true, useArray: true }, function (err, rows) {
       if (err) {
         res.status(500).send({ message: "Error 500: Internal Server Error" });
         console.log(err);
@@ -110,20 +109,20 @@ module.exports = {
       res.json({
         affectedRows: rows.info.affectedRows,
         err: null,
-        message: "Calibration Step has registered successfully",
+        message: "Test Reference has registered successfully",
         success: true
       });
     });
     c.end();
   },
-  updateCalStep: function (req, res) {
-    const waktu = new Date().toISOString();
-    var request = [req.step_name, req.step_number, req.info, waktu, req.id];
+  updateTestReference: function (req, res) {
+    var request = [req.body.name, req.body.year, req.body.version, req.body.standard_level_id, req.body.file, req.params.id];
+    console.log(request)
     if (request.includes(undefined) || request.includes("")) {
       res.send({ message: 'Bad Request: Parameters cannot empty.' });
       return
     }
-    c.query("UPDATE `cal_steps` SET `step_name`=?, `step_number`=?, `info`=?, `updated`=? WHERE `id`=?", request, { metadata: true, useArray: true }, function (err, rows) {
+    c.query("UPDATE `test_references` SET `name`=?, `year`=?, `version`=?, `standard_level_id`=?, `file`=? WHERE `id`=?", request, { metadata: true, useArray: true }, function (err, rows) {
       if (err) {
         res.status(500).send({ message: "Error 500: Internal Server Error" });
         console.log(err);
@@ -133,19 +132,19 @@ module.exports = {
       res.json({
         affectedRows: rows.info.affectedRows,
         err: null,
-        message: "Calibration Step has updated successfully",
+        message: "Test Reference has updated successfully",
         success: true
       });
     });
     c.end();
   },
-  deleteCalStep: function (req, res) {
+  deleteTestReference: function (req, res) {
     var request = [req.id];
     if (request.includes(undefined) || request.includes("")) {
       res.send({ message: 'Bad Request: Parameters cannot empty.' });
       return
     }
-    c.query("DELETE FROM `cal_steps` WHERE `id`=?", request, { metadata: true, useArray: true }, function (err, rows) {
+    c.query("DELETE FROM `test_references` WHERE `id`=?", request, { metadata: true, useArray: true }, function (err, rows) {
       if (err) {
         res.status(500).send({ message: "Error 500: Internal Server Error" });
         console.log(err);
@@ -158,15 +157,15 @@ module.exports = {
         res.json({
           affectedRows: rows.info.affectedRows,
           err: null,
-          message: "Calibration Step has deleted successfully",
+          message: "Test Reference has deleted successfully",
           success: true
         });
       }
     });
     c.end();
   },
-  deleteCalStepAll: function (req, res) {
-    c.query("DELETE FROM `cal_steps`", null, { metadata: true, useArray: true }, function (err, rows) {
+  deleteTestReferenceAll: function (req, res) {
+    c.query("DELETE FROM `test_references`", null, { metadata: true, useArray: true }, function (err, rows) {
       if (err) {
         res.status(500).send({ message: "Error 500: Internal Server Error" });
         console.log(err);
@@ -178,7 +177,7 @@ module.exports = {
       } else {
         res.json({
           affectedRows: rows.info.affectedRows,
-          message: "All Calibration Step has deleted successfully :[",
+          message: "All Test Reference has deleted successfully :[",
           success: true
         });
       }

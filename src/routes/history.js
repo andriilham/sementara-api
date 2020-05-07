@@ -24,12 +24,12 @@ router.get('/reference/:id', jwtMW, (req, res) => {
   db.getHistoryReference(req.params, res)
 })
 
-router.get('/engineers/:id', jwtMW, (req, res) => {
-  db.getHistoryEngineer(req.params, res)
+router.get('/user/:id', jwtMW, (req, res) => {
+  db.getHistoryUser(req.params, res)
 })
 
-router.get('/cal_steps/:id', jwtMW, (req, res) => {
-  db.getHistoryCalStep(req.params, res)
+router.get('/step/:id', jwtMW, (req, res) => {
+  db.getHistoryStep(req.params, res)
 })
 
 router.get('/request_step/:id', (req, res) => {

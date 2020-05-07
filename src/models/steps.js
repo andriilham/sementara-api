@@ -9,10 +9,10 @@ const c = new Client({
 module.exports = {
 
   /////////////////////////////////////////////////////////////////////////////////////////////
-  // CALIBRATION CERTIFICATE MODELS
+  // STEP MODELS
 
-  getProcedureAll: function (req, res) {
-    c.query("SELECT * FROM `procedures`", null, { metadata: true, useArray: true }, function (err, rows) {
+  getStepAll: function (req, res) {
+    c.query("SELECT * FROM `steps`", null, { metadata: true, useArray: true }, function (err, rows) {
       if (err) {
         res.status(500).send({ message: "Error 500: Internal Server Error" });
         console.log(err);
@@ -24,10 +24,10 @@ module.exports = {
         data.push({
           id: items[0],
           name: items[1],
-          effective_date: items[2],
-          pic: items[3],
-          version: items[4],
-          file: items[5]
+          step_number: items[2],
+          info: items[3],
+          created: items[4],
+          updated: items[5]
         });
       });
       if (data.length < 1) {
@@ -38,8 +38,8 @@ module.exports = {
     });
     c.end();
   },
-  getProcedure: function (req, res) {
-    c.query("SELECT * FROM `procedures` WHERE `id`=?", [req.id], { metadata: true, useArray: true }, function (err, rows) {
+  getStep: function (req, res) {
+    c.query("SELECT * FROM `steps` WHERE id=?", [req.id], { metadata: true, useArray: true }, function (err, rows) {
       if (err) {
         res.status(500).send({ message: "Error 500: Internal Server Error" });
         console.log(err);
@@ -51,10 +51,10 @@ module.exports = {
         data.push({
           id: items[0],
           name: items[1],
-          effective_date: items[2],
-          pic: items[3],
-          version: items[4],
-          file: items[5]
+          step_number: items[2],
+          info: items[3],
+          created: items[4],
+          updated: items[5]
         });
       });
       if (data.length < 1) {
@@ -65,37 +65,9 @@ module.exports = {
     });
     c.end();
   },
-  getProcedureType: function (req, res) {
-    const request = ["%" + req.id.toUpperCase() + "%"]
-    c.query("SELECT * FROM `procedures` WHERE `id` LIKE ?", request, { metadata: true, useArray: true }, function (err, rows) {
-      if (err) {
-        res.status(500).send({ message: "Error 500: Internal Server Error" });
-        console.log(err);
-        return
-      }
-
-      var data = [];
-      rows.forEach(function (items) {
-        data.push({
-          id: items[0],
-          name: items[1],
-          effective_date: items[2],
-          pic: items[3],
-          version: items[4],
-          file: items[5]
-        });
-      });
-      if (data.length < 1) {
-        res.status(404).send({ message: 'Data not found.' });
-      } else {
-        res.json(data);
-      }
-    });
-    c.end();
-  },
-  getProcedurePIC: function (req, res) {
+  getStepReference: function (req, res) {
     const request = ["%" + req.id + "%"]
-    c.query("SELECT * FROM `procedures` WHERE `pic` LIKE ?", request, { metadata: true, useArray: true }, function (err, rows) {
+    c.query("SELECT * FROM `steps` WHERE id LIKE ?", request, { metadata: true, useArray: true }, function (err, rows) {
       if (err) {
         res.status(500).send({ message: "Error 500: Internal Server Error" });
         console.log(err);
@@ -107,10 +79,10 @@ module.exports = {
         data.push({
           id: items[0],
           name: items[1],
-          effective_date: items[2],
-          pic: items[3],
-          version: items[4],
-          file: items[5]
+          step_number: items[2],
+          info: items[3],
+          created: items[4],
+          updated: items[5]
         });
       });
       if (data.length < 1) {
@@ -121,13 +93,14 @@ module.exports = {
     });
     c.end();
   },
-  newProcedure: function (req, res) {
-    var request = [req.id, req.name, req.effective_date, req.pic, req.version, req.file];
+  newStep: function (req, res) {
+    const waktu = new Date().toISOString();
+    var request = [req.id, req.name, req.step_number, req.info, waktu, waktu];
     if (request.includes(undefined) || request.includes("")) {
       res.send({ message: 'Bad Request: Parameters cannot empty.' });
       return
     }
-    c.query("INSERT INTO `procedures`(`id`, `name`, `effective_date`, `pic`, `version`, `file`) VALUES (?, ?, ?, ?, ?, ?)", request, { metadata: true, useArray: true }, function (err, rows) {
+    c.query("INSERT INTO `steps`(`id`, `name`, `step_number`, `created`, `updated`) VALUES (?, ?, ?, ?, ?, ?)", request, { metadata: true, useArray: true }, function (err, rows) {
       if (err) {
         res.status(500).send({ message: "Error 500: Internal Server Error" });
         console.log(err);
@@ -137,20 +110,20 @@ module.exports = {
       res.json({
         affectedRows: rows.info.affectedRows,
         err: null,
-        message: "Document has registered successfully",
+        message: "Step has registered successfully",
         success: true
       });
     });
     c.end();
   },
-  updateProcedure: function (req, res) {
-    var request = [req.name, req.effective_date, req.pic, req.version, req.file, req.id];
-    console.log(request)
+  updateStep: function (req, res) {
+    const waktu = new Date().toISOString();
+    var request = [req.name, req.step_number, req.info, waktu, req.id];
     if (request.includes(undefined) || request.includes("")) {
       res.send({ message: 'Bad Request: Parameters cannot empty.' });
       return
     }
-    c.query("UPDATE `procedures` SET `name`=?, `effective_date`=?, `pic`=?, `version`=?, `file`=? WHERE `id`=?", request, { metadata: true, useArray: true }, function (err, rows) {
+    c.query("UPDATE `steps` SET `name`=?, `step_number`=?, `info`=?, `updated`=? WHERE `id`=?", request, { metadata: true, useArray: true }, function (err, rows) {
       if (err) {
         res.status(500).send({ message: "Error 500: Internal Server Error" });
         console.log(err);
@@ -160,19 +133,19 @@ module.exports = {
       res.json({
         affectedRows: rows.info.affectedRows,
         err: null,
-        message: "Document has updated successfully",
+        message: "Step has updated successfully",
         success: true
       });
     });
     c.end();
   },
-  deleteProcedure: function (req, res) {
+  deleteStep: function (req, res) {
     var request = [req.id];
     if (request.includes(undefined) || request.includes("")) {
       res.send({ message: 'Bad Request: Parameters cannot empty.' });
       return
     }
-    c.query("DELETE FROM `procedures` WHERE `id`=?", request, { metadata: true, useArray: true }, function (err, rows) {
+    c.query("DELETE FROM `steps` WHERE `id`=?", request, { metadata: true, useArray: true }, function (err, rows) {
       if (err) {
         res.status(500).send({ message: "Error 500: Internal Server Error" });
         console.log(err);
@@ -185,15 +158,15 @@ module.exports = {
         res.json({
           affectedRows: rows.info.affectedRows,
           err: null,
-          message: "Document has deleted successfully",
+          message: "Step has deleted successfully",
           success: true
         });
       }
     });
     c.end();
   },
-  deleteProcedureAll: function (req, res) {
-    c.query("DELETE FROM `procedures`", null, { metadata: true, useArray: true }, function (err, rows) {
+  deleteStepAll: function (req, res) {
+    c.query("DELETE FROM `steps`", null, { metadata: true, useArray: true }, function (err, rows) {
       if (err) {
         res.status(500).send({ message: "Error 500: Internal Server Error" });
         console.log(err);
@@ -205,7 +178,7 @@ module.exports = {
       } else {
         res.json({
           affectedRows: rows.info.affectedRows,
-          message: "All Document has deleted successfully :[",
+          message: "All Step has deleted successfully :[",
           success: true
         });
       }
