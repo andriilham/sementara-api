@@ -8,7 +8,9 @@ const jwtMW = exjwt({
 });
 
 const accounts = require('./accounts')
+const archives = require('./archives')
 const certificates = require('./certificates')
+const dide = require('./dide')
 const forms = require('./forms')
 const history = require('./history')
 const quality_manuals = require('./quality_manuals')
@@ -25,7 +27,9 @@ const users = require('./users')
 // API Routes
 
 router.use('/accounts', accounts)
+router.use('/archives', archives)
 router.use('/certificates', certificates)
+router.use('/dide', dide)
 router.use('/forms', forms)
 router.use('/history', history)
 router.use('/quality_manuals', quality_manuals)

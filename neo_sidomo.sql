@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: May 04, 2020 at 05:07 PM
+-- Generation Time: May 09, 2020 at 06:51 PM
 -- Server version: 10.1.30-MariaDB
 -- PHP Version: 5.6.33
 
@@ -19,181 +19,52 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `neo_sidomo`
+-- Database: `neo_sidomo_prod`
 --
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `cal_certificates`
+-- Table structure for table `archives`
 --
 
-CREATE TABLE `cal_certificates` (
-  `id` varchar(24) NOT NULL,
-  `device_id` varchar(24) NOT NULL,
-  `calibration_date` varchar(24) NOT NULL,
-  `due_date` varchar(24) NOT NULL,
-  `test_engineer_id` varchar(11) NOT NULL,
-  `certificate_file` text
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
---
--- Dumping data for table `cal_certificates`
---
-
-INSERT INTO `cal_certificates` (`id`, `device_id`, `calibration_date`, `due_date`, `test_engineer_id`, `certificate_file`) VALUES
-('001-KAL-19', '137/CAL', '2019-09-24', '2021-09-24', '970037', 'test.pdf'),
-('001-KAL-20', '006/CAL', '2020-02-03', '2021-02-03', '970037', 'certificate_file_1580665068554_DKI Jakarta.pdf'),
-('002-KAL-19', '194/CAL', '2019-09-25', '2021-09-25', '970037', 'test.pdf'),
-('003-KAL-19', '103/CAL', '2019-09-26', '2021-09-26', '970037', 'test.pdf'),
-('004-KAL-19', '101/CAL', '2019-09-27', '2021-09-27', '970037', 'test.pdf'),
-('005-KAL-19', '100/CAL', '2019-09-28', '2021-09-28', '970037', 'test.pdf'),
-('006-KAL-19', '097/CAL', '2019-09-29', '2021-09-29', '970037', 'test.pdf'),
-('007-KAL-19', '096/CAL', '2019-09-30', '2021-09-30', '970037', 'test.pdf'),
-('008-KAL-19', '091/CAL', '2019-10-03', '2021-10-03', '970037', 'test.pdf'),
-('009-KAL-19', '136/TRA', '2019-10-01', '2021-10-01', '970037', 'test.pdf'),
-('011-KAL-19', '095/CAL', '2019-10-04', '2021-10-04', '970037', 'test.pdf'),
-('048-KAL-19', '086/CAL', '2019-11-10', '2021-11-10', '970037', 'test.pdf'),
-('049-KAL-19', '129/CAL', '2019-11-11', '2021-11-11', '970037', 'test.pdf'),
-('050-KAL-19', '130/CAL', '2019-11-12', '2021-11-12', '970037', 'test.pdf'),
-('051-KAL-19', '109/CAL', '2019-11-13', '2021-11-13', '970037', 'test.pdf'),
-('052-KAL-19', '121/CAL', '2019-11-14', '2021-11-14', '970037', 'test.pdf'),
-('053-KAL-19', '119/CAL', '2019-11-15', '2021-11-15', '970037', 'test.pdf'),
-('054-KAL-19', '037/CAL', '2019-11-16', '2021-11-16', '970037', 'test.pdf'),
-('055-KAL-19', '099/ENE', '2019-11-17', '2021-11-17', '970037', 'test.pdf'),
-('056-KAL-19', '018/ENE', '2019-11-18', '2021-11-18', '970037', 'test.pdf'),
-('057-KAL-19', '180/CAL', '2019-11-19', '2021-11-19', '970037', 'test.pdf'),
-('058-KAL-19', '006/CAL', '2019-11-20', '2021-11-20', '970037', 'test.pdf'),
-('059-KAL-19', '133/CAL', '2019-11-21', '2021-11-21', '970037', 'test.pdf'),
-('060-KAL-19', '062/CAB', '2019-11-22', '2021-11-22', '970037', 'test.pdf'),
-('061-KAL-19', '092/CAB', '2019-11-23', '2021-11-23', '970037', 'test.pdf'),
-('062-KAL-19', '093/CAB', '2019-11-24', '2021-11-24', '970037', 'test.pdf'),
-('063-KAL-19', '069/CAB', '2019-11-25', '2021-11-25', '970037', 'test.pdf'),
-('064-KAL-19', '023/CAB', '2019-11-26', '2021-11-26', '970037', 'test.pdf'),
-('132/KAB/L/QA/2020', '022/132/QA/2020', '2019-08-21', '2019-09-13', '970037', 'certificate_file_1584900013909_KSO DIRECT BURIED 4 - 96 CORE G.655.C English final.pdf');
-
--- --------------------------------------------------------
-
---
--- Table structure for table `cal_requests`
---
-
-CREATE TABLE `cal_requests` (
-  `id` varchar(15) NOT NULL,
-  `lab` varchar(3) NOT NULL,
-  `request_type` varchar(3) NOT NULL,
-  `device_name` text NOT NULL,
-  `manufacturer` text NOT NULL,
-  `model` text NOT NULL,
-  `serial_number` text NOT NULL,
-  `capacity` text NOT NULL,
-  `made_in` varchar(24) NOT NULL,
-  `test_reference` text NOT NULL,
-  `company_name` text NOT NULL,
-  `company_address` text NOT NULL,
-  `created` varchar(24) NOT NULL,
-  `start_target` varchar(24) NOT NULL,
-  `finished_target` varchar(24) NOT NULL,
-  `actual_start` varchar(24) NOT NULL,
-  `actual_finished` varchar(24) NOT NULL,
-  `engineer_1` varchar(11) NOT NULL,
-  `engineer_2` varchar(11) NOT NULL,
-  `engineer_3` varchar(11) NOT NULL,
-  `documentation` text NOT NULL,
-  `status` varchar(3) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
---
--- Dumping data for table `cal_requests`
---
-
-INSERT INTO `cal_requests` (`id`, `lab`, `request_type`, `device_name`, `manufacturer`, `model`, `serial_number`, `capacity`, `made_in`, `test_reference`, `company_name`, `company_address`, `created`, `start_target`, `finished_target`, `actual_start`, `actual_finished`, `engineer_1`, `engineer_2`, `engineer_3`, `documentation`, `status`) VALUES
-('022/132/QA/2020', 'CAB', 'QA', 'KABEL SERAT OPTIK SINGLE MODE BERKONSTRUKSI LOOSE TUBE UNTUK APLIKASI TANAM LANGSUNG (KSO DIRECT BURIED)', 'VOKSEL', 'NZDS C LF B WG LT ( G 655 C ) ', '', '4 to 96 CORE', 'Indonesia', 'STEL K-016-2013 Ver. 3.0', 'VOKSEL ELECTRIC, Tbk. PT.', 'JL. RAYA NAROGONG KM.16, CILEUNGSI, BOGOR\r\n', '2020-03-18', '2020-03-18', '2020-04-08', '2020-03-20', '2020-04-10', '970037', '970000', '201902060', 'test.jpg', '1'),
-('a', '', '', 'ab', 'a', 'a', '', '', '', '', 'a', 'a', '2020-03-26', '2020-03-26', '2020-04-02', '2020-03-27', '', '970037', '', '', 'test.jpg', '1');
-
--- --------------------------------------------------------
-
---
--- Table structure for table `cal_steps`
---
-
-CREATE TABLE `cal_steps` (
-  `id` varchar(11) NOT NULL,
-  `step_name` text NOT NULL,
-  `step_number` int(5) NOT NULL,
+CREATE TABLE `archives` (
+  `id` varchar(20) NOT NULL,
+  `name` text NOT NULL,
+  `year` int(4) NOT NULL,
   `info` text NOT NULL,
-  `created` varchar(24) NOT NULL,
-  `updated` varchar(24) NOT NULL
+  `standard_level_id` varchar(20) NOT NULL,
+  `file` text NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+-- --------------------------------------------------------
+
 --
--- Dumping data for table `cal_steps`
+-- Table structure for table `certificates`
 --
 
-INSERT INTO `cal_steps` (`id`, `step_name`, `step_number`, `info`, `created`, `updated`) VALUES
-('CER1', 'Add', 0, 'has add the record', '2020-04-19T15:40:53.729Z', '2020-04-19T15:40:53.729Z'),
-('CER2', 'Edit', 0, 'has edit the record', '2020-04-19T15:40:53.729Z', '2020-04-19T15:40:53.729Z'),
-('CER3', 'Delete', 0, 'has delete the record', '2020-04-19T15:40:53.729Z', '2020-04-19T15:40:53.729Z'),
-('DEV1', 'Add', 0, 'has add the record', '2020-04-19T15:40:53.729Z', '2020-04-19T15:40:53.729Z'),
-('DEV2', 'Edit', 0, 'has edit the record', '2020-04-19T15:40:53.729Z', '2020-04-19T15:40:53.729Z'),
-('DEV3', 'Delete', 0, 'has delete the record', '2020-04-19T15:40:53.729Z', '2020-04-19T15:40:53.729Z'),
-('DEV4', 'Documentation', 0, 'has add a device documentation', '2020-04-19T15:40:53.729Z', '2020-04-19T15:40:53.729Z'),
-('DEV5', 'Manual', 0, 'has add a device manual', '2020-04-19T15:40:53.729Z', '2020-04-19T15:40:53.729Z'),
-('DEV6', 'Specification', 0, 'has add a device specification', '2020-04-19T15:40:53.729Z', '2020-04-19T15:40:53.729Z'),
-('ENG1', 'Add', 0, 'has add the record', '2020-04-19T15:40:53.729Z', '2020-04-19T15:40:53.729Z'),
-('ENG2', 'Edit', 0, 'has edit the record', '2020-04-19T15:40:53.729Z', '2020-04-19T15:40:53.729Z'),
-('ENG3', 'Delete', 0, 'has delete the record', '2020-04-19T15:40:53.729Z', '2020-04-19T15:40:53.729Z'),
-('FRM1', 'Add', 0, 'has add the record', '2020-04-19T15:40:53.729Z', '2020-04-19T15:40:53.729Z'),
-('FRM2', 'Edit', 0, 'has edit the record', '2020-04-19T15:40:53.729Z', '2020-04-19T15:40:53.729Z'),
-('FRM3', 'Delete', 0, 'has delete the record', '2020-04-19T15:40:53.729Z', '2020-04-19T15:40:53.729Z'),
-('MEQ1', 'Add', 0, 'has add the record', '2020-04-19T15:40:53.729Z', '2020-04-19T15:40:53.729Z'),
-('MEQ2', 'Edit', 0, 'has edit the record', '2020-04-19T15:40:53.729Z', '2020-04-19T15:40:53.729Z'),
-('MEQ3', 'Delete', 0, 'has delete the record', '2020-04-19T15:40:53.729Z', '2020-04-19T15:40:53.729Z'),
-('PRO1', 'Add', 0, 'has add the record', '2020-04-19T15:40:53.729Z', '2020-04-19T15:40:53.729Z'),
-('PRO2', 'Edit', 0, 'has edit the record', '2020-04-19T15:40:53.729Z', '2020-04-19T15:40:53.729Z'),
-('PRO3', 'Delete', 0, 'has delete the record', '2020-04-19T15:40:53.729Z', '2020-04-19T15:40:53.729Z'),
-('RAW1', 'Add', 0, 'has add the record', '2020-04-19T15:40:53.729Z', '2020-04-19T15:40:53.729Z'),
-('RAW2', 'Edit', 0, 'has edit the record', '2020-04-19T15:40:53.729Z', '2020-04-19T15:40:53.729Z'),
-('RAW3', 'Delete', 0, 'has delete the record', '2020-04-19T15:40:53.729Z', '2020-04-19T15:40:53.729Z'),
-('REQ1', 'Add', 1, 'has add the record', '2020-04-19T15:40:53.729Z', '2020-04-19T15:40:53.729Z'),
-('REQ2', 'Edit', 0, 'has edit the record', '2020-04-19T15:40:53.729Z', '2020-04-19T15:40:53.729Z'),
-('REQ3', 'Delete', 0, 'has delete the record', '2020-04-19T15:40:53.729Z', '2020-04-19T15:40:53.729Z'),
-('REQ4', 'Documentation', 0, 'has add a device documentation', '2020-04-19T15:40:53.729Z', '2020-04-19T15:40:53.729Z'),
-('REQCAL1', 'Registered', 1, 'has change the request status to REGISTERED', '2020-04-19T15:40:53.729Z', '2020-04-19T15:40:53.729Z'),
-('REQCAL2', 'Function Test', 2, 'has change the request status to FUNCTION TEST', '2020-04-19T15:40:53.729Z', '2020-04-19T15:40:53.729Z'),
-('REQCAL3', 'Calibrating', 3, 'has change the request status to CALIBRATING', '2020-04-19T15:40:53.729Z', '2020-04-19T15:40:53.729Z'),
-('REQCAL4', 'Submitted', 4, 'has change the request status to SUBMITTED', '2020-04-19T15:40:53.729Z', '2020-04-19T15:40:53.729Z'),
-('REQCAL5', 'Finished', 5, 'has change the request status to FINISHED', '2020-04-19T15:40:53.729Z', '2020-04-19T15:40:53.729Z'),
-('REQQA1', 'Registered', 1, 'has change the request status to REGISTERED', '2020-04-19T15:40:53.729Z', '2020-04-19T15:40:53.729Z'),
-('REQQA2', 'Function Test', 2, 'has change the request status to FUNCTION TEST', '2020-04-19T15:40:53.729Z', '2020-04-19T15:40:53.729Z'),
-('REQQA3', 'QA Test', 3, 'has change the request status to QA TEST', '2020-04-19T15:40:53.729Z', '2020-04-19T15:40:53.729Z'),
-('REQQA4', 'Submitted', 4, 'has change the request status to SUBMITTED', '2020-04-19T15:40:53.729Z', '2020-04-19T15:40:53.729Z'),
-('REQQA5', 'Finished', 5, 'has change the request status to FINISHED', '2020-04-19T15:40:53.729Z', '2020-04-19T15:40:53.729Z'),
-('REQTA1', 'Registered', 1, 'has change the request status to REGISTERED', '2020-04-19T15:40:53.729Z', '2020-04-19T15:40:53.729Z'),
-('REQTA2', 'Function Test', 2, 'has change the request status to FUNCTION TEST', '2020-04-19T15:40:53.729Z', '2020-04-19T15:40:53.729Z'),
-('REQTA3', 'TA Test', 3, 'has change the request status to TA TEST', '2020-04-19T15:40:53.729Z', '2020-04-19T15:40:53.729Z'),
-('REQTA4', 'Submitted', 4, 'has change the request status to SUBMITTED', '2020-04-19T15:40:53.729Z', '2020-04-19T15:40:53.729Z'),
-('REQTA5', 'Finished', 5, 'has change the request status to FINISHED', '2020-04-19T15:40:53.729Z', '2020-04-19T15:40:53.729Z'),
-('REQVT1', 'Registered', 1, 'has change the request status to REGISTERED', '2020-04-19T15:40:53.729Z', '2020-04-19T15:40:53.729Z'),
-('REQVT2', 'Function Test', 2, 'has change the request status to FUNCTION TEST', '2020-04-19T15:40:53.729Z', '2020-04-19T15:40:53.729Z'),
-('REQVT3', 'VT Test', 3, 'has change the request status to VT TEST', '2020-04-19T15:40:53.729Z', '2020-04-19T15:40:53.729Z'),
-('REQVT4', 'Submitted', 4, 'has change the request status to SUBMITTED', '2020-04-19T15:40:53.729Z', '2020-04-19T15:40:53.729Z'),
-('REQVT5', 'Finished', 5, 'has change the request status to FINISHED', '2020-04-19T15:40:53.729Z', '2020-04-19T15:40:53.729Z'),
-('RES1', 'Add', 0, 'has add the record', '2020-04-19T15:40:53.729Z', '2020-04-19T15:40:53.729Z'),
-('RES2', 'Edit', 0, 'has edit the record', '2020-04-19T15:40:53.729Z', '2020-04-19T15:40:53.729Z'),
-('RES3', 'Delete', 0, 'has delete the record', '2020-04-19T15:40:53.729Z', '2020-04-19T15:40:53.729Z'),
-('SPC1', 'Add', 0, 'has add the record', '2020-04-19T15:40:53.729Z', '2020-04-19T15:40:53.729Z'),
-('SPC2', 'Edit', 0, 'has edit the record', '2020-04-19T15:40:53.729Z', '2020-04-19T15:40:53.729Z'),
-('SPC3', 'Delete', 0, 'has delete the record', '2020-04-19T15:40:53.729Z', '2020-04-19T15:40:53.729Z'),
-('TIM1', 'Add', 0, 'has add the record', '2020-04-19T15:40:53.729Z', '2020-04-19T15:40:53.729Z'),
-('TIM2', 'Edit', 0, 'has edit the record', '2020-04-19T15:40:53.729Z', '2020-04-19T15:40:53.729Z'),
-('TIM3', 'Delete', 0, 'has delete the record', '2020-04-19T15:40:53.729Z', '2020-04-19T15:40:53.729Z'),
-('TTY1', 'Add', 0, 'has add the record', '2020-04-19T15:40:53.729Z', '2020-04-19T15:40:53.729Z'),
-('TTY2', 'Edit', 0, 'has edit the record', '2020-04-19T15:40:53.729Z', '2020-04-19T15:40:53.729Z'),
-('TTY3', 'Delete', 0, 'has delete the record', '2020-04-19T15:40:53.729Z', '2020-04-19T15:40:53.729Z'),
-('UNC1', 'Add', 0, 'has add the record', '2020-04-19T15:40:53.729Z', '2020-04-19T15:40:53.729Z'),
-('UNC2', 'Edit', 0, 'has edit the record', '2020-04-19T15:40:53.729Z', '2020-04-19T15:40:53.729Z'),
-('UNC3', 'Delete', 0, 'has delete the record', '2020-04-19T15:40:53.729Z', '2020-04-19T15:40:53.729Z');
+CREATE TABLE `certificates` (
+  `id` varchar(20) NOT NULL,
+  `test_report_id` varchar(24) NOT NULL,
+  `effective_date` varchar(24) NOT NULL,
+  `created` varchar(24) NOT NULL,
+  `file` text NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `dide`
+--
+
+CREATE TABLE `dide` (
+  `id` varchar(20) NOT NULL,
+  `name` text NOT NULL,
+  `edition` text NOT NULL,
+  `publisher` text NOT NULL,
+  `doc_location` text NOT NULL,
+  `standard_level_id` varchar(20) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
@@ -202,10 +73,81 @@ INSERT INTO `cal_steps` (`id`, `step_name`, `step_number`, `info`, `created`, `u
 --
 
 CREATE TABLE `forms` (
-  `id` varchar(11) NOT NULL,
-  `form_name` text NOT NULL,
-  `file` text NOT NULL
+  `id` varchar(20) NOT NULL,
+  `name` text,
+  `effective_date` varchar(24) NOT NULL,
+  `pic` varchar(20) NOT NULL,
+  `version` varchar(10) NOT NULL,
+  `file_pdf` text,
+  `file_doc` text,
+  `file_xls` text
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `forms`
+--
+
+INSERT INTO `forms` (`id`, `name`, `effective_date`, `pic`, `version`, `file_pdf`, `file_doc`, `file_xls`) VALUES
+('TLKM01/F/001', 'Form Pengendalian Dokumen SMM (PDS) - Panduan Mutu dan Prosedur', '2019-05-06', 'ias', '1', '', '', ''),
+('TLKM01/F/002', 'Form Pengendalian Dokumen SMM (PDS) - Dokumen Pendukung', '2019-05-07', 'ias', '1', '', '', ''),
+('TLKM01/F/003', 'Log Pengendalian Dokumen SMM', '2019-05-08', 'ias', '1', '', '', ''),
+('TLKM01/F/004', 'Daftar Induk Dokumen SMM (DIDS)', '2019-05-09', 'ias', '1', '', '', ''),
+('TLKM01/F/005', 'Daftar Induk Dokumen Eksternal (DIDE)', '2019-05-10', 'ias', '1', '', '', ''),
+('TLKM01/F/006', 'Daftar Dokumen Usang (DDU)', '2019-05-11', 'ias', '1', '', '', ''),
+('TLKM01/F/007', 'Form Pemusnahan Dokumen Usang (PDU)', '2019-05-12', 'ias', '1', '', '', ''),
+('TLKM01/F/008', 'Form Notifikasi Dokumen SMM (NDS)', '2019-05-13', 'ias', '1', '', '', ''),
+('TLKM01/F/009', 'Form Program Kaji Ulang Dokumen SMM', '2019-05-14', 'ias', '1', '', '', ''),
+('TLKM01/F/010', 'Form Kaji Ulang Dokumen SMM', '2019-05-15', 'ias', '1', '', '', ''),
+('TLKM01/F/011', 'Daftar Induk Dokumen Internal (DIDI)', '2019-05-16', 'ias', '1', '', '', ''),
+('TLKM02/F/001', 'Form Permohonan Uji Mutu - Quality Assurance (QA)', '2019-05-17', 'urel', '1', '', '', ''),
+('TLKM02/F/002', 'Form Permohonan Uji Tipe - Type Approval (TA)', '2019-05-18', 'urel', '1', '', '', ''),
+('TLKM02/F/003', 'Form Permohonan Uji Pesan - Voluntary Test (VT)', '2019-05-19', 'urel', '1', '', '', ''),
+('TLKM02/F/004', 'Form Permohonan Uji Kalibrasi', '2019-05-20', 'urel', '1', '', '', ''),
+('TLKM02/F/005', 'Form Laporan Uji Fungsi', '2019-05-21', 'urel', '1', '', '', ''),
+('TLKM02/F/006', 'Form Kontrak Pengujian', '2019-05-22', 'urel', '1', '', '', ''),
+('TLKM02/F/007', 'Form Kontrak Uji Lokasi Dalam Negeri  ', '2019-05-23', 'urel', '1', '', '', ''),
+('TLKM02/F/008', 'Form Technical Meeting Uji Lokasi Dalam Negeri', '2019-05-24', 'urel', '1', '', '', ''),
+('TLKM03/F/001', 'Daftar Subkontrak Laboratorium (DSKL)', '2019-05-25', 'urel', '1', '', '', ''),
+('TLKM03/F/002', 'Form Evaluasi Penyedia Produk dan Layanan Eksternal\'', '2019-05-26', 'urel', '1', '', '', ''),
+('TLKM03/F/003', 'Surat Pengantar Pengujian Perangkat (SP3) kepada Laboratorium Subkontrak', '2019-05-27', 'urel', '1', '', '', ''),
+('TLKM04/F/001', 'Form Penanganan Keluhan Pelanggan', '2019-05-28', 'urel', '1', '', '', ''),
+('TLKM04/F/002', 'Form Daftar Keluhan Pelanggan', '2019-05-29', 'urel', '1', '', '', ''),
+('TLKM05/F/001', 'Form Survei Kepuasan Pelanggan Internal', '2019-05-30', 'urel', '1', '', '', ''),
+('TLKM05/F/002', 'Form Survei Kepuasan Pelanggan Eksternal', '2019-05-31', 'urel', '1', '', '', ''),
+('TLKM06/F/001', 'Form Data Hasil Uji', '2019-06-01', 'dev,ene,kab,tra', '1', '', '', ''),
+('TLKM06/F/002', 'Form Data Hasil Pengukuran Kalibrasi', '2019-06-02', 'kal', '1', '', '', ''),
+('TLKM06/F/003', 'QA Laboratory Test Report - Quality Assurance (QA)', '2019-06-03', 'dev,ene,kab,tra', '1', '', '', ''),
+('TLKM06/F/004', 'QA Laboratory Test Report - Type Approval (TA)', '2019-06-04', 'dev,ene,kab,tra', '1', '', '', ''),
+('TLKM06/F/005', 'QA Laboratory Test Report - Voluntary Test (VT)', '2019-06-05', 'dev,ene,kab,tra', '1', '', '', ''),
+('TLKM06/F/006', 'Form Sertifikat Uji Quality Assurance', '2019-06-06', 'dev,ene,kab,tra', '1', '', '', ''),
+('TLKM06/F/007', 'Form Sertifikat Kalibrasi', '2019-06-07', 'kal', '1', '', '', ''),
+('TLKM06/F/008', 'Form Daftar Alat Ukur', '2019-06-08', 'dev,ene,kab,tra,kal', '1', '', '', ''),
+('TLKM06/F/009', 'Form Staff Confidentiality Declaration', '2019-06-09', '*', '1', '', '', ''),
+('TLKM06/F/010', 'Form Environment Data Record', '2019-06-10', 'dev,ene,kab,tra,kal', '1', '', '', ''),
+('TLKM06/F/011', 'Form Surat Keterangan Membawa Barang', '2019-06-11', 'dev,ene,kab,tra,kal', '1', '', '', ''),
+('TLKM06/F/012', 'Form Hasil Pemeriksaan Alat Ukur', '2019-06-12', 'dev,ene,kab,tra,kal', '1', '', '', ''),
+('TLKM06/F/013', 'Form Test Software Record', '2019-06-13', 'dev,ene,kab,tra,kal', '1', '', '', ''),
+('TLKM06/F/014', 'Form Laporan EMC', '2019-06-14', 'tra,dev', '1', '', '', ''),
+('TLKM07/F/001', 'Laporan Ketidaksesuaian/Potensi Ketidaksesuaian (LKPK)', '2019-06-15', '*', '1', '', '', ''),
+('TLKM07/F/002', 'Log Laporan Ketidaksesuaian/Potensi Ketidaksesuaian (Log LKPK)', '2019-06-16', '*', '1', '', '', ''),
+('TLKM08/F/001', 'Form Rencana dan Realisasi Uji Profisiensi/Uji Bandung Antar Laboratorium', '2019-06-17', 'dev,ene,kab,tra,kal', '1', '', '', ''),
+('TLKM09/F/001', 'Form Program Audit Internal', '2019-06-18', '*', '1', '', '', ''),
+('TLKM09/F/002', 'Daftar Periksa Audit Internal', '2019-06-19', '*', '1', '', '', ''),
+('TLKM09/F/003', 'Daftar Auditor Internal', '2019-06-20', '*', '1', '', '', ''),
+('TLKM09/F/004', 'Laporan Audit Internal', '2019-06-21', '*', '1', '', '', ''),
+('TLKM10/F/001', 'Form Program Tinjauan Manajemen', '2019-06-22', 'ias', '1', '', '', ''),
+('TLKM10/F/002', 'Form Tinjauan Manajemen', '2019-06-23', 'ias', '1', '', '', ''),
+('TLKM11/F/001', 'Matrix of Test Engineer Capability and Standard Relating WI', '2019-06-24', 'dev,ene,kab,tra,kal', '1', '', '', ''),
+('TLKM11/F/002', 'Form Staff-Equipment Autorized Matrix Form', '2019-06-25', 'dev,ene,kab,tra,kal', '1', '', '', ''),
+('TLKM11/F/003', 'Form Training Record', '2019-06-26', '*', '1', '', '', ''),
+('TLKM12/F/001', 'Form ID Tag', '2019-06-27', 'urel', '1', '', '', ''),
+('TLKM12/F/002', 'Form Bukti Penerimaan & Pengeluaran Perangkat Uji', '2019-06-28', 'urel', '1', '', '', ''),
+('TLKM13/F/001', 'Form Pengecekan Antara', '2019-06-29', 'dev,ene,kab,tra,kal', '1', '', '', ''),
+('TLKM13/F/002', 'Jadwal Pengecekan Antara', '2019-06-30', 'dev,ene,kab,tra,kal', '1', '', '', ''),
+('TLKM19/F/001', 'Form Analisis Risiko', '2019-07-06', 'ias', '1', '', '', ''),
+('TLKM20/F/001', 'Form Matriks Penilaian Kompetensi', '2019-07-07', '*', '1', '', '', ''),
+('TLKM20/F/002', 'Form Pemberian Otoritas Personel', '2019-07-08', '*', '1', '', '', ''),
+('TLKM20/F/003', 'Form Evaluasi dan Penilaian Kinerja Personel', '2019-07-09', '*', '1', '', '', '');
 
 -- --------------------------------------------------------
 
@@ -214,30 +156,21 @@ CREATE TABLE `forms` (
 --
 
 CREATE TABLE `history` (
-  `id` varchar(11) NOT NULL,
-  `reference_id` varchar(24) NOT NULL,
-  `test_engineer_id` varchar(11) NOT NULL,
-  `cal_step_id` varchar(11) NOT NULL,
-  `message` text,
+  `id` varchar(20) NOT NULL,
+  `reference_id` text NOT NULL,
+  `user_id` varchar(20) NOT NULL,
+  `step_id` varchar(24) NOT NULL,
+  `message` varchar(24) NOT NULL,
   `created` varchar(24) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
---
--- Dumping data for table `history`
---
-
-INSERT INTO `history` (`id`, `reference_id`, `test_engineer_id`, `cal_step_id`, `message`, `created`) VALUES
-('H1E69KFPCO', '012/CAB', '970037', 'DEV2', '', '2020-04-19T16:31:34.808Z'),
-('H1E69KJEJN', '022/132/QA/2020', '970037', 'REQ1', '', '2020-04-19T16:33:34.839Z'),
-('H1E6H6EF3G', '022/132/QA/2020', '970037', 'REQQA2', 'oke', '2020-04-22T15:00:06.896Z');
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `procedures`
+-- Table structure for table `quality_manuals`
 --
 
-CREATE TABLE `procedures` (
+CREATE TABLE `quality_manuals` (
   `id` varchar(20) NOT NULL,
   `name` text NOT NULL,
   `effective_date` varchar(24) NOT NULL,
@@ -247,10 +180,10 @@ CREATE TABLE `procedures` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Dumping data for table `procedures`
+-- Dumping data for table `quality_manuals`
 --
 
-INSERT INTO `procedures` (`id`, `name`, `effective_date`, `pic`, `version`, `file`) VALUES
+INSERT INTO `quality_manuals` (`id`, `name`, `effective_date`, `pic`, `version`, `file`) VALUES
 ('PM/TLKM Bag-B', 'Panduan Mutu Laboratorium Quality Assurance ( B. Daftar Penerima Notifikasi, D. Daftar Isi)', '2019-11-06', 'EGM-DDS', '2', 'PMTLKM-BagBD-v02--Panduan-Mutu-Lab-QA-Penerima-Notifikasi-dan-Daftar-Isi.pdf'),
 ('PM/TLKM Bag-C', 'Panduan Mutu Laboratorium Quality Assurance ( C. Rekaman Riwayat Dokumen )', '2019-11-06', 'EGM-DDS', '3', 'PMTLKM-BagC-v03--Panduan-Mutu-Lab-QA-Rekaman-Riwayat-Dokumen.pdf'),
 ('PM/TLKM Ch-1', 'Panduan Mutu Laboratorium Quality Assurance ( 1. Lingkup dan Kebijakan )', '2019-11-06', 'EGM-DDS', '2', 'PMTLKM-Chapt1-v02--Lingkup-dan-Kebijakan.pdf'),
@@ -720,55 +653,427 @@ INSERT INTO `procedures` (`id`, `name`, `effective_date`, `pic`, `version`, `fil
 -- --------------------------------------------------------
 
 --
--- Table structure for table `test_engineers`
+-- Table structure for table `requests`
 --
 
-CREATE TABLE `test_engineers` (
-  `id` varchar(11) NOT NULL,
+CREATE TABLE `requests` (
+  `id` varchar(20) NOT NULL,
+  `document_id` varchar(20) NOT NULL,
+  `approval1_id` varchar(20) NOT NULL,
+  `approval1_status` int(1) DEFAULT NULL,
+  `approval2_id` varchar(20) NOT NULL,
+  `approval2_status` int(1) DEFAULT NULL,
+  `created` varchar(24) NOT NULL,
+  `updated` varchar(24) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `roles`
+--
+
+CREATE TABLE `roles` (
+  `id` varchar(5) NOT NULL,
+  `name` text NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `roles`
+--
+
+INSERT INTO `roles` (`id`, `name`) VALUES
+('1', 'Super Admin'),
+('2A1', 'Quality Manager'),
+('2A2', 'Document Controller 1'),
+('2B', 'Document Controller 2'),
+('2C', 'Bagian UREL'),
+('3A', 'SM IAS'),
+('3B', 'Lab Manager DEQA'),
+('3C', 'Lab Manager IQA'),
+('4B1', 'Lab Device'),
+('4B2', 'Lab Energy'),
+('4C1', 'Lab Kabel'),
+('4C2', 'Lab Transmisi'),
+('4C3', 'Lab Kalibrasi'),
+('5', 'Guest'),
+('9', 'Deactivated');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `standard_levels`
+--
+
+CREATE TABLE `standard_levels` (
+  `id` varchar(20) NOT NULL,
+  `name` text NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `standard_levels`
+--
+
+INSERT INTO `standard_levels` (`id`, `name`) VALUES
+('I1', 'Internasional'),
+('N1', 'Permenkominfo'),
+('N2', 'Perdirjen'),
+('N3', 'SNI'),
+('T1', 'Lab Device'),
+('T2', 'Lab Energy'),
+('T3', 'Lab Kabel dan Aksesoris FTTH'),
+('T4', 'Lab Transmisi');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `steps`
+--
+
+CREATE TABLE `steps` (
+  `id` varchar(20) NOT NULL,
   `name` text NOT NULL,
-  `lab` char(3) NOT NULL,
-  `password` text NOT NULL,
-  `email` varchar(50) NOT NULL,
-  `role` char(1) NOT NULL,
-  `photo` text,
-  `registered` varchar(24) NOT NULL,
+  `step_number` int(5) NOT NULL,
+  `info` text NOT NULL,
+  `created` varchar(24) NOT NULL,
   `updated` varchar(24) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Dumping data for table `test_engineers`
+-- Dumping data for table `steps`
 --
 
-INSERT INTO `test_engineers` (`id`, `name`, `lab`, `password`, `email`, `role`, `photo`, `registered`, `updated`) VALUES
-('970000', 'Test User', 'TRA', 'J7laj1k08Nzj6KZWDXhITm6V5xCMXrDykaQtuDb2Iks=', 'aldiw@gmail.com', '1', 'test.jpg', '2020-02-17T17:31:11.300Z', '2020-02-17T17:31:11.300Z'),
-('970037', 'Aldi Wiranata', 'CAB', '44sTXVnKJJsC0ZgNLlJmUOJb+8QcJ6ZrI19WrfDFlAA=', 'aldiw01@gmail.com', '2', 'profile_photo_970037', '2020-01-15T04:51:54.211Z', '2020-02-19T01:49:47.616Z');
+INSERT INTO `steps` (`id`, `name`, `step_number`, `info`, `created`, `updated`) VALUES
+('CER1', 'Add', 0, 'has add the record', '2020-04-19T15:40:53.729Z', '2020-04-19T15:40:53.729Z'),
+('CER2', 'Edit', 0, 'has edit the record', '2020-04-19T15:40:53.729Z', '2020-04-19T15:40:53.729Z'),
+('CER3', 'Delete', 0, 'has delete the record', '2020-04-19T15:40:53.729Z', '2020-04-19T15:40:53.729Z'),
+('FRM1', 'Add', 0, 'has add the record', '2020-04-19T15:40:53.729Z', '2020-04-19T15:40:53.729Z'),
+('FRM2', 'Edit', 0, 'has edit the record', '2020-04-19T15:40:53.729Z', '2020-04-19T15:40:53.729Z'),
+('FRM3', 'Delete', 0, 'has delete the record', '2020-04-19T15:40:53.729Z', '2020-04-19T15:40:53.729Z'),
+('QUM1', 'Add', 0, 'has add the record', '2020-04-19T15:40:53.729Z', '2020-04-19T15:40:53.729Z'),
+('QUM2', 'Edit', 0, 'has edit the record', '2020-04-19T15:40:53.729Z', '2020-04-19T15:40:53.729Z'),
+('QUM3', 'Delete', 0, 'has delete the record', '2020-04-19T15:40:53.729Z', '2020-04-19T15:40:53.729Z'),
+('REF1', 'Add', 0, 'has add the record', '2020-04-19T15:40:53.729Z', '2020-04-19T15:40:53.729Z'),
+('REF2', 'Edit', 0, 'has edit the record', '2020-04-19T15:40:53.729Z', '2020-04-19T15:40:53.729Z'),
+('REF3', 'Delete', 0, 'has delete the record', '2020-04-19T15:40:53.729Z', '2020-04-19T15:40:53.729Z'),
+('REP1', 'Add', 0, 'has add the record', '2020-04-19T15:40:53.729Z', '2020-04-19T15:40:53.729Z'),
+('REP2', 'Edit', 0, 'has edit the record', '2020-04-19T15:40:53.729Z', '2020-04-19T15:40:53.729Z'),
+('REP3', 'Delete', 0, 'has delete the record', '2020-04-19T15:40:53.729Z', '2020-04-19T15:40:53.729Z'),
+('REQ1', 'Add', 0, 'has add the record', '2020-04-19T15:40:53.729Z', '2020-04-19T15:40:53.729Z'),
+('REQ2', 'Edit', 0, 'has edit the record', '2020-04-19T15:40:53.729Z', '2020-04-19T15:40:53.729Z'),
+('REQ3', 'Delete', 0, 'has delete the record', '2020-04-19T15:40:53.729Z', '2020-04-19T15:40:53.729Z'),
+('REQS1', 'Approval 1', 1, 'has change the request status to APPROVAL 1', '2020-04-19T15:40:53.729Z', '2020-04-19T15:40:53.729Z'),
+('REQS2', 'Approval 2', 2, 'has change the request status to APPROVAL 2', '2020-04-19T15:40:53.729Z', '2020-04-19T15:40:53.729Z'),
+('REQS3', 'Published', 3, 'has change the request status to PUBLISHED', '2020-04-19T15:40:53.729Z', '2020-04-19T15:40:53.729Z'),
+('TRI1', 'Add', 0, 'has add the record', '2020-04-19T15:40:53.729Z', '2020-04-19T15:40:53.729Z'),
+('TRI2', 'Edit', 0, 'has edit the record', '2020-04-19T15:40:53.729Z', '2020-04-19T15:40:53.729Z'),
+('TRI3', 'Delete', 0, 'has delete the record', '2020-04-19T15:40:53.729Z', '2020-04-19T15:40:53.729Z'),
+('USR1', 'Add', 0, 'has add the record', '2020-04-19T15:40:53.729Z', '2020-04-19T15:40:53.729Z'),
+('USR2', 'Edit', 0, 'has edit the record', '2020-04-19T15:40:53.729Z', '2020-04-19T15:40:53.729Z'),
+('USR3', 'Delete', 0, 'has delete the record', '2020-04-19T15:40:53.729Z', '2020-04-19T15:40:53.729Z');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `test_references`
+--
+
+CREATE TABLE `test_references` (
+  `id` varchar(20) NOT NULL,
+  `name` text NOT NULL,
+  `year` text NOT NULL,
+  `version` varchar(10) NOT NULL,
+  `standard_level_id` varchar(2) NOT NULL,
+  `file` text NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `test_references`
+--
+
+INSERT INTO `test_references` (`id`, `name`, `year`, `version`, `standard_level_id`, `file`) VALUES
+('STEL D-005-2001', 'Spesifikasi Telekomunikasi Router', '2001', '1.0', 'T1', ''),
+('STEL D-006-2011', 'Spesifikasi Telekomunikasi Switch Ethernet (L2 Switch)', '2011', '2.0', 'T1', ''),
+('STEL D-007-2004', 'Spesifikasi Telekomunikasi Core Router (IP)', '2004', '1.0', 'T1', ''),
+('STEL D-010-2005', 'Telecomunication Specification Broadband Remote Access Server (BRAS)', '2005', '1.0', 'T1', ''),
+('STEL D-012-2016', 'Spesifikasi Telekomunikasi Metro Ethernet Device', '2016', '2.0', 'T4', ''),
+('STEL D-014-2008', 'Telecommunication Specification Technical Tera Router', '2008', '1.0', 'T4', ''),
+('STEL D-017-2008', 'Spesifikasi Telekomunikasi Perangkat Managed L3 Switch', '2008', '1.0', 'T1', ''),
+('STEL D-019-2016', 'Telecommunication Specification Small Metro Ethernet Device', '2016', '1.1', 'T4', ''),
+('STEL D-020-2018', 'Spesifikasi Telekomunikasi Provider Edge Router', '2018', '1.0', 'T4', ''),
+('STEL D-068-2006', 'Spesifikasi Telekomunikasi Soft Switch', '2006', '1.0', 'T4', ''),
+('STEL F-001-2017', 'Spesifikasi Telekomunikasi Fiber Monitoring System (FMS)', '2017', '1.0', 'T3', ''),
+('STEL K-001-2003', 'Spesifikasi Telekomunikasi Kabel Telepon Udara Berselubung dan Polietilen Berpenguat sendiri', '2003', '2.1', 'T3', ''),
+('STEL K-002-2001', 'Spesifikasi Telekomunikasi Kabel Saluran Rumah', '2001', '2.0', 'T3', ''),
+('STEL K-003-2001', 'Spesifikasi Telekomunikasi Saluran Penanggal Bawah Tanah', '2001', '2.0', 'T3', ''),
+('STEL K-004-2002', 'Spesifikasi Telekomunikasi Saluran Penanggal Atas Tanah  (U-ES)', '2002', '2.0', 'T3', ''),
+('STEL K-006-2003', 'Spesifikasi Telekomunikasi Kawat Sambung ', '2003', '2.0', 'T3', ''),
+('STEL K-007-2003', 'Spesifikasi Telekomunikasi Kabel Tanah Berperisai dan Berselubung Polietilen Berisi Petrojeli', '2003', '2.0', 'T3', ''),
+('STEL K-008-2003', 'Spesifikasi Telekomunikasi Kabel Tanah Tanpa Perisai dan Berselubung Polietilen Berisi Petrojeli', '2003', '2.0', 'T3', ''),
+('STEL K-009-2003', 'Spesifikasi Telekomunikasi Kabel Tanah Tanpa Perisai dan Berselubung Polietilen ', '2003', '2.0', 'T3', ''),
+('STEL K-010-2000', 'Spesifikasi Telekomunikasi Kabel Telepon Rumah dengan Pelindung Elektris', '2000', '1.0', 'T3', ''),
+('STEL K-011-2000', 'Spesifikasi Telekomunikasi Kabel Telepon Rumah Tanpa Pelindung Elektris', '2000', '1.0', 'T3', ''),
+('STEL K-013-2002', 'Spesifikasi Telekomunikasi Saluran Penanggal Atas Tanah Berpenguat Ganda Tipe U-ES2', '2002', '2.0', 'T3', ''),
+('STEL K-015-2013', 'Spesifikasi Telekomunikasi Perangkat Kabel Serat Optik Single Mode Berkonstruksi Loose Tube untuk Aplikasi Duct', '2013', '3.0', 'T3', ''),
+('STEL K-016-2013', 'Spesifikasi Telekomunikasi Perangkat Kabel Serat Optik Single Mode berkonstruksi Loose Tube untuk Aplikasi  Tanam Langsung (KSO Direct Buried)', '2013', '3.0', 'T3', ''),
+('STEL K-017-2014', 'Spesifikasi Telekomunikasi Perangkat Kabel Serat Optik Single Mode berkonstruksi Loose Tube untuk Aplikasi  Kabel Udara (KSO Aerial)', '2014', '3.0', 'T3', ''),
+('STEL K-018-1996', 'Telecommunication Specification Single Mode Tight Buffered Optical Fiber Cable for Indoor Applications', '1996', '1.2', 'T3', ''),
+('STEL K-019-2002', 'Spesifikasi Telekomunikasi Kabel Telepon Tanah Tanpa Perisai Berisolasi Polietilen Busa Berkulit dan Berselubung Polietilen Tipe Tp-Ebk (Pe) E', '2002', '2.0', 'T3', ''),
+('STEL K-020-1996', 'Spesifikasi Telekomunikasi Kabel Telepon Tanah Berperisai Berisolasi Polietilen Busa Berkulit dan Berselubung Polietilen Berisi Petrojelly Tipe Tp-Ebk J (Pem) E', '1996', '1.0', 'T3', ''),
+('STEL K-021-1996', 'Spesifikasi Telekomunikasi Kabel Telepon Tanah Tanpa Perisai Berisolasi Polietilen Busa Berkulit dan Berselubung Polietilen Berisi Petrojelly Tipe Tp-Ebk (Pe) E', '1996', '1.0', 'T3', ''),
+('STEL K-029-1999', 'Spesifikasi Telekomunikasi Kabel 100 Ohm UTP 4 Pair untuk Aplikasi Horisontal', '1999', '1.0', 'T3', ''),
+('STEL K-030-2003', 'Spesifikasi Telekomunikasi Kabel Koaksial Feeder dan Trunk untuk Jaringan HFC', '2003', '1.0', 'T3', ''),
+('STEL K-031-2003', 'Spesifikasi Telekomunikasi Kabel Koaksial Drop untuk Jaringan HFC', '2003', '1.0', 'T3', ''),
+('STEL K-033-2013', 'Spesifikasi Telekomunikasi Kabel Serat Optik Penanggal dengan Kawat Penggantung', '2013', '1.2', 'T3', ''),
+('STEL K-034-2013', 'Spesifikasi Telekomunikasi Kabel Serat Optik Penanggal Untuk Instalasi Dalam Pipa', '2013', '2.0', 'T3', ''),
+('STEL K-035-2010', 'Spesifikasi Telekomunikasi Kabel Telepon Tanah Berperisai Berisolasi dan Berselubung Polietilen. Berisi Petrojeli Untuk layanan Broadband', '2010', '1.0', 'T3', ''),
+('STEL K-036-2012', 'Spesifikasi Telekomunikasi Perangkat Kabel Serat Optik Single Mode G652D Bertipe Kering dan Berkonstruksi Single Core per Loose Tube untuk Aplikasi Kabel Udara (KSO SCPT Aerial)', '2012', '1.0', 'T3', ''),
+('STEL K-037-2012', 'Spesifikasi Telekomunikasi Kabel Serat Optik G652D Tipe Kering Berkonstruksi Single Core per Loose Tube untuk Aplikasi Duct (KSO SCPT Duct)', '2012', '1.0', 'T3', ''),
+('STEL K-038-2014', 'Spesifikasi Telekomunikasi Kabel Serat Optik Ribbon Single Mode Berkonstruksi Loose Tube Untuk Aplikasi Duc 4 s.d. 96 Core', '2014', '1.0', 'T3', ''),
+('STEL K-039-2015', 'Spesifikasi Telekomunikasi Kabel Serat Optik Indoor Terekspose beserta kelengkapannya', '2015', '1.0', 'T3', ''),
+('STEL K-040-2019', 'Spesifikasi Telekomunikasi Pre-Connectorized Drop Cable', '2019', '2.1', 'T3', ''),
+('STEL L-001.A-2002', 'Spesifikasi Telekomunikasi Sarana Sambung Kabel dengan Proses Pemanasan', '2002', '3.0', 'T3', ''),
+('STEL L-001.B-2002', 'Spesifikasi Telekomunikasi Sarana Sambung Kabel Tanpa Proses Pemanasan', '2002', '3.0', 'T3', ''),
+('STEL L-003-2016', 'Spesifikasi Telekomunikasi Tiang Telepon Besi dengan Sambungan', '2016', '3.0', 'T3', ''),
+('STEL L-004.B-2001', 'Spesifikasi Telekomunikasi Kotak Pembagi Logam tanpa Blok Terminal', '2001', '2.0', 'T3', ''),
+('STEL L-004.C-2001', 'Spesifikasi Telekomunikasi Kotak Pembagi Plastik Dengan Blok Terminal', '2001', '2.0', 'T3', ''),
+('STEL L-004/R.2.A-200', 'Spesifikasi Telekomunikasi Kotak Pembagi Plastik Tanpa Blok Terminal', '2001', '2.0', 'T3', ''),
+('STEL L-005.A-1999', 'Spesifikasi Telekomunikasi Rumah Kabel Plastik Lengkap dengan Blok Terminal', '1999', '2.0', 'T3', ''),
+('STEL L-008-2001', 'Spesifikasi Telekomunikasi Pipa Duct dari Bahan PVC Keras', '2001', '2.0', 'T3', ''),
+('STEL L-014-2001', 'Spesifikasi Telekomunikasi Blok Terminal Rangka Pembagi Utama (BTRPU) Sisi Jaringan Kabel', '2001', '2.0', 'T3', ''),
+('STEL L-015-2001', 'Spesifikasi Telekomunikasi Blok Terminal Kotak Pembagi (BTKP)', '2001', '2.0', 'T3', ''),
+('STEL L-016-2002', 'Spesifikasi Telekomunikasi Digital Distribution Frame untuk Twisted Pair Cable (DDF- Pair Cable)', '2002', '1.0', 'T3', ''),
+('STEL L-022-2001', 'Spesifikasi Telekomunikasi Tiang Telepon Beton Pratekan Penampang Bulat 7 Meter', '2001', '2.0', 'T3', ''),
+('STEL L-023-2001', 'Spesifikasi Telekomunikasi Tiang Telepon Beton Pratekan Penampang Bulat 8 Meter', '2001', '2.0', 'T3', ''),
+('STEL L-024-2001', 'Spesifikasi Telekomunikasi Tiang Telepon Beton Pratekan Penampang Bulat 9 Meter', '2001', '1.0', 'T3', ''),
+('STEL L-028-2002', 'Spesifikasi Telekomunikasi Kelengkapan Tiang Telepon Beton Pratekan Penampang Bulat', '2002', '2.0', 'T3', ''),
+('STEL L-030-1995', 'Spesifikasi Telekomunikasi Perangkat Soket dan Konektor RJ-11', '1995', '1.0', 'T3', ''),
+('STEL L-031-1996', 'Spesifikasi Telekomunikasi Perangkat Kotak Terminal Batas (KTB)', '1996', '2.0', 'T3', ''),
+('STEL L-032-2002', 'Spesifikasi Telekomunikasi Blok Terminal Intermediate Distribution Frame', '2002', '1.0', 'T3', ''),
+('STEL L-033-1996', 'Spesifikasi Telekomunikasi Blok Terminal Rangka Pembagi Utama (BTRPU) Sisi Horisontal', '1996', '1.0', 'T3', ''),
+('STEL L-034-2004', 'Spesifikasi Telekomunikasi Konektor urat Kabel Telepon', '2004', '1.1', 'T3', ''),
+('STEL L-036-1996', 'Spesifikasi Telekomunikasi Tiang Telepon Tanpa Sambungan Bentuk Taper Segi Delapan Tahan Korosi Cuaca', '1996', '1.0', 'T3', ''),
+('STEL L-037-2001', 'Telecommunication Specification Optical Fiber Cable Closure', '2001', '2.0', 'T3', ''),
+('STEL L-038-2002', 'Spesifikasi Telekomunikasi Pipa Duct Tanam Langsung dari Bahan HDPE untuk Kabel Fiber Optik', '2002', '1.0', 'T3', ''),
+('STEL L-039-2008', 'Spesifikasi Telekomunikasi Pipa HDPE untuk Kabel Serat Optik', '2008', '2.2', 'T3', ''),
+('STEL L-040-1998', 'Spesifikasi Telekomunikasi Kotak pembagi Permukaan Tanah Tanpa Blok Terminal', '1998', '1.0', 'T3', ''),
+('STEL L-041-2006', 'Spesifikasi Telekomunikasi Kabinet Luar untuk Perangkat Aktif', '2006', '2.0', 'T3', ''),
+('STEL L-042-1999', 'Spesifikasi Telekomunikasi Perangkat Kotak Terminal Batas (KTB) dengan Arester dan Lampu Indikator', '1999', '1.0', 'T3', ''),
+('STEL L-043-2002', 'Spesifikasi Telekomunikasi Konektor Serat Optical Single Mode', '2002', '1.0', 'T3', ''),
+('STEL L-044-2003', 'Spesifikasi Telekomunikasi Tiang telepon Besi Bentuk Taper Segi Delapan- 9 M ', '2003', '1.0', 'T3', ''),
+('STEL L-045-2003', 'Spesifikasi Telekomunikasi Tiang telepon Besi Bentuk Taper Segi Delapan- 7 M ', '2003', '1.0', 'T3', ''),
+('STEL L-046-2004', 'Spesifikasi Telekomunikasi  Rumah Kabel Plastik  Lengkap dengan Blok terminal', '2004', '3.0', 'T3', ''),
+('STEL L-047-2008', 'Spesifikasi Telekomunikasi Single Mode Passive Optical Splitter', '2008', '1.0', 'T3', ''),
+('STEL L-048-2008', 'Spesifikasi Telekomunikasi Optical Distribution Frame', '2008', '1.0', 'T3', ''),
+('STEL L-049-2008', 'Spesifikasi Telekomunikasi Optical Distribution Cabinet', '2008', '1.0', 'T3', ''),
+('STEL L-050-2008', 'Spesifikasi Telekomunikasi Optical Termination Box', '2008', '1.0', 'T3', ''),
+('STEL L-051-2008', 'Spesifikasi Telekomunikasi Perangkat Insertion Terminal Block', '2008', '1.0', 'T3', ''),
+('STEL L-052-2009', 'Spesifikasi Telekomunikasi Kabinet dan Sarana Penunjang BTS Outdoor CDMA 2000', '2009', '1.0', 'T3', ''),
+('STEL L-053-2011', 'Spesifikasi Telekomunikasi  Optical Rossette (OR) sebagai Terminasi Fiber Optik pada Dinding sesuai BS-4662', '2011', '1.0', 'T3', ''),
+('STEL L-054-2012', 'Spesifikasi Telekomunikasi Perangkat Blok Terminal Rumah Kabel untuk Layanan Broadband', '2012', '2.0', 'T3', ''),
+('STEL L-055-2012', 'Spesifikasi Telekomunikasi Optical Distribution Frame untuk Fiber Termination Management (FTM)', '2012', '2.0', 'T3', ''),
+('STEL L-056-2017', 'Spesifikasi Telekomunikasi Perangkat Optical Distribution Cabinet (ODC) dengan Splitter', '2017', '3.0', 'T3', ''),
+('STEL L-057-2012', 'Spesifikasi Telekomunikasi Perangkat Optical Distribution Point (ODP) Pole', '2012', '1.1', 'T3', ''),
+('STEL L-058-2012', 'Spesifikasi Telekomunikasi Perangkat Optical Distribution Point (ODP) Wall Mounted', '2012', '1.1', 'T3', ''),
+('STEL L-059-2012', 'Spesifikasi Telekomunikasi Perangkat Optical Distribution Point (ODP) Pendestal', '2012', '1.1', 'T3', ''),
+('STEL L-060-2017', 'Spesifikasi Telekomunikasi Optical Patch Cord untuk FTTH', '2017', '2.0', 'T3', ''),
+('STEL L-062-2013', 'Spesifikasi Telekomunikasi Tiang Telepon Besi Galvanis dengan Sambungan untuk Implementasi Perangkat WiFi/Access Point', '2013', '1.0', 'T3', ''),
+('STEL L-064-2014', 'Spesifikasi Telekomunikasi Box Panel Outdoor untuk ONT dan POE pada FTTA', '2014', '1.0', 'T3', ''),
+('STEL L-065-2014', 'Spesifikasi Telekomunikasi Microduct', '2014', '1.0', 'T3', ''),
+('STEL L-066-2015', 'Spesifikasi Telekomunikasi Perangkat Splice on Connector (SOC)', '2015', '1.0', 'T3', ''),
+('STEL L-068-2015', 'Spesifikasi Telekomunikasi Kabinet Luar untuk Perangkat Aktif (KLPA) untuk Multi Dwelling Unit (MDU)', '2015', '1.0', 'T3', ''),
+('STEL L-069-2015', 'Spesifikasi Telekomunikasi Kabinet Luar Perangkat Aktif untuk Mini OLT', '2015', '1.0', 'T3', ''),
+('STEL L-070-2016', 'Spesifikasi Telekomunikasi Box ONT Bridge', '2016', '1.0', 'T3', ''),
+('STEL L-071-2017', 'Spesifikasi Telekomunikasi Optical Distribution Point (ODP) dengan Solid Splitter', '2017', '1.0', 'T3', ''),
+('STEL L-072-2017', 'Spesifikasi Telekomunikasi Portable Handhole', '2017', '1.0', 'T3', ''),
+('STEL L-073-2018', 'Spesifikasi Telekomunikasi ODC Tiang', '2018', '1.0', 'T3', ''),
+('STEL L-074-2019', 'Spesifikasi Telekomunikasi Optical Cord Bundle', '2019', '1.2', 'T3', ''),
+('STEL L-075-2020', 'Spesifikasi Telekomunikasi Optical Distribution Point Closure Aerial dengan Solid Splitter (ODP CA Solid)', '2020', '2.1', 'T3', ''),
+('STEL L-076-2019', 'Spesifikasi Telekomunikasi Perangkat  Aksesoris Tiang', '2019', '2.1', 'T3', ''),
+('STEL L-077-2019', 'Spesifikasi Telekomunikasi Tiang Kabel Kayu Bentuk Segi Empat 7m', '2019', '1.0', 'T3', ''),
+('STEL L-078-2019', 'Spesifikasi Telekomunikasi Optical Termination Premises (OTP) FTTH', '2019', '1.1', 'T3', ''),
+('STEL L-079-2020', 'Spesifikasi Telekomunikasi Tiang Galvanis 6M Tanpa Sambungan', '2020', '1.0', 'T3', ''),
+('STEL L-080-2020', 'Spesifikasi Telekomunikasi Pre-Connectorized KSO Indoor Transparan dengan Roset', '2020', '1.0', 'T3', ''),
+('STEL L-081-2020', 'Spesifikasi Telekomunikasi OTP Indihome Lite', '2020', '1.0', 'T3', ''),
+('STEL M-001-2011', 'Telecommunication Specification CPE WAN MANAGEMENT', '2011', '1.2', 'T1', ''),
+('STEL Q-070-2011', 'Spesifikasi Telekomunikasi Perangkat Set Top Box IPTV (STB)', '2011', '2.4', 'T1', ''),
+('STEL Q-072-2013', 'Spesifikasi Telekomunikasi Home Gateway DSL Tipe Single Port Ethernet', '2013', '3.1', 'T1', ''),
+('STEL Q-073-2016', 'Spesifikasi Telekomunikasi Home Gateway DSL Tipe Empat Port Ethernet', '2016', '3.0', 'T1', ''),
+('STEL Q-077-2018', 'Spesifikasi Telekomunikasi  ONT RETAIL', '2018', '4.0', 'T1', ''),
+('STEL Q-078-2016', 'Spesifikasi Telekomunikasi Media Gateway (STB + WIFI ROUTER)', '2016', '1.2', 'T1', ''),
+('STEL Q-079-2016', 'Telecommunication Specification ONT Bridge For Single Family Unit ', '2016', '1.1', 'T1', ''),
+('STEL Q-080-2019', 'Telecommunication Specification HYBRID STB DEVICE', '2019', '1.2', 'T1', ''),
+('STEL Q-081-2018', 'Telecommunication Specification ONT MOBILE BACKHAUL FOR GPON', '2018', '2.0', 'T1', ''),
+('STEL Q-082-2019', 'Telecommunication Specification ONT ENTERPRISE FOR GPON', '2019', '2.1', 'T1', ''),
+('STEL Q-083-2019', 'Telecommunication Specification OPEN ONT ( Optical Network Terminal ) RETAIL', '2019', '2.1', 'T1', ''),
+('STEL Q-084-2019', 'Telecommunication Specification ONT PREMIUM FOR GPON', '2019', '1.3', 'T1', ''),
+('STEL Q-085-2018', 'Spesifikasi Telekomunikasi ONT MOBILE BACKHAUL FOR XGS-PON', '2018', '1.0', 'T1', ''),
+('STEL Q-086-2018', 'Telecommunication Specification ONT ENTERPRISE FOR XGS-PON', '2018', '1.1', 'T1', ''),
+('STEL Q-088-2019', 'Telecommunication Specification OTT BOX DEVICE', '2019', '1.0', 'T1', ''),
+('STEL Q-089-2020', 'ONT Retail Premium for XGS-PON', '2020', '1.0', 'T1', ''),
+('STEL T-011-2002', 'Spesifikasi Telekomunikasi Perangkat Multiplex PCM 30 Kanal untuk Junction dan Trunk (Telecommunication specification of PCM 30 channel  multiplex equipment for junction and trunk)', '2002', '2.0', 'T4', ''),
+('STEL T-012-1996', 'Spesifikasi Telekomunikasi Perangkat High Order Multiplex', '1996', '2.0', 'T4', ''),
+('STEL T-021-2001', 'Spesifikasi Telekomunikasi Perangkat Digital Cross Connect', '2001', '1.1', 'T4', ''),
+('STEL T-022-1999', 'Spesifikasi Telekomunikasi Perangkat Flexible Multiplex 2 Mbps', '1999', '2.0', 'T4', ''),
+('STEL T-023-2001', 'Spesifikasi Telekomunikasi Pengganda Aluran Transmisi Digital', '2001', '1.1', 'T4', ''),
+('STEL T-024-1996', 'Spesifikasi Telekomunikasi Perangkat Radio Terminal Jarlokar DECT', '1996', '1.0', 'T4', ''),
+('STEL T-025-1996', 'Spesifikasi Telekomunikasi Terminal STB Analog', '1996', '1.0', 'T4', ''),
+('STEL T-026-1996', 'Spesifikasi Telekomunikasi Perangkat Optical Network Unit', '1996', '1.0', 'T4', ''),
+('STEL T-027-1996', 'Spesifikasi Telekomunikasi Perangkat High Bit Rate Data Subscriber Line', '1996', '1.0', 'T4', ''),
+('STEL T-028-1997', 'Spesifikasi Telekomunikasi Perangkat Radio Jarlokar CDMA', '1997', '1.0', 'T4', ''),
+('STEL T-029-2005', 'Spesifikasi Telekomunikasi Perangkat Multiplex SDH', '2005', '3.0', 'T4', ''),
+('STEL T-030-1998', 'Spesifikasi Telekomunikasi Perangkat Radio Digital VHF/UHF 30 MHz ~ 1500 MHz', '1998', '1.0', 'T4', ''),
+('STEL T-033-1997', 'Spesifikasi Telekomunikasi Perangkat Terminal STB GSM', '1997', '1.0', 'T4', ''),
+('STEL T-035-1999', 'Spesifikasi Telekomunikasi Perangkat Terminal STB CDMA IS-95', '1999', '1.0', 'T4', ''),
+('STEL T-036-1998', 'Spesifikasi Telekomunikasi Perangkat Sistem Telekomunikasi Lintas Radio IS-95 (STLR IS-95)', '1998', '1.0', 'T4', ''),
+('STEL T-037-1998', 'Spesifikasi Telekomunikasi Perangkat ADSL', '1998', '1.0', 'T4', ''),
+('STEL T-038-1998', 'Spesifikasi Telekomunikasi Perangkat Jaringan Akses Berbasis Antarmuka V5.X', '1998', '1.0', 'T4', ''),
+('STEL T-040-1998', 'Spesifikasi Telekomunikasi Perangkat Customer Interface Unit HFC', '1998', '1.0', 'T4', ''),
+('STEL T-041-1998', 'Spesifikasi Telekomunikasi Perangkat Set Top Box HFC', '1998', '1.0', 'T4', ''),
+('STEL T-042-1998', 'Spesifikasi Telekomunikasi Perangkat Kabel Modem HFC', '1998', '1.0', 'T4', ''),
+('STEL T-043-1998', 'Spesifikasi Telekomunikasi Kabel Koaksial HFC', '1998', '1.0', 'T4', ''),
+('STEL T-044-1998', 'Spesifikasi Telekomunikasi Komponen Pasif HFC', '1998', '1.0', 'T4', ''),
+('STEL T-045-1998', 'Spesifikasi Telekomunikasi Perangkat Amplifier HFC', '1998', '1.0', 'T4', ''),
+('STEL T-046-1998', 'Spesifikasi Telekomunikasi Perangkat Fiber Node HFC', '1998', '1.0', 'T4', ''),
+('STEL T-047-1998', 'Spesifikasi Telekomunikasi Perangkat Headend HFC', '1998', '1.0', 'T4', ''),
+('STEL T-048-1998', 'Spesifikasi Telekomunikasi Perangkat Cable Telephony Headend HFC', '1998', '1.0', 'T4', ''),
+('STEL T-049-1998', 'Spesifikasi Telekomunikasi Perangkat Cable Router HFC', '1998', '1.0', 'T4', ''),
+('STEL T-050-2005', 'Spesifikasi Telekomunikasi Perangkat VSAT', '2005', '3.0', 'T4', ''),
+('STEL T-051-1999', 'Spesifikasi Telekomunikasi Perangkat Repeater Seluler Full Duplex', '1999', '1.0', 'T4', ''),
+('STEL T-052-2000', 'Spesifikasi Telekomunikasi Perangkat Gateway/Gatekeeper VoIP ', '2000', '2.0', 'T4', ''),
+('STEL T-053-2000', 'Spesifikasi Telekomunikasi Perangkat ADSL-Lite', '2000', '1.0', 'T4', ''),
+('STEL T-054-2000', 'Spesifikasi Telekomunikasi Perangkat SDSL (Symmetric Digital Subscriber Line)', '2000', '1.0', 'T4', ''),
+('STEL T-056-2000', 'Spesifikasi Telekomunikasi Perangkat GPRS', '2000', '1.0', 'T4', ''),
+('STEL T-057-2000', 'Telecommunication Specification Bluetooth', '2000', '1.0', 'T4', ''),
+('STEL T-058-2001', 'Spesifikasi Telekomunikasi Perangkat Wireless LAN', '2001', '1.0', 'T4', ''),
+('STEL T-059-2002', 'Spesifikasi Telekomunikasi Dense Wavelength Division Multiplexing (DWDM)/ Telecommunication Specification of Dense Wavelength Division Multiplexing(DWDM)', '2002', '1.0', 'T4', ''),
+('STEL T-060-2001', 'Spesifikasi Telekomunikasi Perangkat Radio Point To Multipoint untuk Layanan Broadband dengan Metode Akses TDMA', '2001', '1.0', 'T4', ''),
+('STEL T-061-2001', 'Spesifikasi Telekomunikasi Perangkat Radio Point To Multipoint Metode Akses DS-CDMA', '2001', '1.0', 'T4', ''),
+('STEL T-062-2001', 'Spesifikasi Telekomunikasi Perangkat Radio Point To Multipoint Metode Akses FH-CDMA', '2001', '1.0', 'T4', ''),
+('STEL T-063-2002', 'Spesifikasi Telekomunikasi Antar Muka Optik Untuk Channel STM-4 / Telecommunication Specification of Optical Interface for Single Channel STM-64', '2002', '1.0', 'T4', ''),
+('STEL T-066-2007', 'Spesifikasi Telekomunikasi Trunk Gateway untuk Sistem Softswitch', '2007', '2.0', 'T4', ''),
+('STEL T-067-2007', 'Spesifikasi Telekomunikasi Perangkat Access Gateway untuk Sistem Softswitch', '2007', '2.0', 'T4', ''),
+('STEL T-068-2007', 'Spesifikasi Telekomunikasi Perangkat Softswitch.', '2007', '2.0', 'T4', ''),
+('STEL T-071-2006', 'Telecommunication Specification Up Converter C Band', '2006', '1.0', 'T4', ''),
+('STEL T-076-2006', 'Spesifikasi Telekomunikasi perangkat Block Up Converter Stasiun Bumi Sistem Komunikasi Satelit', '2006', '1.0', 'T4', ''),
+('STEL T-077-2006', 'Spesifikasi Telekomunikasi perangkat Hight Power Amplifier Stasiun Bumi Sistem Komunikasi Satelit', '2006', '1.0', 'T4', ''),
+('STEL T-078-2006', 'Spesifikasi Telekomunikasi perangkat Antena Stasiun Bumi Sistem Komunikasi Satelit', '2006', '1.0', 'T4', ''),
+('STEL T-079-2007', 'Spesifikasi Telekomunikasi Active Digital Distribution Frame (DDF)', '2007', '1.0', 'T4', ''),
+('STEL T-083-2012', 'Spesifikasi Telekomunikasi Perangkat MSAN', '2012', '1.1', 'T4', ''),
+('STEL T-085-2008', 'Spesifikasi Telekomunikasi Dense Wavelength Division Multiplexing (DWDM) (Untuk Terresterial & Submarine)', '2008', '1.0', 'T4', ''),
+('STEL T-087-2008', 'Spesifikasi Telekomunikasi Perangkat Broadband Wireless Access 3,3 GHz', '2008', '1.0', 'T4', ''),
+('STEL T-088-2008', 'Telecommunication Specification Gigabit-Capable Passive Optical Network (GPON)', '2008', '1.0', 'T4', ''),
+('STEL T-089-2008', 'Telecommunication Specification Optical Terminal Multiplexer', '2008', '1.0', 'T4', ''),
+('STEL T-090-2008', 'Telecommunication Specification Sub System of Reconfigurable Optical Add-drop Multiplexer (ROADM)', '2008', '1.0', 'T4', ''),
+('STEL T-091-2008', 'Telecommunication Specification Tunable Optical Transponder', '2008', '1.0', 'T4', ''),
+('STEL T-092-2009', 'Spesifikasi Telekomunikasi Perangkat G.SHDSL.bis Line Extender (GLE)', '2009', '1.0', 'T4', ''),
+('STEL T-093-2009', 'Spesifikasi Telekomunikasi Perangkat BTS Outdoor CDMA2000 1x', '2009', '1.0', 'T4', ''),
+('STEL T-094-2009', 'Spesifikasi Telekomunikasi Perangkat Digital Fixed Radio System Point to Point (Radio IP)', '2009', '1.0', 'T4', ''),
+('STEL T-095-2010', 'Spesifikasi Telekomunikasi Perangkat Fixed/Nomadic Broadband Wireless Access 2,3 GHz', '2010', '1.0', 'T4', ''),
+('STEL T-096-2020', 'Telecommunication Specification VSAT IP', '2020', '2.0', 'T4', ''),
+('STEL T-097-2014', 'Telecommunication Specification Tuneable 100G-Coherent Optical Transponder', '2014', '1.1', 'T4', ''),
+('STEL T-098-2013', 'Telecommunication Specification 10 Gigabit-Capable Passive Optical Network (XG-PON)', '2013', '1.0', 'T4', ''),
+('STEL T-099-2014', 'Telecommunication Specification Optical Transport Network (OTN)', '2014', '1.0', 'T4', ''),
+('STEL T-100-2015', 'Telecommunication Specification Radio System-PTP for Long Haul Application', '2015', '1.0', 'T4', ''),
+('STEL T-101-2015', 'Telecommunication Specification Multi Dwelling Unit (MDU)', '2015', '1.0', 'T4', ''),
+('STEL T-102-2015', 'Spesifikasi Telekomunikasi Mini OLT for XG-PON/ GPON System (ONT Enterprise)', '2015', '1.0', 'T4', ''),
+('STEL T-103-2018', 'Spesifikasi Telekomunikasi Open Optical Line Termination (Open OLT)', '2018', '2.0', 'T4', ''),
+('STEL T-104-2018', 'Spesifikasi Telekomunikasi MS OTN', '2018', '1.0', 'T4', ''),
+('STEL T-105-2018', 'Spesifikasi Telekomunikasi Open OLT for XGSPON', '2018', '1.0', 'T4', ''),
+('STEL T-106-2019', 'AP (Access Point) WAC (Wireless Access Controller) for WiFi Managed System', '2019', '1.0', 'T4', ''),
+('STEL T-107-2019', 'Telecommunication Specification Access Point - Wireless Access Controller for WIFI Managed System', '2019', '1.0', 'T4', ''),
+('STEL U-003-2006', 'Spesifikasi Telekomunikasi Batere Asam Timbal Berventilasi untuk Sistem Floating (Vented Lead Acid)', '2006', '3.0', 'T2', ''),
+('STEL U-007-2012', 'Spesifikasi Telekomunikasi Rectifier Indoor', '2012', '3.1', 'T2', ''),
+('STEL U-015-2012', 'Spesifikasi Telekomunikasi Batere Asam Timbal Tertutup untuk Sistem Floating', '2012', '4.2', 'T2', ''),
+('STEL U-021-2001', 'Spesifikasi Telekomunikasi Diesel Genset Stasioner Kapasitas 500kVA s.d. 1000kVA untuk Catuan Perangkat Telekomunikasi', '2001', '2.0', 'T2', ''),
+('STEL U-024-2001', 'Spesifikasi Telekomunikasi Perangkat Diesel Genset Mobile', '2001', '1.0', 'T2', ''),
+('STEL U-025-2001', 'Spesifikasi Telekomunikasi Diesel Genset Stasioner di Bawah 500kVA untuk Catuan Perangkat Telekomunikasi', '2001', '1.0', 'T2', ''),
+('STEL U-030-2008', 'Spesifikasi Telekomunikasi Diesel Genset Dibawah 50kVA Untuk Catuan Perangkat Telekomunikasi', '2008', '1.0', 'T2', ''),
+('STEL U-033-2012', 'Spesifikasi Telekomunikasi Rectifier Outdoor', '2012', '1.1', 'T2', ''),
+('STEL U-034-2013', 'Spesifikasi Telekomunikasi Lithium Iron Phosphate (LiFePO4) Ion Battery (Batere Lithium) Untuk Implementasi Charge Discharge', '2013', '1.0', 'T2', '');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `test_reports`
+--
+
+CREATE TABLE `test_reports` (
+  `id` varchar(24) NOT NULL,
+  `request_id` varchar(24) NOT NULL,
+  `company_name` text NOT NULL,
+  `device_name` text NOT NULL,
+  `brand` text NOT NULL,
+  `model` text NOT NULL,
+  `test_reference_id` varchar(32) NOT NULL,
+  `created` varchar(24) NOT NULL,
+  `file` text NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `trial_reports`
+--
+
+CREATE TABLE `trial_reports` (
+  `id` varchar(20) NOT NULL,
+  `name` text NOT NULL,
+  `trial_date` varchar(24) NOT NULL,
+  `num_device` int(11) NOT NULL,
+  `num_pass` int(11) DEFAULT NULL,
+  `file` text NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `users`
+--
+
+CREATE TABLE `users` (
+  `id` varchar(20) NOT NULL,
+  `name` text NOT NULL,
+  `password` text NOT NULL,
+  `role` varchar(5) NOT NULL,
+  `telp` varchar(15) DEFAULT NULL,
+  `email` text,
+  `photo` text,
+  `registered` varchar(24) DEFAULT NULL,
+  `updated` varchar(24) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `users`
+--
+
+INSERT INTO `users` (`id`, `name`, `password`, `role`, `telp`, `email`, `photo`, `registered`, `updated`) VALUES
+('970037', 'Aldi Wiranata', '44sTXVnKJJsC0ZgNLlJmUOJb+8QcJ6ZrI19WrfDFlAA=', '1', '081388098842', 'aldiw01@gmail.com', 'profile_photo_970037', '2020-05-07T04:51:54.211Z', '2020-05-07T04:51:54.211Z');
 
 --
 -- Indexes for dumped tables
 --
 
 --
--- Indexes for table `cal_certificates`
+-- Indexes for table `archives`
 --
-ALTER TABLE `cal_certificates`
+ALTER TABLE `archives`
   ADD PRIMARY KEY (`id`),
-  ADD KEY `FK` (`device_id`,`test_engineer_id`),
-  ADD KEY `test_engineer_id` (`test_engineer_id`);
+  ADD KEY `standard_level_id` (`standard_level_id`);
 
 --
--- Indexes for table `cal_requests`
+-- Indexes for table `certificates`
 --
-ALTER TABLE `cal_requests`
+ALTER TABLE `certificates`
   ADD PRIMARY KEY (`id`),
-  ADD KEY `FK` (`engineer_1`,`engineer_2`,`engineer_3`),
-  ADD KEY `engineer_2` (`engineer_2`),
-  ADD KEY `engineer_3` (`engineer_3`);
+  ADD KEY `FK` (`test_report_id`);
 
 --
--- Indexes for table `cal_steps`
+-- Indexes for table `dide`
 --
-ALTER TABLE `cal_steps`
-  ADD PRIMARY KEY (`id`);
+ALTER TABLE `dide`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `standard_level_id` (`standard_level_id`);
 
 --
 -- Indexes for table `forms`
@@ -781,43 +1086,113 @@ ALTER TABLE `forms`
 --
 ALTER TABLE `history`
   ADD PRIMARY KEY (`id`),
-  ADD KEY `test_engineer_id` (`test_engineer_id`),
-  ADD KEY `cal_step_id` (`cal_step_id`);
+  ADD KEY `FK` (`user_id`,`step_id`),
+  ADD KEY `step_id` (`step_id`);
 
 --
--- Indexes for table `procedures`
+-- Indexes for table `quality_manuals`
 --
-ALTER TABLE `procedures`
+ALTER TABLE `quality_manuals`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `test_engineers`
+-- Indexes for table `requests`
 --
-ALTER TABLE `test_engineers`
+ALTER TABLE `requests`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `FK` (`document_id`);
+
+--
+-- Indexes for table `roles`
+--
+ALTER TABLE `roles`
   ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `standard_levels`
+--
+ALTER TABLE `standard_levels`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `steps`
+--
+ALTER TABLE `steps`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `test_references`
+--
+ALTER TABLE `test_references`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `FK` (`standard_level_id`);
+
+--
+-- Indexes for table `test_reports`
+--
+ALTER TABLE `test_reports`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `FK` (`test_reference_id`);
+
+--
+-- Indexes for table `trial_reports`
+--
+ALTER TABLE `trial_reports`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `users`
+--
+ALTER TABLE `users`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `FK` (`role`);
 
 --
 -- Constraints for dumped tables
 --
 
 --
--- Constraints for table `cal_certificates`
+-- Constraints for table `archives`
 --
-ALTER TABLE `cal_certificates`
-  ADD CONSTRAINT `cal_certificates_ibfk_2` FOREIGN KEY (`test_engineer_id`) REFERENCES `test_engineers` (`id`);
+ALTER TABLE `archives`
+  ADD CONSTRAINT `archives_ibfk_1` FOREIGN KEY (`standard_level_id`) REFERENCES `standard_levels` (`id`);
 
 --
--- Constraints for table `cal_requests`
+-- Constraints for table `certificates`
 --
-ALTER TABLE `cal_requests`
-  ADD CONSTRAINT `cal_requests_ibfk_1` FOREIGN KEY (`engineer_1`) REFERENCES `test_engineers` (`id`);
+ALTER TABLE `certificates`
+  ADD CONSTRAINT `certificates_ibfk_1` FOREIGN KEY (`test_report_id`) REFERENCES `test_report` (`id`);
+
+--
+-- Constraints for table `dide`
+--
+ALTER TABLE `dide`
+  ADD CONSTRAINT `dide_ibfk_1` FOREIGN KEY (`standard_level_id`) REFERENCES `standard_levels` (`id`);
 
 --
 -- Constraints for table `history`
 --
 ALTER TABLE `history`
-  ADD CONSTRAINT `history_ibfk_2` FOREIGN KEY (`test_engineer_id`) REFERENCES `test_engineers` (`id`),
-  ADD CONSTRAINT `history_ibfk_3` FOREIGN KEY (`cal_step_id`) REFERENCES `cal_steps` (`id`);
+  ADD CONSTRAINT `history_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`),
+  ADD CONSTRAINT `history_ibfk_2` FOREIGN KEY (`step_id`) REFERENCES `steps` (`id`);
+
+--
+-- Constraints for table `test_references`
+--
+ALTER TABLE `test_references`
+  ADD CONSTRAINT `test_references_ibfk_1` FOREIGN KEY (`standard_level_id`) REFERENCES `standard_levels` (`id`);
+
+--
+-- Constraints for table `test_reports`
+--
+ALTER TABLE `test_reports`
+  ADD CONSTRAINT `test_reports_ibfk_1` FOREIGN KEY (`test_reference_id`) REFERENCES `test_references` (`id`);
+
+--
+-- Constraints for table `users`
+--
+ALTER TABLE `users`
+  ADD CONSTRAINT `users_ibfk_1` FOREIGN KEY (`role`) REFERENCES `roles` (`id`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
