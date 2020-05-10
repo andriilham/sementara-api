@@ -134,12 +134,12 @@ module.exports = {
   },
   newUser: function (req, password, res) {
     const waktu = new Date().toISOString();
-    var request = [req.id, req.name, password, req.telp, req.email, waktu, waktu];
-    if (request.includes(undefined) || request.includes("")) {
+    var request = [req.id, req.name, password, req.email, req.role, waktu, waktu];
+    if (request.includes(undefined)) {
       res.send({ message: 'Bad Request: Parameters cannot empty.' });
       return
     }
-    c.query("INSERT INTO `users`(`id`, `name`, `password`, `telp`, `email`, `role`, `registered`, `updated`) VALUES (?, ?, ?, ?, ?, ?, ?, ?)", request, { metadata: true, useArray: true }, function (err, rows) {
+    c.query("INSERT INTO `users` (`id`, `name`, `password`, `email`, `role`, `registered`, `updated`) VALUES (?, ?, ?, ?, ?, ?, ?)", request, { metadata: true, useArray: true }, function (err, rows) {
       if (err) {
         res.status(500).send({ message: "Error 500: Internal Server Error" });
         console.log(err);
@@ -158,7 +158,7 @@ module.exports = {
   updateUser: function (req, res) {
     const waktu = new Date().toISOString();
     var request = [req.name, req.telp, req.email, waktu, req.id];
-    if (request.includes(undefined) || request.includes("")) {
+    if (request.includes(undefined)) {
       res.send({ message: 'Bad Request: Parameters cannot empty.' });
       return
     }

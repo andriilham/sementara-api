@@ -50,8 +50,16 @@ router.get('/type/:id', jwtMW, (req, res) => {
   db.getFormType(req.params, res)
 })
 
+router.get('/procedure/:procedure/pic/:pic', jwtMW, (req, res) => {
+  db.getFormProPIC(req.params, res)
+})
+
 router.get('/pic/:id', jwtMW, (req, res) => {
   db.getFormPIC(req.params, res)
+})
+
+router.get('/procedure/:id', jwtMW, (req, res) => {
+  db.getFormProcedure(req.params, res)
 })
 
 router.post('/', jwtMW, (req, res) => {

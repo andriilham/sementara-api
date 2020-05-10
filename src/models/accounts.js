@@ -268,13 +268,13 @@ module.exports = {
         res.json({
           success: true,
           err: null,
-          message: "email already registered"
+          message: "user already registered"
         });
       } else {
         res.json({
           success: false,
           err: null,
-          message: "email not registered"
+          message: "user not registered"
         });
       }
     });

@@ -1,7 +1,7 @@
 
 const express = require('express')
 var router = express.Router()
-var db = require('../models/steps')
+var db = require('../models/roles')
 const exjwt = require('express-jwt')
 
 // Instantiating the express-jwt middleware
@@ -10,33 +10,33 @@ const jwtMW = exjwt({
 });
 
 /////////////////////////////////////////////////////////////////////////////////////////////
-// API Steps => /api/steps/
+// API Roles => /api/roles/
 
 router.get('/', jwtMW, (req, res) => {
-  db.getStepAll(req.body, res)
+  db.getRoleAll(req.body, res)
 })
 
 router.get('/:id', (req, res) => {
-  db.getStep(req.params, res)
+  db.getRole(req.params, res)
 })
 
 router.post('/', jwtMW, (req, res) => {
-  db.newStep(req.body, res)
+  db.newRole(req.body, res)
 })
 
 router.put('/:id', jwtMW, (req, res) => {
-  db.updateStep(req, res)
+  db.updateRole(req, res)
 })
 
 /////////////////////////////////////////////////////////////////////////////////////////////
 // EXTREAMLY DANGEROUS, USE THIS WISELY
 
 router.delete('/ever/:id', jwtMW, (req, res) => {
-  db.deleteStep(req.params, res)
+  db.deleteRole(req.params, res)
 })
 
 router.delete('/all/ever', jwtMW, (req, res) => {
-  db.deleteStepAll(req.params, res)
+  db.deleteRoleAll(req.params, res)
 })
 
 module.exports = router

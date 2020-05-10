@@ -16,7 +16,7 @@ const storageTestReports = multer.diskStorage({
     cb(null, 'src/uploads/test_reports/');
   },
   filename: function (req, file, cb) {
-    cb(null, req.body.id.replace(new RegExp("/", 'g'), "") + req.body.request_id + '_' + req.body.company_name + path.extname(file.originalname));
+    cb(null, req.body.id.replace(new RegExp("/", 'g'), "") + '_' + req.body.company_name.replace(new RegExp(" ", 'g'), "-") + path.extname(file.originalname));
   }
 })
 
@@ -42,8 +42,8 @@ router.get('/:id', (req, res) => {
   db.getTestReport(req.params, res)
 })
 
-router.get('/request/:id', jwtMW, (req, res) => {
-  db.getTestReportRequest(req.params, res)
+router.get('/search/:id', jwtMW, (req, res) => {
+  db.getTestReportSearch(req.params, res)
 })
 
 router.get('/test_reference/:id', jwtMW, (req, res) => {

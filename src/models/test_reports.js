@@ -23,14 +23,13 @@ module.exports = {
       rows.forEach(function (items) {
         data.push({
           id: items[0],
-          request_id: items[1],
-          company_name: items[2],
-          device_name: items[3],
-          brand: items[4],
-          model: items[5],
-          test_reference_id: items[6],
-          created: items[7],
-          file: items[8]
+          company_name: items[1],
+          device_name: items[2],
+          brand: items[3],
+          model: items[4],
+          test_reference_id: items[5],
+          created: items[6],
+          file: items[7]
         });
       });
       if (data.length < 1) {
@@ -53,14 +52,13 @@ module.exports = {
       rows.forEach(function (items) {
         data.push({
           id: items[0],
-          request_id: items[1],
-          company_name: items[2],
-          device_name: items[3],
-          brand: items[4],
-          model: items[5],
-          test_reference_id: items[6],
-          created: items[7],
-          file: items[8]
+          company_name: items[1],
+          device_name: items[2],
+          brand: items[3],
+          model: items[4],
+          test_reference_id: items[5],
+          created: items[6],
+          file: items[7]
         });
       });
       if (data.length < 1) {
@@ -71,9 +69,9 @@ module.exports = {
     });
     c.end();
   },
-  getTestReportRequest: function (req, res) {
+  getTestReportSearch: function (req, res) {
     const request = ["%" + req.id.toUpperCase() + "%"]
-    c.query("SELECT * FROM `test_reports` WHERE `request_id` LIKE ?", request, { metadata: true, useArray: true }, function (err, rows) {
+    c.query("SELECT * FROM `test_reports` WHERE `id` LIKE ?", request, { metadata: true, useArray: true }, function (err, rows) {
       if (err) {
         res.status(500).send({ message: "Error 500: Internal Server Error" });
         console.log(err);
@@ -84,14 +82,13 @@ module.exports = {
       rows.forEach(function (items) {
         data.push({
           id: items[0],
-          request_id: items[1],
-          company_name: items[2],
-          device_name: items[3],
-          brand: items[4],
-          model: items[5],
-          test_reference_id: items[6],
-          created: items[7],
-          file: items[8]
+          company_name: items[1],
+          device_name: items[2],
+          brand: items[3],
+          model: items[4],
+          test_reference_id: items[5],
+          created: items[6],
+          file: items[7]
         });
       });
       if (data.length < 1) {
@@ -115,14 +112,13 @@ module.exports = {
       rows.forEach(function (items) {
         data.push({
           id: items[0],
-          request_id: items[1],
-          company_name: items[2],
-          device_name: items[3],
-          brand: items[4],
-          model: items[5],
-          test_reference_id: items[6],
-          created: items[7],
-          file: items[8]
+          company_name: items[1],
+          device_name: items[2],
+          brand: items[3],
+          model: items[4],
+          test_reference_id: items[5],
+          created: items[6],
+          file: items[7]
         });
       });
       if (data.length < 1) {
@@ -134,12 +130,12 @@ module.exports = {
     c.end();
   },
   newTestReport: function (req, res) {
-    var request = [req.id, req.request_id, req.company_name, req.device_name, req.brand, req.model, req.test_reference_id, req.created, req.file];
-    if (request.includes(undefined) || request.includes("")) {
+    var request = [req.id, req.company_name, req.device_name, req.brand, req.model, req.test_reference_id, req.created, req.file];
+    if (request.includes(undefined)) {
       res.send({ message: 'Bad Request: Parameters cannot empty.' });
       return
     }
-    c.query("INSERT INTO `test_reports`(`id`, `request_id`, `company_name`, `device_name`, `brand`, `model`, `test_reference_id`, `created`, `file`) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)", request, { metadata: true, useArray: true }, function (err, rows) {
+    c.query("INSERT INTO `test_reports`(`id`, `company_name`, `device_name`, `brand`, `model`, `test_reference_id`, `created`, `file`) VALUES (?, ?, ?, ?, ?, ?, ?, ?)", request, { metadata: true, useArray: true }, function (err, rows) {
       if (err) {
         res.status(500).send({ message: "Error 500: Internal Server Error" });
         console.log(err);
@@ -156,12 +152,12 @@ module.exports = {
     c.end();
   },
   updateTestReport: function (req, res) {
-    var request = [req.body.request_id, req.body.company_name, req.body.device_name, req.body.brand, req.body.model, req.body.test_reference_id, req.body.created, req.body.file, req.params.id];
-    if (request.includes(undefined) || request.includes("")) {
+    var request = [req.body.company_name, req.body.device_name, req.body.brand, req.body.model, req.body.test_reference_id, req.body.created, req.body.file, req.params.id];
+    if (request.includes(undefined)) {
       res.send({ message: 'Bad Request: Parameters cannot empty.' });
       return
     }
-    c.query("UPDATE `test_reports` SET `request_id`=?, `company_name`=?, `device_name`=?, `brand`=?, `model`=?, `test_reference_id`=?, `created`=?, `file`=? WHERE `id`=?", request, { metadata: true, useArray: true }, function (err, rows) {
+    c.query("UPDATE `test_reports` SET `company_name`=?, `device_name`=?, `brand`=?, `model`=?, `test_reference_id`=?, `created`=?, `file`=? WHERE `id`=?", request, { metadata: true, useArray: true }, function (err, rows) {
       if (err) {
         res.status(500).send({ message: "Error 500: Internal Server Error" });
         console.log(err);

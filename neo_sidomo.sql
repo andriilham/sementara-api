@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: May 09, 2020 at 06:51 PM
+-- Generation Time: May 10, 2020 at 06:27 PM
 -- Server version: 10.1.30-MariaDB
 -- PHP Version: 5.6.33
 
@@ -19,7 +19,7 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `neo_sidomo_prod`
+-- Database: `neo_sidomo`
 --
 
 -- --------------------------------------------------------
@@ -693,7 +693,7 @@ INSERT INTO `roles` (`id`, `name`) VALUES
 ('3C', 'Lab Manager IQA'),
 ('4B1', 'Lab Device'),
 ('4B2', 'Lab Energy'),
-('4C1', 'Lab Kabel'),
+('4C1', 'Lab Kabel dan Aksesoris FTTH'),
 ('4C2', 'Lab Transmisi'),
 ('4C3', 'Lab Kalibrasi'),
 ('5', 'Guest'),
@@ -1000,7 +1000,6 @@ INSERT INTO `test_references` (`id`, `name`, `year`, `version`, `standard_level_
 
 CREATE TABLE `test_reports` (
   `id` varchar(24) NOT NULL,
-  `request_id` varchar(24) NOT NULL,
   `company_name` text NOT NULL,
   `device_name` text NOT NULL,
   `brand` text NOT NULL,
@@ -1009,6 +1008,14 @@ CREATE TABLE `test_reports` (
   `created` varchar(24) NOT NULL,
   `file` text NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `test_reports`
+--
+
+INSERT INTO `test_reports` (`id`, `company_name`, `device_name`, `brand`, `model`, `test_reference_id`, `created`, `file`) VALUES
+('002/KAB/TL/QA/2019', 'TAKDIR LIMA SEKAWAN', 'Optical Distribution Point (ODP) dengan Solid Splitter', 'SUKAi', '16 Port Adaptor', 'STEL L-071-2017', '2019-03-22', '002KABTLQA2019_TAKDIR-LIMA-SEKAWAN.pdf'),
+('208/KAB/VT/2018', 'BUANA SELARAS GLOBALINDO', 'FABRIC INNER DUCT', 'OPTICELL', '6428-3', '', '2019-04-10', '208KABVT2018_BUANA-SELARAS-GLOBALINDO.pdf');
 
 -- --------------------------------------------------------
 
@@ -1048,6 +1055,7 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `name`, `password`, `role`, `telp`, `email`, `photo`, `registered`, `updated`) VALUES
+('012020', 'Auditor 1', 'T63BtTiIBlilJYWzavEWC/ILcH6SIpoHoEqb132mQio=', '5', NULL, 'test@mail.com', NULL, '2020-05-10T12:01:39.524Z', '2020-05-10T12:01:39.524Z'),
 ('970037', 'Aldi Wiranata', '44sTXVnKJJsC0ZgNLlJmUOJb+8QcJ6ZrI19WrfDFlAA=', '1', '081388098842', 'aldiw01@gmail.com', 'profile_photo_970037', '2020-05-07T04:51:54.211Z', '2020-05-07T04:51:54.211Z');
 
 --
@@ -1131,8 +1139,7 @@ ALTER TABLE `test_references`
 -- Indexes for table `test_reports`
 --
 ALTER TABLE `test_reports`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `FK` (`test_reference_id`);
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Indexes for table `trial_reports`
@@ -1161,7 +1168,7 @@ ALTER TABLE `archives`
 -- Constraints for table `certificates`
 --
 ALTER TABLE `certificates`
-  ADD CONSTRAINT `certificates_ibfk_1` FOREIGN KEY (`test_report_id`) REFERENCES `test_report` (`id`);
+  ADD CONSTRAINT `certificates_ibfk_1` FOREIGN KEY (`test_report_id`) REFERENCES `neo_sidomo_prod`.`test_report` (`id`);
 
 --
 -- Constraints for table `dide`
@@ -1181,12 +1188,6 @@ ALTER TABLE `history`
 --
 ALTER TABLE `test_references`
   ADD CONSTRAINT `test_references_ibfk_1` FOREIGN KEY (`standard_level_id`) REFERENCES `standard_levels` (`id`);
-
---
--- Constraints for table `test_reports`
---
-ALTER TABLE `test_reports`
-  ADD CONSTRAINT `test_reports_ibfk_1` FOREIGN KEY (`test_reference_id`) REFERENCES `test_references` (`id`);
 
 --
 -- Constraints for table `users`

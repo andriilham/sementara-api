@@ -129,6 +129,66 @@ module.exports = {
     });
     c.end();
   },
+  getFormProcedure: function (req, res) {
+    const request = ["%" + req.id + "%"]
+    c.query("SELECT * FROM `forms` WHERE `id` LIKE ?", request, { metadata: true, useArray: true }, function (err, rows) {
+      if (err) {
+        res.status(500).send({ message: "Error 500: Internal Server Error" });
+        console.log(err);
+        return
+      }
+
+      var data = [];
+      rows.forEach(function (items) {
+        data.push({
+          id: items[0],
+          name: items[1],
+          effective_date: items[2],
+          pic: items[3],
+          version: items[4],
+          file_pdf: items[5],
+          file_doc: items[6],
+          file_xls: items[7]
+        });
+      });
+      if (data.length < 1) {
+        res.status(404).send({ message: 'Data not found.' });
+      } else {
+        res.json(data);
+      }
+    });
+    c.end();
+  },
+  getFormProPIC: function (req, res) {
+    const request = ["%" + req.procedure + "%", "%" + req.pic + "%"]
+    c.query("SELECT * FROM `forms` WHERE `id` LIKE ? AND `pic` LIKE ?", request, { metadata: true, useArray: true }, function (err, rows) {
+      if (err) {
+        res.status(500).send({ message: "Error 500: Internal Server Error" });
+        console.log(err);
+        return
+      }
+
+      var data = [];
+      rows.forEach(function (items) {
+        data.push({
+          id: items[0],
+          name: items[1],
+          effective_date: items[2],
+          pic: items[3],
+          version: items[4],
+          file_pdf: items[5],
+          file_doc: items[6],
+          file_xls: items[7]
+        });
+      });
+      if (data.length < 1) {
+        res.status(404).send({ message: 'Data not found.' });
+      } else {
+        res.json(data);
+      }
+    });
+    c.end();
+  },
   newForm: function (req, res) {
     var request = [req.id, req.name, req.effective_date, req.pic, req.version, req.file_pdf, req.file_doc, req.file_xls];
     if (request.includes(undefined) || request.includes("")) {
