@@ -99,6 +99,36 @@ module.exports = {
     });
     c.end();
   },
+  getTestReportSearch2: function (req, res) {
+    const request = ["%" + req.id.toUpperCase() + "%", "%" + req.id2.toUpperCase() + "%"]
+    c.query("SELECT * FROM `test_reports` WHERE `id` LIKE ? OR `id` LIKE ?", request, { metadata: true, useArray: true }, function (err, rows) {
+      if (err) {
+        res.status(500).send({ message: "Error 500: Internal Server Error" });
+        console.log(err);
+        return
+      }
+
+      var data = [];
+      rows.forEach(function (items) {
+        data.push({
+          id: items[0],
+          company_name: items[1],
+          device_name: items[2],
+          brand: items[3],
+          model: items[4],
+          test_reference_id: items[5],
+          created: items[6],
+          file: items[7]
+        });
+      });
+      if (data.length < 1) {
+        res.status(404).send({ message: 'Data not found.' });
+      } else {
+        res.json(data);
+      }
+    });
+    c.end();
+  },
   getTestReportTestReference: function (req, res) {
     const request = ["%" + req.id + "%"]
     c.query("SELECT * FROM `test_reports` WHERE `test_reference_id` LIKE ?", request, { metadata: true, useArray: true }, function (err, rows) {

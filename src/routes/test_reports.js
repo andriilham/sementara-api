@@ -46,6 +46,10 @@ router.get('/search/:id', jwtMW, (req, res) => {
   db.getTestReportSearch(req.params, res)
 })
 
+router.get('/search/:id/:id2', jwtMW, (req, res) => {
+  db.getTestReportSearch2(req.params, res)
+})
+
 router.get('/test_reference/:id', jwtMW, (req, res) => {
   db.getTestReportTestReference(req.params, res)
 })

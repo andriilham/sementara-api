@@ -161,7 +161,7 @@ module.exports = {
   },
   getFormProPIC: function (req, res) {
     const request = ["%" + req.procedure + "%", "%" + req.pic + "%"]
-    c.query("SELECT * FROM `forms` WHERE `id` LIKE ? AND `pic` LIKE ?", request, { metadata: true, useArray: true }, function (err, rows) {
+    c.query("SELECT * FROM `forms` WHERE `id` LIKE ? AND (`pic` LIKE ? OR `pic`='*')", request, { metadata: true, useArray: true }, function (err, rows) {
       if (err) {
         res.status(500).send({ message: "Error 500: Internal Server Error" });
         console.log(err);

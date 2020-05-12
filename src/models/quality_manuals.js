@@ -94,8 +94,8 @@ module.exports = {
     c.end();
   },
   getQualityManualPIC: function (req, res) {
-    const request = ["%" + req.id + "%"]
-    c.query("SELECT * FROM `quality_manuals` WHERE `pic` LIKE ?", request, { metadata: true, useArray: true }, function (err, rows) {
+    const request = ["%" + req.id + "%", "%" + req.id + "%"]
+    c.query("SELECT DISTINCT p.`id`, p.`name`, p.`effective_date`, p.`pic`, p.`version`, p.`file` FROM `quality_manuals` p INNER JOIN `forms` f ON (f.`pic` LIKE ? OR f.`pic`='*') AND LEFT(p.`id`,6)=LEFT(f.`id`,6) OR p.`pic` LIKE ? AND p.`id` LIKE '%/P%'", request, { metadata: true, useArray: true }, function (err, rows) {
       if (err) {
         res.status(500).send({ message: "Error 500: Internal Server Error" });
         console.log(err);

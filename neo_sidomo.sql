@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: May 10, 2020 at 06:27 PM
+-- Generation Time: May 12, 2020 at 06:03 PM
 -- Server version: 10.1.30-MariaDB
 -- PHP Version: 5.6.33
 
@@ -44,12 +44,19 @@ CREATE TABLE `archives` (
 --
 
 CREATE TABLE `certificates` (
-  `id` varchar(20) NOT NULL,
+  `id` varchar(32) NOT NULL,
   `test_report_id` varchar(24) NOT NULL,
   `effective_date` varchar(24) NOT NULL,
-  `created` varchar(24) NOT NULL,
+  `due_date` varchar(24) NOT NULL,
   `file` text NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `certificates`
+--
+
+INSERT INTO `certificates` (`id`, `test_report_id`, `effective_date`, `due_date`, `file`) VALUES
+('TEL.342/LB-200/DDS-73/2019', '065/DQA/L/QA/2019', '2019-12-19', '2022-12-19', 'TEL.342LB-200DDS-732019_065DQALQA2019.pdf');
 
 -- --------------------------------------------------------
 
@@ -629,26 +636,26 @@ INSERT INTO `quality_manuals` (`id`, `name`, `effective_date`, `pic`, `version`,
 ('TLKM/TP/TRA/003', 'Pengukuran Conducted Emission EMC', '2019-09-08', 'Mgr-IQA', '1', ''),
 ('TLKM/TP/TRA/004', 'Pengukuran Radiated Immunity EMC', '2019-09-08', 'Mgr-IQA', '1', ''),
 ('TLKM/TP/TRA/005', 'Pengukuran Conducted Emission EMC', '2019-09-08', 'Mgr-IQA', '1', ''),
-('TLKM01/P ', 'Pengendalian Dokumen Sistem Manajemen', '2018-09-18', 'SM-PIA', '1', 'TLKM01P_v01_Pengendalian-Dokumen-Sistem-Manajemen.pdf'),
-('TLKM02/P ', 'Prosedur Tinjauan Permintaan, Tender, dan Kontrak', '2019-10-03', 'Mgr-UREL', '3', 'TLKM02P-v03--Tinjauan-Permintaan-Tender-dan-Kontrak.pdf'),
-('TLKM03/P ', 'Prosedur Sub-Kontrak Pengujian', '2018-10-22', 'Mgr-UREL', '1', 'TLKM03P_v01_Prosedur-Sub-Kontrak-Pengujian.pdf'),
-('TLKM04/P ', 'Prosedur Keluhan Pelanggann', '2018-10-22', 'Mgr-UREL', '1', 'TLKM04P_v01_Prosedur-Keluhan-Pelanggan.pdf'),
-('TLKM05/P ', 'Prosedur Survei Kepuasan Pelanggan', '2018-10-22', 'Mgr-UREL', '1', 'TLKM05P_v01_Prosedur-Survei-Kepuasan-Pelanggan.pdf'),
-('TLKM06/P ', 'Prosedur Umum dan Pelaporan Hasil Laboratorium', '2019-04-11', 'SM-PIA', '3', 'TLKM06P-v03--Prosedur-Umum-dan-Pelaporan-Hasil-Laboratorium.pdf'),
-('TLKM07/P ', 'Prosedur Tindakan Koreksi, Perbaikan, dan Pencegahan', '2018-10-22', 'SM-PIA', '1', 'TLKM07P_v01_Prosedur-Tindakan-Koreksi-Perbaikan-dan-Pencegahan.pdf'),
-('TLKM08/P ', 'Prosedur Validitas Hasil Uji dan Kalibrasi', '2019-04-17', 'SM-PIA', '2', 'TLKM08P-v02--Prosedur-Validitas-Hasil-Uji-dan-Kalibrasi.pdf'),
-('TLKM09/P ', 'Prosedur Audit Internal', '2018-10-22', 'SM-PIA', '1', 'TLKM09P_v01_Prosedur-Audit-Internal.pdf'),
-('TLKM10/P ', 'Prosedur Tinjauan Manajemen', '2018-10-22', 'SM-PIA', '1', 'TLKM10P_v01_Prosedur-Tinjauan-Manajemen.pdf'),
-('TLKM11/P ', 'Prosedur Pengembangan Kompetensi', '2018-10-22', 'SM-PIA', '1', 'TLKM11P_v01_Prosedur-Pengembangan-Kompetensi.pdf'),
-('TLKM12/P ', 'Prosedur Penanganan Barang Pengujian dan Kalibrasi', '2019-10-03', 'Mgr-UREL', '3', 'TLKM12P-v03--Penanganan-Barang-Pengujian-dan-Kalibrasi.pdf'),
-('TLKM13/P ', 'Prosedur Penanganan Peralatan dan Pengecekan Antara', '2018-10-22', 'SM-PIA', '1', 'TLKM13P-v01--Prosedur-Penanganan-Peralatan-dan-Pengecekan-Antara.pdf'),
-('TLKM14/P ', 'Prosedur Evaluasi Ketidakpastian Pengukuran', '2018-10-22', 'SM-PIA', '1', 'TLKM14P-v01--Prosedur-Evaluasi-Ketidakpastian-Pengukuran.pdf'),
-('TLKM15/P ', 'Prosedur Seleksi, Verifikasi, dan Metode Validasi', '2018-10-22', 'SM-PIA', '1', 'TLKM15P-v01--Prosedur-Seleksi-Verifikasi-dan-Validasi-Metode.pdf'),
-('TLKM16/P ', 'Prosedur Peta Kendali', '2018-10-22', 'SM-PIA', '1', 'TLKM16P-v01--Prosedur-Peta-Kendali.pdf'),
-('TLKM17/P ', 'Pengendalian Pekerjaan Pengujian dan Kalibrasi yang Tidak Sesuai', '2018-10-22', 'SM-PIA', '1', 'TLKM17P-v01--Prosedur-Pekerjaan-Pengujian-dan-Kalibrasi-Yang-Tidak-Sesuai.pdf'),
-('TLKM18/P ', 'Prosedur Ketertelusuran Pengukuran (Metrologi)', '2018-10-22', 'SM-PIA', '1', 'TLKM18P_v01_Prosedur-Ketertelusuran-Pengukuran-Metrologi.pdf'),
-('TLKM19/P ', 'Prosedur Tindakan Mengatasi Risiko dan Peluang', '2018-10-22', 'SM-PIA', '1', 'TLKM19P_v01_Prosedur-Tindakan-Mengatasi-Risiko-dan-Peluang.pdf'),
-('TLKM20/P ', 'Prosedur Rekrutmen dan Pengembangan Personel Alih Daya', '2019-12-20', 'SM-PIA', '2', 'TLKM20P-v02--Prosedur-Pengelolaan-Personel.pdf');
+('TLKM01/P', 'Pengendalian Dokumen Sistem Manajemen', '2018-09-18', 'SM-IAS', '1', 'TLKM01P_v01_Pengendalian-Dokumen-Sistem-Manajemen.pdf'),
+('TLKM02/P', 'Prosedur Tinjauan Permintaan, Tender, dan Kontrak', '2019-10-03', 'Mgr-UREL', '3', 'TLKM02P-v03--Tinjauan-Permintaan-Tender-dan-Kontrak.pdf'),
+('TLKM03/P', 'Prosedur Sub-Kontrak Pengujian', '2018-10-22', 'Mgr-UREL', '1', 'TLKM03P_v01_Prosedur-Sub-Kontrak-Pengujian.pdf'),
+('TLKM04/P', 'Prosedur Keluhan Pelanggann', '2018-10-22', 'Mgr-UREL', '1', 'TLKM04P_v01_Prosedur-Keluhan-Pelanggan.pdf'),
+('TLKM05/P', 'Prosedur Survei Kepuasan Pelanggan', '2018-10-22', 'Mgr-UREL', '1', 'TLKM05P_v01_Prosedur-Survei-Kepuasan-Pelanggan.pdf'),
+('TLKM06/P', 'Prosedur Umum dan Pelaporan Hasil Laboratorium', '2019-04-11', 'SM-IAS', '3', 'TLKM06P-v03--Prosedur-Umum-dan-Pelaporan-Hasil-Laboratorium.pdf'),
+('TLKM07/P', 'Prosedur Tindakan Koreksi, Perbaikan, dan Pencegahan', '2018-10-22', 'SM-IAS', '1', 'TLKM07P_v01_Prosedur-Tindakan-Koreksi-Perbaikan-dan-Pencegahan.pdf'),
+('TLKM08/P', 'Prosedur Validitas Hasil Uji dan Kalibrasi', '2019-04-17', 'SM-IAS', '2', 'TLKM08P-v02--Prosedur-Validitas-Hasil-Uji-dan-Kalibrasi.pdf'),
+('TLKM09/P', 'Prosedur Audit Internal', '2018-10-22', 'SM-IAS', '1', 'TLKM09P_v01_Prosedur-Audit-Internal.pdf'),
+('TLKM10/P', 'Prosedur Tinjauan Manajemen', '2018-10-22', 'SM-IAS', '1', 'TLKM10P_v01_Prosedur-Tinjauan-Manajemen.pdf'),
+('TLKM11/P', 'Prosedur Pengembangan Kompetensi', '2018-10-22', 'SM-IAS', '1', 'TLKM11P_v01_Prosedur-Pengembangan-Kompetensi.pdf'),
+('TLKM12/P', 'Prosedur Penanganan Barang Pengujian dan Kalibrasi', '2019-10-03', 'Mgr-UREL', '3', 'TLKM12P-v03--Penanganan-Barang-Pengujian-dan-Kalibrasi.pdf'),
+('TLKM13/P', 'Prosedur Penanganan Peralatan dan Pengecekan Antara', '2018-10-22', 'SM-IAS', '1', 'TLKM13P-v01--Prosedur-Penanganan-Peralatan-dan-Pengecekan-Antara.pdf'),
+('TLKM14/P', 'Prosedur Evaluasi Ketidakpastian Pengukuran', '2018-10-22', 'SM-IAS', '1', 'TLKM14P-v01--Prosedur-Evaluasi-Ketidakpastian-Pengukuran.pdf'),
+('TLKM15/P', 'Prosedur Seleksi, Verifikasi, dan Metode Validasi', '2018-10-22', 'SM-IAS', '1', 'TLKM15P-v01--Prosedur-Seleksi-Verifikasi-dan-Validasi-Metode.pdf'),
+('TLKM16/P', 'Prosedur Peta Kendali', '2018-10-22', 'SM-IAS', '1', 'TLKM16P-v01--Prosedur-Peta-Kendali.pdf'),
+('TLKM17/P', 'Pengendalian Pekerjaan Pengujian dan Kalibrasi yang Tidak Sesuai', '2018-10-22', 'SM-IAS', '1', 'TLKM17P-v01--Prosedur-Pekerjaan-Pengujian-dan-Kalibrasi-Yang-Tidak-Sesuai.pdf'),
+('TLKM18/P', 'Prosedur Ketertelusuran Pengukuran (Metrologi)', '2018-10-22', 'SM-IAS', '1', 'TLKM18P_v01_Prosedur-Ketertelusuran-Pengukuran-Metrologi.pdf'),
+('TLKM19/P', 'Prosedur Tindakan Mengatasi Risiko dan Peluang', '2018-10-22', 'SM-IAS', '1', 'TLKM19P_v01_Prosedur-Tindakan-Mengatasi-Risiko-dan-Peluang.pdf'),
+('TLKM20/P', 'Prosedur Rekrutmen dan Pengembangan Personel Alih Daya', '2019-12-20', 'SM-IAS', '2', 'TLKM20P-v02--Prosedur-Pengelolaan-Personel.pdf');
 
 -- --------------------------------------------------------
 
@@ -1015,6 +1022,7 @@ CREATE TABLE `test_reports` (
 
 INSERT INTO `test_reports` (`id`, `company_name`, `device_name`, `brand`, `model`, `test_reference_id`, `created`, `file`) VALUES
 ('002/KAB/TL/QA/2019', 'TAKDIR LIMA SEKAWAN', 'Optical Distribution Point (ODP) dengan Solid Splitter', 'SUKAi', '16 Port Adaptor', 'STEL L-071-2017', '2019-03-22', '002KABTLQA2019_TAKDIR-LIMA-SEKAWAN.pdf'),
+('065/DQA/L/QA/2019', 'ZTE INDONESIA', 'ONT Premium for GPON', 'ZTE', 'F670 V2.0', 'STEL Q-084-2019', '2019-12-19', '065DQALQA2019_ZTE-INDONESIA.pdf'),
 ('208/KAB/VT/2018', 'BUANA SELARAS GLOBALINDO', 'FABRIC INNER DUCT', 'OPTICELL', '6428-3', '', '2019-04-10', '208KABVT2018_BUANA-SELARAS-GLOBALINDO.pdf');
 
 -- --------------------------------------------------------
@@ -1168,7 +1176,7 @@ ALTER TABLE `archives`
 -- Constraints for table `certificates`
 --
 ALTER TABLE `certificates`
-  ADD CONSTRAINT `certificates_ibfk_1` FOREIGN KEY (`test_report_id`) REFERENCES `neo_sidomo_prod`.`test_report` (`id`);
+  ADD CONSTRAINT `certificates_ibfk_1` FOREIGN KEY (`test_report_id`) REFERENCES `test_reports` (`id`);
 
 --
 -- Constraints for table `dide`

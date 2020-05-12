@@ -16,7 +16,7 @@ const storageCertificates = multer.diskStorage({
     cb(null, 'src/uploads/certificates/');
   },
   filename: function (req, file, cb) {
-    cb(null, req.body.id.replace(new RegExp("/", 'g'), "") + '_' + req.body.effective_date + + path.extname(file.originalname));
+    cb(null, req.body.id.replace(new RegExp("/", 'g'), "") + '_' + req.body.test_report_id.replace(new RegExp("/", 'g'), "-") + path.extname(file.originalname));
   }
 })
 
@@ -44,6 +44,10 @@ router.get('/:id', (req, res) => {
 
 router.get('/test-report/:id', jwtMW, (req, res) => {
   db.getCertificateTestReport(req.params, res)
+})
+
+router.get('/test-report/:id/:id2', jwtMW, (req, res) => {
+  db.getCertificateTestReport2(req.params, res)
 })
 
 router.post('/', jwtMW, (req, res) => {

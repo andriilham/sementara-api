@@ -16,7 +16,7 @@ const storageUsers = multer.diskStorage({
     cb(null, 'src/uploads/users/');
   },
   filename: function (req, file, cb) {
-    cb(null, file.fieldname + '_' + req.params.id);
+    cb(null, file.fieldname + '_' + req.params.id + path.extname(file.originalname));
   }
 })
 
