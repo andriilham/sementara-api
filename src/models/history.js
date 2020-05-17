@@ -176,7 +176,14 @@ module.exports = {
   },
   newHistory: function (req, res) {
     const waktu = new Date().toISOString();
-    var request = ['H' + new Date(waktu).valueOf().toString(32).toUpperCase(), req.reference_id, req.user_id, req.step_id, req.message, waktu];
+    var request = [
+      'H' + new Date(waktu).valueOf().toString(32).toUpperCase(),
+      req.reference_id,
+      req.user_id,
+      req.step_id,
+      req.message,
+      waktu
+    ];
     if (request.includes(undefined)) {
       res.send({ message: 'Bad Request: Parameters cannot empty.' });
       return
@@ -199,7 +206,14 @@ module.exports = {
   },
   updateHistory: function (req, res) {
     const waktu = new Date().toISOString();
-    var request = [req.reference_id, req.user_id, req.step_id, req.message, waktu, req.id];
+    var request = [
+      req.reference_id,
+      req.user_id,
+      req.step_id,
+      req.message,
+      waktu,
+      req.id
+    ];
     if (request.includes(undefined)) {
       res.send({ message: 'Bad Request: Parameters cannot empty.' });
       return

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: May 12, 2020 at 06:03 PM
+-- Generation Time: May 17, 2020 at 04:06 PM
 -- Server version: 10.1.30-MariaDB
 -- PHP Version: 5.6.33
 
@@ -660,6 +660,28 @@ INSERT INTO `quality_manuals` (`id`, `name`, `effective_date`, `pic`, `version`,
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `quality_records`
+--
+
+CREATE TABLE `quality_records` (
+  `id` varchar(20) NOT NULL,
+  `form_id` varchar(20) NOT NULL,
+  `pic` varchar(20) NOT NULL,
+  `name` text NOT NULL,
+  `created` varchar(24) NOT NULL,
+  `file` text NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `quality_records`
+--
+
+INSERT INTO `quality_records` (`id`, `form_id`, `pic`, `name`, `created`, `file`) VALUES
+('R1E8GM55M5', 'TLKM06/F/009', 'KAB', 'Aldi W_SCD', '2020-03-12', 'TLKM06F009_Aldi_SCD_1589698008761.pdf');
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `requests`
 --
 
@@ -751,15 +773,24 @@ CREATE TABLE `steps` (
 --
 
 INSERT INTO `steps` (`id`, `name`, `step_number`, `info`, `created`, `updated`) VALUES
+('ARV1', 'Add', 0, 'has add the record', '2020-04-19T15:40:53.729Z', '2020-04-19T15:40:53.729Z'),
+('ARV2', 'Edit', 0, 'has edit the record', '2020-04-19T15:40:53.729Z', '2020-04-19T15:40:53.729Z'),
+('ARV3', 'Delete', 0, 'has delete the record', '2020-04-19T15:40:53.729Z', '2020-04-19T15:40:53.729Z'),
 ('CER1', 'Add', 0, 'has add the record', '2020-04-19T15:40:53.729Z', '2020-04-19T15:40:53.729Z'),
 ('CER2', 'Edit', 0, 'has edit the record', '2020-04-19T15:40:53.729Z', '2020-04-19T15:40:53.729Z'),
 ('CER3', 'Delete', 0, 'has delete the record', '2020-04-19T15:40:53.729Z', '2020-04-19T15:40:53.729Z'),
+('DDE1', 'Add', 0, 'has add the record', '2020-04-19T15:40:53.729Z', '2020-04-19T15:40:53.729Z'),
+('DDE2', 'Edit', 0, 'has edit the record', '2020-04-19T15:40:53.729Z', '2020-04-19T15:40:53.729Z'),
+('DDE3', 'Delete', 0, 'has delete the record', '2020-04-19T15:40:53.729Z', '2020-04-19T15:40:53.729Z'),
 ('FRM1', 'Add', 0, 'has add the record', '2020-04-19T15:40:53.729Z', '2020-04-19T15:40:53.729Z'),
 ('FRM2', 'Edit', 0, 'has edit the record', '2020-04-19T15:40:53.729Z', '2020-04-19T15:40:53.729Z'),
 ('FRM3', 'Delete', 0, 'has delete the record', '2020-04-19T15:40:53.729Z', '2020-04-19T15:40:53.729Z'),
 ('QUM1', 'Add', 0, 'has add the record', '2020-04-19T15:40:53.729Z', '2020-04-19T15:40:53.729Z'),
 ('QUM2', 'Edit', 0, 'has edit the record', '2020-04-19T15:40:53.729Z', '2020-04-19T15:40:53.729Z'),
 ('QUM3', 'Delete', 0, 'has delete the record', '2020-04-19T15:40:53.729Z', '2020-04-19T15:40:53.729Z'),
+('REC1', 'Add', 0, 'has add the record', '2020-04-19T15:40:53.729Z', '2020-04-19T15:40:53.729Z'),
+('REC2', 'Edit', 0, 'has edit the record', '2020-04-19T15:40:53.729Z', '2020-04-19T15:40:53.729Z'),
+('REC3', 'Delete', 0, 'has delete the record', '2020-04-19T15:40:53.729Z', '2020-04-19T15:40:53.729Z'),
 ('REF1', 'Add', 0, 'has add the record', '2020-04-19T15:40:53.729Z', '2020-04-19T15:40:53.729Z'),
 ('REF2', 'Edit', 0, 'has edit the record', '2020-04-19T15:40:53.729Z', '2020-04-19T15:40:53.729Z'),
 ('REF3', 'Delete', 0, 'has delete the record', '2020-04-19T15:40:53.729Z', '2020-04-19T15:40:53.729Z'),
@@ -1112,6 +1143,13 @@ ALTER TABLE `quality_manuals`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `quality_records`
+--
+ALTER TABLE `quality_records`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `form_id` (`form_id`);
+
+--
 -- Indexes for table `requests`
 --
 ALTER TABLE `requests`
@@ -1190,6 +1228,12 @@ ALTER TABLE `dide`
 ALTER TABLE `history`
   ADD CONSTRAINT `history_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`),
   ADD CONSTRAINT `history_ibfk_2` FOREIGN KEY (`step_id`) REFERENCES `steps` (`id`);
+
+--
+-- Constraints for table `quality_records`
+--
+ALTER TABLE `quality_records`
+  ADD CONSTRAINT `quality_records_ibfk_1` FOREIGN KEY (`form_id`) REFERENCES `forms` (`id`);
 
 --
 -- Constraints for table `test_references`
