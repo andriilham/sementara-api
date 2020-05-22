@@ -75,7 +75,7 @@ router.post('/', jwtMW, (req, res) => {
     console.log('Upload success.')
 
     // File name key used while in production and filename in development
-    req.body.file = req.file.filename
+    req.body.file = req.file ? req.file.filename : req.body.file
 
     db.newTestReference(req.body, res)
   })

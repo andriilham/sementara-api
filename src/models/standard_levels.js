@@ -14,7 +14,7 @@ module.exports = {
   getStandardLevelAll: function (req, res) {
     c.query("SELECT * FROM `standard_levels`", null, { metadata: true, useArray: true }, function (err, rows) {
       if (err) {
-        res.status(500).send({ message: "Error 500: Internal Server Error" });
+        res.send({ message: err.message });
         console.log(err);
         return
       }
@@ -37,7 +37,7 @@ module.exports = {
   getStandardLevel: function (req, res) {
     c.query("SELECT * FROM `standard_levels` WHERE id=?", [req.id], { metadata: true, useArray: true }, function (err, rows) {
       if (err) {
-        res.status(500).send({ message: "Error 500: Internal Server Error" });
+        res.send({ message: err.message });
         console.log(err);
         return
       }
@@ -66,7 +66,7 @@ module.exports = {
     }
     c.query("INSERT INTO `standard_levels` (`id`, `name`) VALUES (?, ?)", request, { metadata: true, useArray: true }, function (err, rows) {
       if (err) {
-        res.status(500).send({ message: "Error 500: Internal Server Error" });
+        res.send({ message: err.message });
         console.log(err);
         return
       }
@@ -89,7 +89,7 @@ module.exports = {
     }
     c.query("UPDATE `standard_levels` SET `name`=? WHERE `id`=?", request, { metadata: true, useArray: true }, function (err, rows) {
       if (err) {
-        res.status(500).send({ message: "Error 500: Internal Server Error" });
+        res.send({ message: err.message });
         console.log(err);
         return
       }
@@ -111,7 +111,7 @@ module.exports = {
     }
     c.query("DELETE FROM `standard_levels` WHERE `id`=?", request, { metadata: true, useArray: true }, function (err, rows) {
       if (err) {
-        res.status(500).send({ message: "Error 500: Internal Server Error" });
+        res.send({ message: err.message });
         console.log(err);
         return
       }
@@ -132,7 +132,7 @@ module.exports = {
   deleteStandardLevelAll: function (req, res) {
     c.query("DELETE FROM `standard_levels`", null, { metadata: true, useArray: true }, function (err, rows) {
       if (err) {
-        res.status(500).send({ message: "Error 500: Internal Server Error" });
+        res.send({ message: err.message });
         console.log(err);
         return
       }

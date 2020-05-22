@@ -14,7 +14,7 @@ module.exports = {
   getUserAll: function (req, res) {
     c.query("SELECT * FROM `users`", null, { metadata: true, useArray: true }, function (err, rows) {
       if (err) {
-        res.status(500).send({ message: "Error 500: Internal Server Error" });
+        res.send({ message: err.message });
         console.log(err);
         return
       }
@@ -44,7 +44,7 @@ module.exports = {
   getUser: function (req, res) {
     c.query("SELECT * FROM `users` WHERE `id`=?", [req.id], { metadata: true, useArray: true }, function (err, rows) {
       if (err) {
-        res.status(500).send({ message: "Error 500: Internal Server Error" });
+        res.send({ message: err.message });
         console.log(err);
         return
       }
@@ -74,7 +74,7 @@ module.exports = {
   getUserRole: function (req, res) {
     c.query("SELECT * FROM `users` WHERE `role`=?", [req.id], { metadata: true, useArray: true }, function (err, rows) {
       if (err) {
-        res.status(500).send({ message: "Error 500: Internal Server Error" });
+        res.send({ message: err.message });
         console.log(err);
         return
       }
@@ -105,7 +105,7 @@ module.exports = {
     var request = ["%" + req.id + "%", "%" + req.id + "%"];
     c.query("SELECT * FROM `users` WHERE `id` LIKE ? OR `name` LIKE ?", request, { metadata: true, useArray: true }, function (err, rows) {
       if (err) {
-        res.status(500).send({ message: "Error 500: Internal Server Error" });
+        res.send({ message: err.message });
         console.log(err);
         return
       }
@@ -141,7 +141,7 @@ module.exports = {
     }
     c.query("INSERT INTO `users` (`id`, `name`, `password`, `email`, `role`, `registered`, `updated`) VALUES (?, ?, ?, ?, ?, ?, ?)", request, { metadata: true, useArray: true }, function (err, rows) {
       if (err) {
-        res.status(500).send({ message: "Error 500: Internal Server Error" });
+        res.send({ message: err.message });
         console.log(err);
         return
       }
@@ -164,7 +164,7 @@ module.exports = {
     }
     c.query("UPDATE `users` SET `name`=?, `telp`=?, `email`=?, `updated`=? WHERE `id`=?", request, { metadata: true, useArray: true }, function (err, rows) {
       if (err) {
-        res.status(500).send({ message: "Error 500: Internal Server Error" });
+        res.send({ message: err.message });
         console.log(err);
         return
       }
@@ -187,7 +187,7 @@ module.exports = {
     }
     c.query("UPDATE `users` SET `photo`=?, `updated`=? WHERE `id`=?", request, { metadata: true, useArray: true }, function (err, rows) {
       if (err) {
-        res.status(500).send({ message: "Error 500: Internal Server Error" });
+        res.send({ message: err.message });
         console.log(err);
         return
       }
@@ -210,7 +210,7 @@ module.exports = {
     }
     c.query("UPDATE `users` SET `status`='9', `updated`=? WHERE `id`=?", request, { metadata: true, useArray: true }, function (err, rows) {
       if (err) {
-        res.status(500).send({ message: "Error 500: Internal Server Error" });
+        res.send({ message: err.message });
         console.log(err);
         return
       }
@@ -236,7 +236,7 @@ module.exports = {
     }
     c.query("DELETE FROM `users` WHERE `id`=?", request, { metadata: true, useArray: true }, function (err, rows) {
       if (err) {
-        res.status(500).send({ message: "Error 500: Internal Server Error" });
+        res.send({ message: err.message });
         console.log(err);
         return
       }
@@ -257,7 +257,7 @@ module.exports = {
   deleteUserAll: function (req, res) {
     c.query("DELETE FROM `users`", null, { metadata: true, useArray: true }, function (err, rows) {
       if (err) {
-        res.status(500).send({ message: "Error 500: Internal Server Error" });
+        res.send({ message: err.message });
         console.log(err);
         return
       }

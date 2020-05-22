@@ -14,7 +14,7 @@ module.exports = {
   getFormAll: function (req, res) {
     c.query("SELECT * FROM `forms`", null, { metadata: true, useArray: true }, function (err, rows) {
       if (err) {
-        res.status(500).send({ message: "Error 500: Internal Server Error" });
+        res.send({ message: err.message });
         console.log(err);
         return
       }
@@ -43,7 +43,7 @@ module.exports = {
   getForm: function (req, res) {
     c.query("SELECT * FROM `forms` WHERE `id`=?", [req.id], { metadata: true, useArray: true }, function (err, rows) {
       if (err) {
-        res.status(500).send({ message: "Error 500: Internal Server Error" });
+        res.send({ message: err.message });
         console.log(err);
         return
       }
@@ -73,7 +73,7 @@ module.exports = {
     const request = ["%" + req.id.toUpperCase() + "%"]
     c.query("SELECT * FROM `forms` WHERE `id` LIKE ?", request, { metadata: true, useArray: true }, function (err, rows) {
       if (err) {
-        res.status(500).send({ message: "Error 500: Internal Server Error" });
+        res.send({ message: err.message });
         console.log(err);
         return
       }
@@ -103,7 +103,7 @@ module.exports = {
     const request = ["%" + req.id + "%"]
     c.query("SELECT * FROM `forms` WHERE `pic` LIKE ?", request, { metadata: true, useArray: true }, function (err, rows) {
       if (err) {
-        res.status(500).send({ message: "Error 500: Internal Server Error" });
+        res.send({ message: err.message });
         console.log(err);
         return
       }
@@ -133,7 +133,7 @@ module.exports = {
     const request = ["%" + req.id + "%"]
     c.query("SELECT * FROM `forms` WHERE `id` LIKE ?", request, { metadata: true, useArray: true }, function (err, rows) {
       if (err) {
-        res.status(500).send({ message: "Error 500: Internal Server Error" });
+        res.send({ message: err.message });
         console.log(err);
         return
       }
@@ -163,7 +163,7 @@ module.exports = {
     const request = ["%" + req.procedure + "%", "%" + req.pic + "%"]
     c.query("SELECT * FROM `forms` WHERE `id` LIKE ? AND (`pic` LIKE ? OR `pic`='*')", request, { metadata: true, useArray: true }, function (err, rows) {
       if (err) {
-        res.status(500).send({ message: "Error 500: Internal Server Error" });
+        res.send({ message: err.message });
         console.log(err);
         return
       }
@@ -197,7 +197,7 @@ module.exports = {
     }
     c.query("INSERT INTO `forms`(`id`, `name`, `effective_date`, `pic`, `version`, `file_pdf`, `file_doc`, `file_xls`) VALUES (?, ?, ?, ?, ?, ?, ?, ?)", request, { metadata: true, useArray: true }, function (err, rows) {
       if (err) {
-        res.status(500).send({ message: "Error 500: Internal Server Error" });
+        res.send({ message: err.message });
         console.log(err);
         return
       }
@@ -219,7 +219,7 @@ module.exports = {
     }
     c.query("UPDATE `forms` SET `name`=?, `effective_date`=?, `pic`=?, `version`=? WHERE `id`=?", request, { metadata: true, useArray: true }, function (err, rows) {
       if (err) {
-        res.status(500).send({ message: "Error 500: Internal Server Error" });
+        res.send({ message: err.message });
         console.log(err);
         return
       }
@@ -241,7 +241,7 @@ module.exports = {
     }
     c.query("UPDATE `devices` SET `file_pdf`=? WHERE `id`=?", request, { metadata: true, useArray: true }, function (err, rows) {
       if (err) {
-        res.status(500).send({ message: "Error 500: Internal Server Error" });
+        res.send({ message: err.message });
         console.log(err);
         return
       }
@@ -263,7 +263,7 @@ module.exports = {
     }
     c.query("UPDATE `devices` SET `file_doc`=? WHERE `id`=?", request, { metadata: true, useArray: true }, function (err, rows) {
       if (err) {
-        res.status(500).send({ message: "Error 500: Internal Server Error" });
+        res.send({ message: err.message });
         console.log(err);
         return
       }
@@ -285,7 +285,7 @@ module.exports = {
     }
     c.query("UPDATE `devices` SET `file_xls`=? WHERE `id`=?", request, { metadata: true, useArray: true }, function (err, rows) {
       if (err) {
-        res.status(500).send({ message: "Error 500: Internal Server Error" });
+        res.send({ message: err.message });
         console.log(err);
         return
       }
@@ -307,7 +307,7 @@ module.exports = {
     }
     c.query("DELETE FROM `forms` WHERE `id`=?", request, { metadata: true, useArray: true }, function (err, rows) {
       if (err) {
-        res.status(500).send({ message: "Error 500: Internal Server Error" });
+        res.send({ message: err.message });
         console.log(err);
         return
       }
@@ -328,7 +328,7 @@ module.exports = {
   deleteFormAll: function (req, res) {
     c.query("DELETE FROM `forms`", null, { metadata: true, useArray: true }, function (err, rows) {
       if (err) {
-        res.status(500).send({ message: "Error 500: Internal Server Error" });
+        res.send({ message: err.message });
         console.log(err);
         return
       }

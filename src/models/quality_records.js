@@ -14,7 +14,7 @@ module.exports = {
   getQualityRecordAll: function (req, res) {
     c.query("SELECT * FROM `quality_records`", null, { metadata: true, useArray: true }, function (err, rows) {
       if (err) {
-        res.status(500).send({ message: "Error 500: Internal Server Error" });
+        res.send({ message: err.message });
         console.log(err);
         return
       }
@@ -41,7 +41,7 @@ module.exports = {
   getQualityRecord: function (req, res) {
     c.query("SELECT * FROM `quality_records` WHERE `id`=?", [req.id], { metadata: true, useArray: true }, function (err, rows) {
       if (err) {
-        res.status(500).send({ message: "Error 500: Internal Server Error" });
+        res.send({ message: err.message });
         console.log(err);
         return
       }
@@ -69,7 +69,7 @@ module.exports = {
     const request = [req.id.toUpperCase()]
     c.query("SELECT * FROM `quality_records` WHERE `form_id`=?", request, { metadata: true, useArray: true }, function (err, rows) {
       if (err) {
-        res.status(500).send({ message: "Error 500: Internal Server Error" });
+        res.send({ message: err.message });
         console.log(err);
         return
       }
@@ -100,7 +100,7 @@ module.exports = {
     ]
     c.query("SELECT DISTINCT p.`id`, p.`form_id`, p.`pic`, p.`name`, p.`created`, p.`file` FROM `quality_records` p INNER JOIN `forms` f ON (f.`name` LIKE ? OR f.`name`='*') AND LEFT(p.`id`,6)=LEFT(f.`id`,6) OR p.`name` LIKE ? AND p.`id` LIKE '%/P%'", request, { metadata: true, useArray: true }, function (err, rows) {
       if (err) {
-        res.status(500).send({ message: "Error 500: Internal Server Error" });
+        res.send({ message: err.message });
         console.log(err);
         return
       }
@@ -140,7 +140,7 @@ module.exports = {
     }
     c.query("INSERT INTO `quality_records`(`id`, `form_id`, `pic`, `name`, `created`, `file`) VALUES (?, ?, ?, ?, ?, ?)", request, { metadata: true, useArray: true }, function (err, rows) {
       if (err) {
-        res.status(500).send({ message: "Error 500: Internal Server Error" });
+        res.send({ message: err.message });
         console.log(err);
         return
       }
@@ -169,7 +169,7 @@ module.exports = {
     }
     c.query("UPDATE `quality_records` SET `form_id`=?, `pic`=?, `name`=?, `created`=?, `file`=? WHERE `id`=?", request, { metadata: true, useArray: true }, function (err, rows) {
       if (err) {
-        res.status(500).send({ message: "Error 500: Internal Server Error" });
+        res.send({ message: err.message });
         console.log(err);
         return
       }
@@ -191,7 +191,7 @@ module.exports = {
     }
     c.query("DELETE FROM `quality_records` WHERE `id`=?", request, { metadata: true, useArray: true }, function (err, rows) {
       if (err) {
-        res.status(500).send({ message: "Error 500: Internal Server Error" });
+        res.send({ message: err.message });
         console.log(err);
         return
       }
@@ -212,7 +212,7 @@ module.exports = {
   deleteQualityRecordAll: function (req, res) {
     c.query("DELETE FROM `quality_records`", null, { metadata: true, useArray: true }, function (err, rows) {
       if (err) {
-        res.status(500).send({ message: "Error 500: Internal Server Error" });
+        res.send({ message: err.message });
         console.log(err);
         return
       }

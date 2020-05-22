@@ -15,7 +15,7 @@ module.exports = {
     var req = [id, pass];
     c.query("SELECT * FROM `users` WHERE `id`=? AND `password`=?", req, { metadata: true, useArray: true }, function (err, rows) {
       if (err) {
-        res.status(500).send({ message: "Error 500: Internal Server Error" });
+        res.send({ message: err.message });
         console.log(err);
         return
       }
@@ -47,7 +47,7 @@ module.exports = {
     const waktu = new Date().toISOString();
     c.query("SELECT `email`, `status` FROM `verification_token` WHERE `token`=? AND (`status`=0 OR `status`=2)", [req.token], { metadata: true, useArray: true }, function (err, rows) {
       if (err) {
-        res.status(500).send({ message: "Error 500: Internal Server Error" });
+        res.send({ message: err.message });
         console.log(err);
         return
       }
@@ -117,7 +117,7 @@ module.exports = {
     }
     c.query("UPDATE `users` SET `status`='2', `updated`=? WHERE `id`=? AND `id` LIKE 'U%'", [waktu, req.id], { metadata: true, useArray: true }, function (err, rows) {
       if (err) {
-        res.status(500).send({ message: "Error 500: Internal Server Error" });
+        res.send({ message: err.message });
         console.log(err);
         return
       }
@@ -134,7 +134,7 @@ module.exports = {
   checkVerified: function (req, res) {
     c.query("SELECT `status` FROM `users` WHERE `id`=? AND `status`=1", [req.id], { metadata: true, useArray: true }, function (err, rows) {
       if (err) {
-        res.status(500).send({ message: "Error 500: Internal Server Error" });
+        res.send({ message: err.message });
         console.log(err);
         return
       }
@@ -169,7 +169,7 @@ module.exports = {
     }
     c.query("SELECT `name` FROM `users` WHERE `email`=? AND `id` LIKE 'U%'", [req.email], { metadata: true, useArray: true }, function (err, rows) {
       if (err) {
-        res.status(500).send({ message: "Error 500: Internal Server Error" });
+        res.send({ message: err.message });
         console.log(err);
         return
       }
@@ -202,7 +202,7 @@ module.exports = {
   forgotPassword_getToken(req, res) {
     c.query("SELECT `email`, `expired`, `status` FROM `reset_password` WHERE `token`=? AND (`status`=0 OR `status`=2)", [req.token], { metadata: true, useArray: true }, function (err, rows) {
       if (err) {
-        res.status(500).send({ message: "Error 500: Internal Server Error" });
+        res.send({ message: err.message });
         console.log(err);
         return
       }
@@ -232,7 +232,7 @@ module.exports = {
     const waktu = new Date().toISOString();
     c.query("UPDATE `users` SET `password`=?, `updated`=? WHERE `email`=? AND `id` LIKE 'U%'", [password, waktu, req.email], { metadata: true, useArray: true }, function (err, rows) {
       if (err) {
-        res.status(500).send({ message: "Error 500: Internal Server Error" });
+        res.send({ message: err.message });
         console.log(err);
         return
       }
@@ -244,7 +244,7 @@ module.exports = {
     });
     c.query("UPDATE `reset_password` SET `status`=1, `updated`=? WHERE `token`=?", [waktu, req.token], { metadata: true, useArray: true }, function (err, rows) {
       if (err) {
-        res.status(500).send({ message: "Error 500: Internal Server Error" });
+        res.send({ message: err.message });
         console.log(err);
         return
       }
@@ -259,7 +259,7 @@ module.exports = {
   checkUserRegistered: function (req, res) {
     c.query("SELECT * FROM `users` WHERE `id`=?", [req.id], { metadata: true, useArray: true }, function (err, rows) {
       if (err) {
-        res.status(500).send({ message: "Error 500: Internal Server Error" });
+        res.send({ message: err.message });
         console.log(err);
         return
       }
@@ -283,7 +283,7 @@ module.exports = {
   deleteVerificationToken: function (req, res) {
     c.query("DELETE FROM `verification_token`", null, { metadata: true, useArray: true }, function (err, rows) {
       if (err) {
-        res.status(500).send({ message: "Error 500: Internal Server Error" });
+        res.send({ message: err.message });
         console.log(err);
         return
       }
@@ -299,7 +299,7 @@ module.exports = {
   deleteResetPasswordToken: function (req, res) {
     c.query("DELETE FROM `reset_password`", null, { metadata: true, useArray: true }, function (err, rows) {
       if (err) {
-        res.status(500).send({ message: "Error 500: Internal Server Error" });
+        res.send({ message: err.message });
         console.log(err);
         return
       }
@@ -316,14 +316,14 @@ module.exports = {
     const waktu = new Date().valueOf();
     c.query("DELETE FROM `reset_password` WHERE `status`=1 OR `status`=3 OR `expired`<?", [waktu], { metadata: true, useArray: true }, function (err, rows) {
       if (err) {
-        res.status(500).send({ message: "Error 500: Internal Server Error" });
+        res.send({ message: err.message });
         console.log(err);
         return
       }
     });
     c.query("DELETE FROM `verification_token` WHERE `status`=1 OR `status`=3", [waktu], { metadata: true, useArray: true }, function (err, rows) {
       if (err) {
-        res.status(500).send({ message: "Error 500: Internal Server Error" });
+        res.send({ message: err.message });
         console.log(err);
         return
       }

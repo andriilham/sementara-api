@@ -14,7 +14,7 @@ module.exports = {
   getStepAll: function (req, res) {
     c.query("SELECT * FROM `steps`", null, { metadata: true, useArray: true }, function (err, rows) {
       if (err) {
-        res.status(500).send({ message: "Error 500: Internal Server Error" });
+        res.send({ message: err.message });
         console.log(err);
         return
       }
@@ -41,7 +41,7 @@ module.exports = {
   getStep: function (req, res) {
     c.query("SELECT * FROM `steps` WHERE id=?", [req.id], { metadata: true, useArray: true }, function (err, rows) {
       if (err) {
-        res.status(500).send({ message: "Error 500: Internal Server Error" });
+        res.send({ message: err.message });
         console.log(err);
         return
       }
@@ -69,7 +69,7 @@ module.exports = {
     const request = ["%" + req.id + "%"]
     c.query("SELECT * FROM `steps` WHERE id LIKE ?", request, { metadata: true, useArray: true }, function (err, rows) {
       if (err) {
-        res.status(500).send({ message: "Error 500: Internal Server Error" });
+        res.send({ message: err.message });
         console.log(err);
         return
       }
@@ -102,7 +102,7 @@ module.exports = {
     }
     c.query("INSERT INTO `steps`(`id`, `name`, `step_number`, `created`, `updated`) VALUES (?, ?, ?, ?, ?, ?)", request, { metadata: true, useArray: true }, function (err, rows) {
       if (err) {
-        res.status(500).send({ message: "Error 500: Internal Server Error" });
+        res.send({ message: err.message });
         console.log(err);
         return
       }
@@ -125,7 +125,7 @@ module.exports = {
     }
     c.query("UPDATE `steps` SET `name`=?, `step_number`=?, `info`=?, `updated`=? WHERE `id`=?", request, { metadata: true, useArray: true }, function (err, rows) {
       if (err) {
-        res.status(500).send({ message: "Error 500: Internal Server Error" });
+        res.send({ message: err.message });
         console.log(err);
         return
       }
@@ -147,7 +147,7 @@ module.exports = {
     }
     c.query("DELETE FROM `steps` WHERE `id`=?", request, { metadata: true, useArray: true }, function (err, rows) {
       if (err) {
-        res.status(500).send({ message: "Error 500: Internal Server Error" });
+        res.send({ message: err.message });
         console.log(err);
         return
       }
@@ -168,7 +168,7 @@ module.exports = {
   deleteStepAll: function (req, res) {
     c.query("DELETE FROM `steps`", null, { metadata: true, useArray: true }, function (err, rows) {
       if (err) {
-        res.status(500).send({ message: "Error 500: Internal Server Error" });
+        res.send({ message: err.message });
         console.log(err);
         return
       }

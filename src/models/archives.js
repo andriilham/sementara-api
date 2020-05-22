@@ -14,7 +14,7 @@ module.exports = {
   getArchiveAll: function (req, res) {
     c.query("SELECT * FROM `archives`", null, { metadata: true, useArray: true }, function (err, rows) {
       if (err) {
-        res.status(500).send({ message: "Error 500: Internal Server Error" });
+        res.send({ message: err.message });
         console.log(err);
         return
       }
@@ -41,7 +41,7 @@ module.exports = {
   getArchive: function (req, res) {
     c.query("SELECT * FROM `archives` WHERE `id`=?", [req.id], { metadata: true, useArray: true }, function (err, rows) {
       if (err) {
-        res.status(500).send({ message: "Error 500: Internal Server Error" });
+        res.send({ message: err.message });
         console.log(err);
         return
       }
@@ -69,7 +69,7 @@ module.exports = {
     const request = ["%" + req.id.toUpperCase() + "%"]
     c.query("SELECT * FROM `archives` WHERE `standard_level_id` LIKE ?", request, { metadata: true, useArray: true }, function (err, rows) {
       if (err) {
-        res.status(500).send({ message: "Error 500: Internal Server Error" });
+        res.send({ message: err.message });
         console.log(err);
         return
       }
@@ -101,7 +101,7 @@ module.exports = {
     }
     c.query("INSERT INTO `archives`(`id`, `name`, `year`, `info`, `standard_level_id`, `file`) VALUES (?, ?, ?, ?, ?, ?)", request, { metadata: true, useArray: true }, function (err, rows) {
       if (err) {
-        res.status(500).send({ message: "Error 500: Internal Server Error" });
+        res.send({ message: err.message });
         console.log(err);
         return
       }
@@ -123,7 +123,7 @@ module.exports = {
     }
     c.query("UPDATE `archives` SET `name`=?, `year`=?, `info`=?, `standard_level_id`=?, `file`=? WHERE `id`=?", request, { metadata: true, useArray: true }, function (err, rows) {
       if (err) {
-        res.status(500).send({ message: "Error 500: Internal Server Error" });
+        res.send({ message: err.message });
         console.log(err);
         return
       }
@@ -145,7 +145,7 @@ module.exports = {
     }
     c.query("DELETE FROM `archives` WHERE `id`=?", request, { metadata: true, useArray: true }, function (err, rows) {
       if (err) {
-        res.status(500).send({ message: "Error 500: Internal Server Error" });
+        res.send({ message: err.message });
         console.log(err);
         return
       }
@@ -166,7 +166,7 @@ module.exports = {
   deleteArchiveAll: function (req, res) {
     c.query("DELETE FROM `archives`", null, { metadata: true, useArray: true }, function (err, rows) {
       if (err) {
-        res.status(500).send({ message: "Error 500: Internal Server Error" });
+        res.send({ message: err.message });
         console.log(err);
         return
       }

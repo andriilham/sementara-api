@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: May 17, 2020 at 04:06 PM
+-- Generation Time: May 22, 2020 at 05:17 PM
 -- Server version: 10.1.30-MariaDB
 -- PHP Version: 5.6.33
 
@@ -67,10 +67,10 @@ INSERT INTO `certificates` (`id`, `test_report_id`, `effective_date`, `due_date`
 CREATE TABLE `dide` (
   `id` varchar(20) NOT NULL,
   `name` text NOT NULL,
-  `edition` text NOT NULL,
   `publisher` text NOT NULL,
-  `doc_location` text NOT NULL,
-  `standard_level_id` varchar(20) NOT NULL
+  `edition` text NOT NULL,
+  `standard_level_id` varchar(20) NOT NULL,
+  `doc_location` text NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
@@ -745,9 +745,15 @@ CREATE TABLE `standard_levels` (
 
 INSERT INTO `standard_levels` (`id`, `name`) VALUES
 ('I1', 'Internasional'),
+('M1', 'Lab Device'),
+('M2', 'Lab Energy'),
+('M3', 'Lab Kabel dan Aksesoris FTTH'),
+('M4', 'Lab Transmisi'),
+('M5', 'Lab Kalibrasi'),
 ('N1', 'Permenkominfo'),
 ('N2', 'Perdirjen'),
 ('N3', 'SNI'),
+('P!', 'Publikasi'),
 ('T1', 'Lab Device'),
 ('T2', 'Lab Energy'),
 ('T3', 'Lab Kabel dan Aksesoris FTTH'),
@@ -820,8 +826,8 @@ CREATE TABLE `test_references` (
   `id` varchar(20) NOT NULL,
   `name` text NOT NULL,
   `year` text NOT NULL,
-  `version` varchar(10) NOT NULL,
-  `standard_level_id` varchar(2) NOT NULL,
+  `version` text NOT NULL,
+  `standard_level_id` varchar(20) NOT NULL,
   `file` text NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 

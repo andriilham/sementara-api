@@ -14,7 +14,7 @@ module.exports = {
   getCertificateAll: function (req, res) {
     c.query("SELECT * FROM `certificates`", null, { metadata: true, useArray: true }, function (err, rows) {
       if (err) {
-        res.status(500).send({ message: "Error 500: Internal Server Error" });
+        res.send({ message: err.message });
         console.log(err);
         return
       }
@@ -40,7 +40,7 @@ module.exports = {
   getCertificate: function (req, res) {
     c.query("SELECT * FROM `certificates` WHERE `id`=?", [req.id], { metadata: true, useArray: true }, function (err, rows) {
       if (err) {
-        res.status(500).send({ message: "Error 500: Internal Server Error" });
+        res.send({ message: err.message });
         console.log(err);
         return
       }
@@ -67,7 +67,7 @@ module.exports = {
     const request = ["%" + req.id.toUpperCase() + "%"]
     c.query("SELECT * FROM `certificates` WHERE `test_report_id` LIKE ?", request, { metadata: true, useArray: true }, function (err, rows) {
       if (err) {
-        res.status(500).send({ message: "Error 500: Internal Server Error" });
+        res.send({ message: err.message });
         console.log(err);
         return
       }
@@ -94,7 +94,7 @@ module.exports = {
     const request = ["%" + req.id.toUpperCase() + "%", "%" + req.id2.toUpperCase() + "%"]
     c.query("SELECT * FROM `certificates` WHERE `test_report_id` LIKE ? OR`test_report_id` LIKE ?", request, { metadata: true, useArray: true }, function (err, rows) {
       if (err) {
-        res.status(500).send({ message: "Error 500: Internal Server Error" });
+        res.send({ message: err.message });
         console.log(err);
         return
       }
@@ -126,7 +126,7 @@ module.exports = {
     }
     c.query("INSERT INTO `certificates`(`id`, `test_report_id`, `effective_date`, `due_date`, `file`) VALUES (?, ?, ?, ?, ?)", request, { metadata: true, useArray: true }, function (err, rows) {
       if (err) {
-        res.status(500).send({ message: "Error 500: Internal Server Error" });
+        res.send({ message: err.message });
         console.log(err);
         return
       }
@@ -148,7 +148,7 @@ module.exports = {
     }
     c.query("UPDATE `certificates` SET `test_report_id`=?, `effective_date`=?, `due_date`=?, `file`=? WHERE `id`=?", request, { metadata: true, useArray: true }, function (err, rows) {
       if (err) {
-        res.status(500).send({ message: "Error 500: Internal Server Error" });
+        res.send({ message: err.message });
         console.log(err);
         return
       }
@@ -170,7 +170,7 @@ module.exports = {
     }
     c.query("DELETE FROM `certificates` WHERE `id`=?", request, { metadata: true, useArray: true }, function (err, rows) {
       if (err) {
-        res.status(500).send({ message: "Error 500: Internal Server Error" });
+        res.send({ message: err.message });
         console.log(err);
         return
       }
@@ -191,7 +191,7 @@ module.exports = {
   deleteCertificateAll: function (req, res) {
     c.query("DELETE FROM `certificates`", null, { metadata: true, useArray: true }, function (err, rows) {
       if (err) {
-        res.status(500).send({ message: "Error 500: Internal Server Error" });
+        res.send({ message: err.message });
         console.log(err);
         return
       }

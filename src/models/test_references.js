@@ -14,7 +14,7 @@ module.exports = {
   getTestReferenceAll: function (req, res) {
     c.query("SELECT * FROM `test_references`", null, { metadata: true, useArray: true }, function (err, rows) {
       if (err) {
-        res.status(500).send({ message: "Error 500: Internal Server Error" });
+        res.send({ message: err.message });
         console.log(err);
         return
       }
@@ -41,7 +41,7 @@ module.exports = {
   getTestReference: function (req, res) {
     c.query("SELECT * FROM `test_references` WHERE `id`=?", [req.id], { metadata: true, useArray: true }, function (err, rows) {
       if (err) {
-        res.status(500).send({ message: "Error 500: Internal Server Error" });
+        res.send({ message: err.message });
         console.log(err);
         return
       }
@@ -66,10 +66,10 @@ module.exports = {
     c.end();
   },
   getTestReferenceType: function (req, res) {
-    const request = ["%" + req.id.toUpperCase() + "%"]
-    c.query("SELECT * FROM `test_references` WHERE `standard_level_id` LIKE ?", request, { metadata: true, useArray: true }, function (err, rows) {
+    const request = [req.id.toUpperCase()]
+    c.query("SELECT * FROM `test_references` WHERE `standard_level_id`=?", request, { metadata: true, useArray: true }, function (err, rows) {
       if (err) {
-        res.status(500).send({ message: "Error 500: Internal Server Error" });
+        res.send({ message: err.message });
         console.log(err);
         return
       }
@@ -95,13 +95,13 @@ module.exports = {
   },
   newTestReference: function (req, res) {
     var request = [req.id, req.name, req.year, req.version, req.standard_level_id, req.file];
-    if (request.includes(undefined) || request.includes("")) {
+    if (request.includes(undefined)) {
       res.send({ message: 'Bad Request: Parameters cannot empty.' });
       return
     }
     c.query("INSERT INTO `test_references`(`id`, `name`, `year`, `version`, `standard_level_id`, `file`) VALUES (?, ?, ?, ?, ?, ?)", request, { metadata: true, useArray: true }, function (err, rows) {
       if (err) {
-        res.status(500).send({ message: "Error 500: Internal Server Error" });
+        res.send({ message: err.message });
         console.log(err);
         return
       }
@@ -117,14 +117,13 @@ module.exports = {
   },
   updateTestReference: function (req, res) {
     var request = [req.body.name, req.body.year, req.body.version, req.body.standard_level_id, req.body.file, req.params.id];
-    console.log(request)
-    if (request.includes(undefined) || request.includes("")) {
+    if (request.includes(undefined)) {
       res.send({ message: 'Bad Request: Parameters cannot empty.' });
       return
     }
     c.query("UPDATE `test_references` SET `name`=?, `year`=?, `version`=?, `standard_level_id`=?, `file`=? WHERE `id`=?", request, { metadata: true, useArray: true }, function (err, rows) {
       if (err) {
-        res.status(500).send({ message: "Error 500: Internal Server Error" });
+        res.send({ message: err.message });
         console.log(err);
         return
       }
@@ -146,7 +145,7 @@ module.exports = {
     }
     c.query("DELETE FROM `test_references` WHERE `id`=?", request, { metadata: true, useArray: true }, function (err, rows) {
       if (err) {
-        res.status(500).send({ message: "Error 500: Internal Server Error" });
+        res.send({ message: err.message });
         console.log(err);
         return
       }
@@ -167,7 +166,7 @@ module.exports = {
   deleteTestReferenceAll: function (req, res) {
     c.query("DELETE FROM `test_references`", null, { metadata: true, useArray: true }, function (err, rows) {
       if (err) {
-        res.status(500).send({ message: "Error 500: Internal Server Error" });
+        res.send({ message: err.message });
         console.log(err);
         return
       }

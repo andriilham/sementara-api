@@ -14,7 +14,7 @@ module.exports = {
   getQualityManualAll: function (req, res) {
     c.query("SELECT * FROM `quality_manuals`", null, { metadata: true, useArray: true }, function (err, rows) {
       if (err) {
-        res.status(500).send({ message: "Error 500: Internal Server Error" });
+        res.send({ message: err.message });
         console.log(err);
         return
       }
@@ -41,7 +41,7 @@ module.exports = {
   getQualityManual: function (req, res) {
     c.query("SELECT * FROM `quality_manuals` WHERE `id`=?", [req.id], { metadata: true, useArray: true }, function (err, rows) {
       if (err) {
-        res.status(500).send({ message: "Error 500: Internal Server Error" });
+        res.send({ message: err.message });
         console.log(err);
         return
       }
@@ -69,7 +69,7 @@ module.exports = {
     const request = ["%" + req.id.toUpperCase() + "%"]
     c.query("SELECT * FROM `quality_manuals` WHERE `id` LIKE ?", request, { metadata: true, useArray: true }, function (err, rows) {
       if (err) {
-        res.status(500).send({ message: "Error 500: Internal Server Error" });
+        res.send({ message: err.message });
         console.log(err);
         return
       }
@@ -97,7 +97,7 @@ module.exports = {
     const request = ["%" + req.id + "%", "%" + req.id + "%"]
     c.query("SELECT DISTINCT p.`id`, p.`name`, p.`effective_date`, p.`pic`, p.`version`, p.`file` FROM `quality_manuals` p INNER JOIN `forms` f ON (f.`pic` LIKE ? OR f.`pic`='*') AND LEFT(p.`id`,6)=LEFT(f.`id`,6) OR p.`pic` LIKE ? AND p.`id` LIKE '%/P%'", request, { metadata: true, useArray: true }, function (err, rows) {
       if (err) {
-        res.status(500).send({ message: "Error 500: Internal Server Error" });
+        res.send({ message: err.message });
         console.log(err);
         return
       }
@@ -129,7 +129,7 @@ module.exports = {
     }
     c.query("INSERT INTO `quality_manuals`(`id`, `name`, `effective_date`, `pic`, `version`, `file`) VALUES (?, ?, ?, ?, ?, ?)", request, { metadata: true, useArray: true }, function (err, rows) {
       if (err) {
-        res.status(500).send({ message: "Error 500: Internal Server Error" });
+        res.send({ message: err.message });
         console.log(err);
         return
       }
@@ -151,7 +151,7 @@ module.exports = {
     }
     c.query("UPDATE `quality_manuals` SET `name`=?, `effective_date`=?, `pic`=?, `version`=?, `file`=? WHERE `id`=?", request, { metadata: true, useArray: true }, function (err, rows) {
       if (err) {
-        res.status(500).send({ message: "Error 500: Internal Server Error" });
+        res.send({ message: err.message });
         console.log(err);
         return
       }
@@ -173,7 +173,7 @@ module.exports = {
     }
     c.query("DELETE FROM `quality_manuals` WHERE `id`=?", request, { metadata: true, useArray: true }, function (err, rows) {
       if (err) {
-        res.status(500).send({ message: "Error 500: Internal Server Error" });
+        res.send({ message: err.message });
         console.log(err);
         return
       }
@@ -194,7 +194,7 @@ module.exports = {
   deleteQualityManualAll: function (req, res) {
     c.query("DELETE FROM `quality_manuals`", null, { metadata: true, useArray: true }, function (err, rows) {
       if (err) {
-        res.status(500).send({ message: "Error 500: Internal Server Error" });
+        res.send({ message: err.message });
         console.log(err);
         return
       }

@@ -14,7 +14,7 @@ module.exports = {
   getDIDEAll: function (req, res) {
     c.query("SELECT * FROM `dide`", null, { metadata: true, useArray: true }, function (err, rows) {
       if (err) {
-        res.status(500).send({ message: "Error 500: Internal Server Error" });
+        res.send({ message: err.message });
         console.log(err);
         return
       }
@@ -24,10 +24,10 @@ module.exports = {
         data.push({
           id: items[0],
           name: items[1],
-          edition: items[2],
-          publisher: items[3],
-          doc_location: items[4],
-          standard_level_id: items[5]
+          publisher: items[2],
+          edition: items[3],
+          standard_level_id: items[4],
+          doc_location: items[5]
         });
       });
       if (data.length < 1) {
@@ -41,7 +41,7 @@ module.exports = {
   getDIDE: function (req, res) {
     c.query("SELECT * FROM `dide` WHERE `id`=?", [req.id], { metadata: true, useArray: true }, function (err, rows) {
       if (err) {
-        res.status(500).send({ message: "Error 500: Internal Server Error" });
+        res.send({ message: err.message });
         console.log(err);
         return
       }
@@ -51,10 +51,10 @@ module.exports = {
         data.push({
           id: items[0],
           name: items[1],
-          edition: items[2],
-          publisher: items[3],
-          doc_location: items[4],
-          standard_level_id: items[5]
+          publisher: items[2],
+          edition: items[3],
+          standard_level_id: items[4],
+          doc_location: items[5]
         });
       });
       if (data.length < 1) {
@@ -66,10 +66,10 @@ module.exports = {
     c.end();
   },
   getDIDEType: function (req, res) {
-    const request = [req.id]
+    const request = [req.id.toUpperCase()]
     c.query("SELECT * FROM `dide` WHERE `standard_level_id`=?", request, { metadata: true, useArray: true }, function (err, rows) {
       if (err) {
-        res.status(500).send({ message: "Error 500: Internal Server Error" });
+        res.send({ message: err.message });
         console.log(err);
         return
       }
@@ -79,10 +79,10 @@ module.exports = {
         data.push({
           id: items[0],
           name: items[1],
-          edition: items[2],
-          publisher: items[3],
-          doc_location: items[4],
-          standard_level_id: items[5]
+          publisher: items[2],
+          edition: items[3],
+          standard_level_id: items[4],
+          doc_location: items[5]
         });
       });
       if (data.length < 1) {
@@ -94,14 +94,14 @@ module.exports = {
     c.end();
   },
   newDIDE: function (req, res) {
-    var request = [req.id, req.name, req.edition, req.publisher, req.doc_location, req.standard_level_id];
+    var request = [req.id.toUpperCase(), req.name, req.publisher, req.edition, req.standard_level_id, req.doc_location];
     if (request.includes(undefined) || request.includes("")) {
       res.send({ message: 'Bad Request: Parameters cannot empty.' });
       return
     }
-    c.query("INSERT INTO `dide`(`id`, `name`, `edition`, `publisher`, `doc_location`, `standard_level_id`) VALUES (?, ?, ?, ?, ?, ?)", request, { metadata: true, useArray: true }, function (err, rows) {
+    c.query("INSERT INTO `dide`(`id`, `name`, `publisher`, `edition`, `standard_level_id`, `doc_location`) VALUES (?, ?, ?, ?, ?, ?)", request, { metadata: true, useArray: true }, function (err, rows) {
       if (err) {
-        res.status(500).send({ message: "Error 500: Internal Server Error" });
+        res.send({ message: err.message });
         console.log(err);
         return
       }
@@ -116,14 +116,14 @@ module.exports = {
     c.end();
   },
   updateDIDE: function (req, res) {
-    var request = [req.body.name, req.body.edition, req.body.publisher, req.body.doc_location, req.body.standard_level_id, req.params.id];
+    var request = [req.body.name, req.body.publisher, req.body.edition, req.body.standard_level_id, req.body.doc_location, req.params.id];
     if (request.includes(undefined) || request.includes("")) {
       res.send({ message: 'Bad Request: Parameters cannot empty.' });
       return
     }
-    c.query("UPDATE `dide` SET `name`=?, `edition`=?, `publisher`=?, `doc_location`=?, `standard_level_id`=? WHERE `id`=?", request, { metadata: true, useArray: true }, function (err, rows) {
+    c.query("UPDATE `dide` SET `name`=?, `publisher`=?, `edition`=?, `standard_level_id`=?, `doc_location`=? WHERE `id`=?", request, { metadata: true, useArray: true }, function (err, rows) {
       if (err) {
-        res.status(500).send({ message: "Error 500: Internal Server Error" });
+        res.send({ message: err.message });
         console.log(err);
         return
       }
@@ -145,7 +145,7 @@ module.exports = {
     }
     c.query("DELETE FROM `dide` WHERE `id`=?", request, { metadata: true, useArray: true }, function (err, rows) {
       if (err) {
-        res.status(500).send({ message: "Error 500: Internal Server Error" });
+        res.send({ message: err.message });
         console.log(err);
         return
       }
@@ -166,7 +166,7 @@ module.exports = {
   deleteDIDEAll: function (req, res) {
     c.query("DELETE FROM `dide`", null, { metadata: true, useArray: true }, function (err, rows) {
       if (err) {
-        res.status(500).send({ message: "Error 500: Internal Server Error" });
+        res.send({ message: err.message });
         console.log(err);
         return
       }

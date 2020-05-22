@@ -14,7 +14,7 @@ module.exports = {
   getTrialReportAll: function (req, res) {
     c.query("SELECT * FROM `trial_reports`", null, { metadata: true, useArray: true }, function (err, rows) {
       if (err) {
-        res.status(500).send({ message: "Error 500: Internal Server Error" });
+        res.send({ message: err.message });
         console.log(err);
         return
       }
@@ -41,7 +41,7 @@ module.exports = {
   getTrialReport: function (req, res) {
     c.query("SELECT * FROM `trial_reports` WHERE `id`=?", [req.id], { metadata: true, useArray: true }, function (err, rows) {
       if (err) {
-        res.status(500).send({ message: "Error 500: Internal Server Error" });
+        res.send({ message: err.message });
         console.log(err);
         return
       }
@@ -73,7 +73,7 @@ module.exports = {
     }
     c.query("INSERT INTO `trial_reports`(`id`, `name`, `trial_date`, `num_device`, `num_pass`, `file`) VALUES (?, ?, ?, ?, ?, ?)", request, { metadata: true, useArray: true }, function (err, rows) {
       if (err) {
-        res.status(500).send({ message: "Error 500: Internal Server Error" });
+        res.send({ message: err.message });
         console.log(err);
         return
       }
@@ -95,7 +95,7 @@ module.exports = {
     }
     c.query("UPDATE `trial_reports` SET `name`=?, `trial_date`=?, `num_device`=?, `num_pass`=?, `file`=? WHERE `id`=?", request, { metadata: true, useArray: true }, function (err, rows) {
       if (err) {
-        res.status(500).send({ message: "Error 500: Internal Server Error" });
+        res.send({ message: err.message });
         console.log(err);
         return
       }
@@ -117,7 +117,7 @@ module.exports = {
     }
     c.query("DELETE FROM `trial_reports` WHERE `id`=?", request, { metadata: true, useArray: true }, function (err, rows) {
       if (err) {
-        res.status(500).send({ message: "Error 500: Internal Server Error" });
+        res.send({ message: err.message });
         console.log(err);
         return
       }
@@ -138,7 +138,7 @@ module.exports = {
   deleteTrialReportAll: function (req, res) {
     c.query("DELETE FROM `trial_reports`", null, { metadata: true, useArray: true }, function (err, rows) {
       if (err) {
-        res.status(500).send({ message: "Error 500: Internal Server Error" });
+        res.send({ message: err.message });
         console.log(err);
         return
       }

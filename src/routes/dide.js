@@ -46,66 +46,75 @@ router.get('/type/:id', jwtMW, (req, res) => {
   db.getDIDEType(req.params, res)
 })
 
+// router.post('/', jwtMW, (req, res) => {
+//   var upload = multer({
+//     storage: storageDIDEs,
+//     limits: {
+//       fileSize: 10 * 1024 * 1024
+//     },
+//     fileFilter: fileFilter
+//   }).single('file')
+//   upload(req, res, function (err) {
+//     if (err instanceof multer.MulterError) {
+//       // A Multer error occurred when uploading.
+//       res.send(err)
+//       return
+//     } else if (err) {
+//       // An unknown error occurred when uploading.
+//       res.send(err)
+//       return
+//     } else if (req.file == undefined && req.body.file === undefined) {
+//       res.send({ message: 'No file selected!' })
+//       return
+//     }
+//     // Everything went fine.
+//     console.log('Upload success.')
+
+//     // File name key used while in production and filename in development
+//     req.body.file = req.file ? req.file.filename : req.body.file
+
+//     db.newDIDE(req.body, res)
+//   })
+// })
+
 router.post('/', jwtMW, (req, res) => {
-  var upload = multer({
-    storage: storageDIDEs,
-    limits: {
-      fileSize: 10 * 1024 * 1024
-    },
-    fileFilter: fileFilter
-  }).single('file')
-  upload(req, res, function (err) {
-    if (err instanceof multer.MulterError) {
-      // A Multer error occurred when uploading.
-      res.send(err)
-      return
-    } else if (err) {
-      // An unknown error occurred when uploading.
-      res.send(err)
-      return
-    } else if (req.file == undefined && req.body.file === undefined) {
-      res.send({ message: 'No file selected!' })
-      return
-    }
-    // Everything went fine.
-    console.log('Upload success.')
-
-    // File name key used while in production and filename in development
-    req.body.file = req.file ? req.file.filename : req.body.file
-
-    db.newDIDE(req.body, res)
-  })
+  console.log(req.body)
+  db.newDIDE(req.body, res)
 })
 
+// router.put('/:id', jwtMW, (req, res) => {
+//   var upload = multer({
+//     storage: storageDIDEs,
+//     limits: {
+//       fileSize: 10 * 1024 * 1024
+//     },
+//     fileFilter: fileFilter
+//   }).single('file')
+//   upload(req, res, function (err) {
+//     if (err instanceof multer.MulterError) {
+//       // A Multer error occurred when uploading.
+//       res.send(err)
+//       return
+//     } else if (err) {
+//       // An unknown error occurred when uploading.
+//       res.send(err)
+//       return
+//     } else if (req.file == undefined && req.body.file === undefined) {
+//       res.send('index', { message: 'No file selected!' })
+//       return
+//     }
+//     // Everything went fine.
+//     console.log('Upload success.')
+
+//     // File name key used while in production and filename in development
+//     req.body.file = req.file ? req.file.filename : req.body.file
+
+//     db.updateDIDE(req, res)
+//   })
+// })
+
 router.put('/:id', jwtMW, (req, res) => {
-  var upload = multer({
-    storage: storageDIDEs,
-    limits: {
-      fileSize: 10 * 1024 * 1024
-    },
-    fileFilter: fileFilter
-  }).single('file')
-  upload(req, res, function (err) {
-    if (err instanceof multer.MulterError) {
-      // A Multer error occurred when uploading.
-      res.send(err)
-      return
-    } else if (err) {
-      // An unknown error occurred when uploading.
-      res.send(err)
-      return
-    } else if (req.file == undefined && req.body.file === undefined) {
-      res.send('index', { message: 'No file selected!' })
-      return
-    }
-    // Everything went fine.
-    console.log('Upload success.')
-
-    // File name key used while in production and filename in development
-    req.body.file = req.file ? req.file.filename : req.body.file
-
-    db.updateDIDE(req, res)
-  })
+  db.updateDIDE(req, res)
 })
 
 /////////////////////////////////////////////////////////////////////////////////////////////

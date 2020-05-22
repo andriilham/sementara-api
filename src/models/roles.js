@@ -14,7 +14,7 @@ module.exports = {
   getRoleAll: function (req, res) {
     c.query("SELECT * FROM `roles`", null, { metadata: true, useArray: true }, function (err, rows) {
       if (err) {
-        res.status(500).send({ message: "Error 500: Internal Server Error" });
+        res.send({ message: err.message });
         console.log(err);
         return
       }
@@ -37,7 +37,7 @@ module.exports = {
   getRole: function (req, res) {
     c.query("SELECT * FROM `roles` WHERE id=?", [req.id], { metadata: true, useArray: true }, function (err, rows) {
       if (err) {
-        res.status(500).send({ message: "Error 500: Internal Server Error" });
+        res.send({ message: err.message });
         console.log(err);
         return
       }
@@ -66,7 +66,7 @@ module.exports = {
     }
     c.query("INSERT INTO `roles` (`id`, `name`) VALUES (?, ?)", request, { metadata: true, useArray: true }, function (err, rows) {
       if (err) {
-        res.status(500).send({ message: "Error 500: Internal Server Error" });
+        res.send({ message: err.message });
         console.log(err);
         return
       }
@@ -89,7 +89,7 @@ module.exports = {
     }
     c.query("UPDATE `roles` SET `name`=? WHERE `id`=?", request, { metadata: true, useArray: true }, function (err, rows) {
       if (err) {
-        res.status(500).send({ message: "Error 500: Internal Server Error" });
+        res.send({ message: err.message });
         console.log(err);
         return
       }
@@ -111,7 +111,7 @@ module.exports = {
     }
     c.query("DELETE FROM `roles` WHERE `id`=?", request, { metadata: true, useArray: true }, function (err, rows) {
       if (err) {
-        res.status(500).send({ message: "Error 500: Internal Server Error" });
+        res.send({ message: err.message });
         console.log(err);
         return
       }
@@ -132,7 +132,7 @@ module.exports = {
   deleteRoleAll: function (req, res) {
     c.query("DELETE FROM `roles`", null, { metadata: true, useArray: true }, function (err, rows) {
       if (err) {
-        res.status(500).send({ message: "Error 500: Internal Server Error" });
+        res.send({ message: err.message });
         console.log(err);
         return
       }
