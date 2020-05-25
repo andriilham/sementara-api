@@ -46,6 +46,14 @@ router.get('/type/:id', jwtMW, (req, res) => {
   db.getArchiveType(req.params, res)
 })
 
+router.get('/search/:id', jwtMW, (req, res) => {
+  db.getArchiveSearch(req.params, res)
+})
+
+router.get('/search/:id/:id2', jwtMW, (req, res) => {
+  db.getArchiveSearch2(req.params, res)
+})
+
 router.post('/', jwtMW, (req, res) => {
   var upload = multer({
     storage: storageArchives,

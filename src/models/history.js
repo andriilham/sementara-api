@@ -68,7 +68,37 @@ module.exports = {
     c.end();
   },
   getHistoryReference: function (req, res) {
-    c.query("SELECT h.`reference_id`, e.`name`, s.`name`, s.`info`, s.`step_number`, h.`message`, h.`created` FROM `history` h LEFT OUTER JOIN `steps` s ON h.`step_id`=s.`id` LEFT OUTER JOIN `users` e ON h.`user_id`=e.`id` WHERE h.`reference_id`=? ORDER BY h.`created` DESC", [req.id], { metadata: true, useArray: true }, function (err, rows) {
+    const request = ["%" + req.id.toUpperCase() + "%"]
+    c.query("SELECT h.`reference_id`, e.`name`, s.`name`, s.`info`, s.`step_number`, h.`message`, h.`created` FROM `history` h LEFT OUTER JOIN `steps` s ON h.`step_id`=s.`id` LEFT OUTER JOIN `users` e ON h.`user_id`=e.`id` WHERE h.`reference_id` LIKE ? AND h.`step_id` NOT LIKE '%4%' ORDER BY h.`created` DESC LIMIT 10", request, { metadata: true, useArray: true }, function (err, rows) {
+      if (err) {
+        res.send({ message: err.message });
+        console.log(err);
+        return
+      }
+
+      var data = [];
+      rows.forEach(function (items) {
+        data.push({
+          reference_id: items[0],
+          name: items[1],
+          action: items[2],
+          info: items[3],
+          step_number: items[4],
+          message: items[5],
+          created: items[6]
+        });
+      });
+      if (data.length < 1) {
+        res.status(404).send({ message: 'Data not found.' });
+      } else {
+        res.json(data);
+      }
+    });
+    c.end();
+  },
+  getHistoryReferenceAdmin: function (req, res) {
+    const request = ["%" + req.id.toUpperCase() + "%"]
+    c.query("SELECT h.`reference_id`, e.`name`, s.`name`, s.`info`, s.`step_number`, h.`message`, h.`created` FROM `history` h LEFT OUTER JOIN `steps` s ON h.`step_id`=s.`id` LEFT OUTER JOIN `users` e ON h.`user_id`=e.`id` WHERE h.`reference_id` LIKE ? ORDER BY h.`created` DESC LIMIT 10", request, { metadata: true, useArray: true }, function (err, rows) {
       if (err) {
         res.send({ message: err.message });
         console.log(err);
@@ -184,6 +214,7 @@ module.exports = {
       req.message,
       waktu
     ];
+    console.log(request)
     if (request.includes(undefined)) {
       res.send({ message: 'Bad Request: Parameters cannot empty.' });
       return

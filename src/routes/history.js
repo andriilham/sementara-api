@@ -24,6 +24,10 @@ router.get('/reference/:id', jwtMW, (req, res) => {
   db.getHistoryReference(req.params, res)
 })
 
+router.get('/reference-admin/:id', jwtMW, (req, res) => {
+  db.getHistoryReferenceAdmin(req.params, res)
+})
+
 router.get('/user/:id', jwtMW, (req, res) => {
   db.getHistoryUser(req.params, res)
 })
@@ -32,7 +36,7 @@ router.get('/step/:id', jwtMW, (req, res) => {
   db.getHistoryStep(req.params, res)
 })
 
-router.get('/request_step/:id', (req, res) => {
+router.get('/request-step/:id', (req, res) => {
   db.getHistoryRequestStep(req.params, res)
 })
 

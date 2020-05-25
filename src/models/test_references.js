@@ -93,6 +93,62 @@ module.exports = {
     });
     c.end();
   },
+  getTestReferenceSearch: function (req, res) {
+    const request = ["%" + req.id.toUpperCase() + "%"]
+    c.query("SELECT * FROM `test_references` WHERE `standard_level_id` LIKE ?", request, { metadata: true, useArray: true }, function (err, rows) {
+      if (err) {
+        res.send({ message: err.message });
+        console.log(err);
+        return
+      }
+
+      var data = [];
+      rows.forEach(function (items) {
+        data.push({
+          id: items[0],
+          name: items[1],
+          year: items[2],
+          version: items[3],
+          standard_level_id: items[4],
+          file: items[5]
+        });
+      });
+      if (data.length < 1) {
+        res.status(404).send({ message: 'Data not found.' });
+      } else {
+        res.json(data);
+      }
+    });
+    c.end();
+  },
+  getTestReferenceSearch2: function (req, res) {
+    const request = ["%" + req.id.toUpperCase() + "%", "%" + req.id2.toUpperCase() + "%"]
+    c.query("SELECT * FROM `test_references` WHERE `standard_level_id` LIKE ? OR `standard_level_id` LIKE ?", request, { metadata: true, useArray: true }, function (err, rows) {
+      if (err) {
+        res.send({ message: err.message });
+        console.log(err);
+        return
+      }
+
+      var data = [];
+      rows.forEach(function (items) {
+        data.push({
+          id: items[0],
+          name: items[1],
+          year: items[2],
+          version: items[3],
+          standard_level_id: items[4],
+          file: items[5]
+        });
+      });
+      if (data.length < 1) {
+        res.status(404).send({ message: 'Data not found.' });
+      } else {
+        res.json(data);
+      }
+    });
+    c.end();
+  },
   newTestReference: function (req, res) {
     var request = [req.id, req.name, req.year, req.version, req.standard_level_id, req.file];
     if (request.includes(undefined)) {

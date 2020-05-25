@@ -20,6 +20,14 @@ router.get('/:id', (req, res) => {
   db.getStandardLevel(req.params, res)
 })
 
+router.get('/search/:id', jwtMW, (req, res) => {
+  db.getStandardLevelSearch(req.params, res)
+})
+
+router.get('/search/:id/:id2', jwtMW, (req, res) => {
+  db.getStandardLevelSearch2(req.params, res)
+})
+
 router.post('/', jwtMW, (req, res) => {
   db.newStandardLevel(req.body, res)
 })

@@ -57,6 +57,54 @@ module.exports = {
     });
     c.end();
   },
+  getStandardLevelSearch: function (req, res) {
+    const request = ["%" + req.id.toUpperCase() + "%"]
+    c.query("SELECT * FROM `standard_levels` WHERE id LIKE ?", request, { metadata: true, useArray: true }, function (err, rows) {
+      if (err) {
+        res.send({ message: err.message });
+        console.log(err);
+        return
+      }
+
+      var data = [];
+      rows.forEach(function (items) {
+        data.push({
+          id: items[0],
+          name: items[1]
+        });
+      });
+      if (data.length < 1) {
+        res.status(404).send({ message: 'Data not found.' });
+      } else {
+        res.json(data);
+      }
+    });
+    c.end();
+  },
+  getStandardLevelSearch2: function (req, res) {
+    const request = ["%" + req.id.toUpperCase() + "%", "%" + req.id2.toUpperCase() + "%"]
+    c.query("SELECT * FROM `standard_levels` WHERE id LIKE ? OR id LIKE ?", request, { metadata: true, useArray: true }, function (err, rows) {
+      if (err) {
+        res.send({ message: err.message });
+        console.log(err);
+        return
+      }
+
+      var data = [];
+      rows.forEach(function (items) {
+        data.push({
+          id: items[0],
+          name: items[1]
+        });
+      });
+      if (data.length < 1) {
+        res.status(404).send({ message: 'Data not found.' });
+      } else {
+        res.json(data);
+      }
+    });
+    c.end();
+  },
   newStandardLevel: function (req, res) {
     const waktu = new Date().toISOString();
     var request = [req.id, req.name];

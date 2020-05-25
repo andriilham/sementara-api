@@ -16,7 +16,8 @@ const storageTestReferences = multer.diskStorage({
     cb(null, 'src/uploads/test_references/');
   },
   filename: function (req, file, cb) {
-    cb(null, req.body.id.replace(new RegExp("/", 'g'), "") + '_v' + req.body.version + '_' + req.body.name + path.extname(file.originalname));
+    const version = req.body.version || req.body.year;
+    cb(null, req.body.id.replace(new RegExp("/", 'g'), "") + '_v' + version + '_' + req.body.name + path.extname(file.originalname));
   }
 })
 
@@ -46,8 +47,12 @@ router.get('/type/:id', jwtMW, (req, res) => {
   db.getTestReferenceType(req.params, res)
 })
 
-router.get('/pic/:id', jwtMW, (req, res) => {
-  db.getTestReferencePIC(req.params, res)
+router.get('/search/:id', jwtMW, (req, res) => {
+  db.getTestReferenceSearch(req.params, res)
+})
+
+router.get('/search/:id/:id2', jwtMW, (req, res) => {
+  db.getTestReferenceSearch2(req.params, res)
 })
 
 router.post('/', jwtMW, (req, res) => {

@@ -12,7 +12,7 @@ module.exports = {
   // ARCHIVE MODELS
 
   getArchiveAll: function (req, res) {
-    c.query("SELECT * FROM `archives`", null, { metadata: true, useArray: true }, function (err, rows) {
+    c.query("SELECT * FROM `archives` ORDER BY `year` DESC", null, { metadata: true, useArray: true }, function (err, rows) {
       if (err) {
         res.send({ message: err.message });
         console.log(err);
@@ -39,7 +39,7 @@ module.exports = {
     c.end();
   },
   getArchive: function (req, res) {
-    c.query("SELECT * FROM `archives` WHERE `id`=?", [req.id], { metadata: true, useArray: true }, function (err, rows) {
+    c.query("SELECT * FROM `archives` WHERE `id`=? ORDER BY `year` DESC", [req.id], { metadata: true, useArray: true }, function (err, rows) {
       if (err) {
         res.send({ message: err.message });
         console.log(err);
@@ -66,8 +66,64 @@ module.exports = {
     c.end();
   },
   getArchiveType: function (req, res) {
+    const request = [req.id.toUpperCase()]
+    c.query("SELECT * FROM `archives` WHERE `standard_level_id`=? ORDER BY `year` DESC", request, { metadata: true, useArray: true }, function (err, rows) {
+      if (err) {
+        res.send({ message: err.message });
+        console.log(err);
+        return
+      }
+
+      var data = [];
+      rows.forEach(function (items) {
+        data.push({
+          id: items[0],
+          name: items[1],
+          year: items[2],
+          info: items[3],
+          standard_level_id: items[4],
+          file: items[5]
+        });
+      });
+      if (data.length < 1) {
+        res.status(404).send({ message: 'Data not found.' });
+      } else {
+        res.json(data);
+      }
+    });
+    c.end();
+  },
+  getArchiveSearch: function (req, res) {
     const request = ["%" + req.id.toUpperCase() + "%"]
-    c.query("SELECT * FROM `archives` WHERE `standard_level_id` LIKE ?", request, { metadata: true, useArray: true }, function (err, rows) {
+    c.query("SELECT * FROM `archives` WHERE `standard_level_id` LIKE ? ORDER BY `year` DESC", request, { metadata: true, useArray: true }, function (err, rows) {
+      if (err) {
+        res.send({ message: err.message });
+        console.log(err);
+        return
+      }
+
+      var data = [];
+      rows.forEach(function (items) {
+        data.push({
+          id: items[0],
+          name: items[1],
+          year: items[2],
+          info: items[3],
+          standard_level_id: items[4],
+          file: items[5]
+        });
+      });
+      if (data.length < 1) {
+        res.status(404).send({ message: 'Data not found.' });
+      } else {
+        res.json(data);
+      }
+    });
+    c.end();
+  },
+  getArchiveSearch2: function (req, res) {
+    const request = ["%" + req.id.toUpperCase() + "%", "%" + req.id2.toUpperCase() + "%"]
+    c.query("SELECT * FROM `archives` WHERE `standard_level_id` LIKE ? OR `standard_level_id` LIKE ? ORDER BY `year` DESC", request, { metadata: true, useArray: true }, function (err, rows) {
       if (err) {
         res.send({ message: err.message });
         console.log(err);
