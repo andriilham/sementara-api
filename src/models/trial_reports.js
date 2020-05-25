@@ -12,7 +12,7 @@ module.exports = {
   // TRIAL REPORT MODELS
 
   getTrialReportAll: function (req, res) {
-    c.query("SELECT * FROM `trial_reports`", null, { metadata: true, useArray: true }, function (err, rows) {
+    c.query("SELECT * FROM `trial_reports` ORDER BY `trial_date` DESC", null, { metadata: true, useArray: true }, function (err, rows) {
       if (err) {
         res.send({ message: err.message });
         console.log(err);
@@ -39,7 +39,7 @@ module.exports = {
     c.end();
   },
   getTrialReport: function (req, res) {
-    c.query("SELECT * FROM `trial_reports` WHERE `id`=?", [req.id], { metadata: true, useArray: true }, function (err, rows) {
+    c.query("SELECT * FROM `trial_reports` WHERE `id`=? ORDER BY `trial_date` DESC", [req.id], { metadata: true, useArray: true }, function (err, rows) {
       if (err) {
         res.send({ message: err.message });
         console.log(err);
@@ -66,7 +66,14 @@ module.exports = {
     c.end();
   },
   newTrialReport: function (req, res) {
-    var request = [req.id, req.name, req.trial_date, req.num_device, req.num_pass, req.file];
+    var request = [
+      req.id,
+      req.name,
+      req.trial_date,
+      req.num_device,
+      req.num_pass,
+      req.file
+    ];
     if (request.includes(undefined) || request.includes("")) {
       res.send({ message: 'Bad Request: Parameters cannot empty.' });
       return

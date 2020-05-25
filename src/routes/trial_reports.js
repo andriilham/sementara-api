@@ -16,7 +16,8 @@ const storageTrialReports = multer.diskStorage({
     cb(null, 'src/uploads/trial_reports/');
   },
   filename: function (req, file, cb) {
-    cb(null, req.body.id.replace(new RegExp("/", 'g'), "") + '_v' + req.body.trial_date + '_' + req.body.name + path.extname(file.originalname));
+    const id = req.id || req.body.id
+    cb(null, req.body.trial_date + '_' + req.body.name.replace(new RegExp("[^\\w\\s]", 'g'), "") + '_' + id + path.extname(file.originalname));
   }
 })
 
@@ -43,6 +44,8 @@ router.get('/:id', (req, res) => {
 })
 
 router.post('/', jwtMW, (req, res) => {
+  const waktu = new Date().toISOString();
+  req.id = 'T' + new Date(waktu).valueOf().toString(32).toUpperCase();
   var upload = multer({
     storage: storageTrialReports,
     limits: {
@@ -68,6 +71,7 @@ router.post('/', jwtMW, (req, res) => {
 
     // File name key used while in production and filename in development
     req.body.file = req.file.filename
+    req.body.id = req.id
 
     db.newTrialReport(req.body, res)
   })
