@@ -42,7 +42,7 @@ module.exports = {
     c.end();
   },
   getUser: function (req, res) {
-    c.query("SELECT * FROM `users` WHERE `id`=?", [req.id], { metadata: true, useArray: true }, function (err, rows) {
+    c.query("SELECT u.`id`, u.`name`, r.`name`, u.`telp`, u.`email`, u.`photo`, u.`registered`, u.`updated` FROM `users` u INNER JOIN `roles` r ON u.`role`=r.`id` WHERE u.`id`=?", [req.id], { metadata: true, useArray: true }, function (err, rows) {
       if (err) {
         res.send({ message: err.message });
         console.log(err);
@@ -54,13 +54,12 @@ module.exports = {
         data.push({
           id: items[0],
           name: items[1],
-          // password: items[2],
-          role: items[3],
-          telp: items[4],
-          email: items[5],
-          photo: items[6],
-          registered: items[7],
-          updated: items[8]
+          role: items[2],
+          telp: items[3],
+          email: items[4],
+          photo: items[5],
+          registered: items[6],
+          updated: items[7]
         });
       });
       if (data.length < 1) {
