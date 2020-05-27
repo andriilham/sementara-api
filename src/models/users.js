@@ -177,6 +177,41 @@ module.exports = {
     });
     c.end();
   },
+  updateUserPassword: function (req, res) {
+    const waktu = new Date().toISOString();
+    var request1 = [req.params.id, req.body.password_old];
+    var request2 = [req.body.password, waktu, req.params.id];
+    if (request1.includes(undefined) || request2.includes(undefined)) {
+      res.send({ message: 'Bad Request: Parameters cannot empty.' });
+      return
+    }
+    c.query("SELECT * FROM `users` WHERE `id`=? AND `password`=?", request1, { metadata: true, useArray: true }, function (err, rows) {
+      if (err) {
+        res.send({ message: err.message });
+        console.log(err);
+        return
+      }
+      if (data.length < 1) {
+        res.send({ message: "Password is incorrect, please try again." });
+      } else {
+        c.query("UPDATE `users` SET `password`=?, `updated`=? WHERE `id`=?", request2, { metadata: true, useArray: true }, function (err, rows) {
+          if (err) {
+            res.send({ message: err.message });
+            console.log(err);
+            return
+          }
+
+          res.json({
+            affectedRows: rows.info.affectedRows,
+            err: null,
+            message: "User Password has updated successfully",
+            success: true
+          });
+        });
+      }
+    });
+    c.end();
+  },
   updateUserRole: function (req, res) {
     const waktu = new Date().toISOString();
     var request = [req.body.role, waktu, req.params.id];
@@ -194,7 +229,7 @@ module.exports = {
       res.json({
         affectedRows: rows.info.affectedRows,
         err: null,
-        message: "User has updated successfully",
+        message: "User Role has updated successfully",
         success: true
       });
     });

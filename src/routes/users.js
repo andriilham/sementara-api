@@ -5,6 +5,7 @@ const multer = require('multer')
 var db = require('../models/users')
 const exjwt = require('express-jwt')
 const crypto = require("crypto")
+var path = require('path')
 
 // Instantiating the express-jwt middleware
 const jwtMW = exjwt({
@@ -63,8 +64,10 @@ router.put('/:id', jwtMW, (req, res) => {
   db.updateUser(req, res)
 })
 
-router.put('/role/:id', jwtMW, (req, res) => {
-  db.updateUserRole(req, res)
+router.put('/password/:id', jwtMW, (req, res) => {
+  req.body.password = crypto.createHmac(HASH_ALGORITHM, CIPHER_SECRET).update(req.body.new).digest(CIPHER_BASE);
+  req.body.password_old = crypto.createHmac(HASH_ALGORITHM, CIPHER_SECRET).update(req.body.old).digest(CIPHER_BASE);
+  db.updateUserPassword(req, res)
 })
 
 router.put('/photo/:id', jwtMW, (req, res) => {
@@ -96,6 +99,10 @@ router.put('/photo/:id', jwtMW, (req, res) => {
 
     db.updateUserPhoto(req, res)
   })
+})
+
+router.put('/role/:id', jwtMW, (req, res) => {
+  db.updateUserRole(req, res)
 })
 
 /////////////////////////////////////////////////////////////////////////////////////////////
