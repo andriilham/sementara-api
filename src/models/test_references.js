@@ -12,7 +12,7 @@ module.exports = {
   // TEST REFERENCE MODELS
 
   getTestReferenceAll: function (req, res) {
-    c.query("SELECT * FROM `test_references`", null, { metadata: true, useArray: true }, function (err, rows) {
+    c.query("SELECT * FROM `test_references` ORDER BY `id`", null, { metadata: true, useArray: true }, function (err, rows) {
       if (err) {
         res.send({ message: err.message });
         console.log(err);
@@ -39,7 +39,7 @@ module.exports = {
     c.end();
   },
   getTestReference: function (req, res) {
-    c.query("SELECT * FROM `test_references` WHERE `id`=?", [req.id], { metadata: true, useArray: true }, function (err, rows) {
+    c.query("SELECT * FROM `test_references` WHERE `id`=? ORDER BY `id`", [req.id], { metadata: true, useArray: true }, function (err, rows) {
       if (err) {
         res.send({ message: err.message });
         console.log(err);
@@ -67,7 +67,7 @@ module.exports = {
   },
   getTestReferenceType: function (req, res) {
     const request = [req.id.toUpperCase()]
-    c.query("SELECT * FROM `test_references` WHERE `standard_level_id`=?", request, { metadata: true, useArray: true }, function (err, rows) {
+    c.query("SELECT * FROM `test_references` WHERE `standard_level_id`=? ORDER BY `id`", request, { metadata: true, useArray: true }, function (err, rows) {
       if (err) {
         res.send({ message: err.message });
         console.log(err);
@@ -95,7 +95,7 @@ module.exports = {
   },
   getTestReferenceSearch: function (req, res) {
     const request = ["%" + req.id.toUpperCase() + "%"]
-    c.query("SELECT * FROM `test_references` WHERE `standard_level_id` LIKE ?", request, { metadata: true, useArray: true }, function (err, rows) {
+    c.query("SELECT * FROM `test_references` WHERE `standard_level_id` LIKE ? ORDER BY `id`", request, { metadata: true, useArray: true }, function (err, rows) {
       if (err) {
         res.send({ message: err.message });
         console.log(err);
@@ -123,7 +123,7 @@ module.exports = {
   },
   getTestReferenceSearch2: function (req, res) {
     const request = ["%" + req.id.toUpperCase() + "%", "%" + req.id2.toUpperCase() + "%"]
-    c.query("SELECT * FROM `test_references` WHERE `standard_level_id` LIKE ? OR `standard_level_id` LIKE ?", request, { metadata: true, useArray: true }, function (err, rows) {
+    c.query("SELECT * FROM `test_references` WHERE `standard_level_id` LIKE ? OR `standard_level_id` LIKE ? ORDER BY `id`", request, { metadata: true, useArray: true }, function (err, rows) {
       if (err) {
         res.send({ message: err.message });
         console.log(err);

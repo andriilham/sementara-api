@@ -12,7 +12,7 @@ module.exports = {
   // QUALITY MANUAL MODELS
 
   getQualityManualAll: function (req, res) {
-    c.query("SELECT * FROM `quality_manuals`", null, { metadata: true, useArray: true }, function (err, rows) {
+    c.query("SELECT * FROM `quality_manuals` ORDER BY `id`", null, { metadata: true, useArray: true }, function (err, rows) {
       if (err) {
         res.send({ message: err.message });
         console.log(err);

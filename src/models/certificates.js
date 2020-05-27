@@ -12,7 +12,7 @@ module.exports = {
   // CERTIFICATE MODELS
 
   getCertificateAll: function (req, res) {
-    c.query("SELECT * FROM `certificates`", null, { metadata: true, useArray: true }, function (err, rows) {
+    c.query("SELECT * FROM `certificates` ORDER BY `effective_date` DESC", null, { metadata: true, useArray: true }, function (err, rows) {
       if (err) {
         res.send({ message: err.message });
         console.log(err);

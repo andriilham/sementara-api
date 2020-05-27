@@ -12,7 +12,7 @@ module.exports = {
   // DIDE MODELS
 
   getDIDEAll: function (req, res) {
-    c.query("SELECT * FROM `dide`", null, { metadata: true, useArray: true }, function (err, rows) {
+    c.query("SELECT * FROM `dide` ORDER BY `id`", null, { metadata: true, useArray: true }, function (err, rows) {
       if (err) {
         res.send({ message: err.message });
         console.log(err);

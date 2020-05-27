@@ -12,7 +12,7 @@ module.exports = {
   // FORM MODELS
 
   getFormAll: function (req, res) {
-    c.query("SELECT * FROM `forms`", null, { metadata: true, useArray: true }, function (err, rows) {
+    c.query("SELECT * FROM `forms` ORDER BY `id`", null, { metadata: true, useArray: true }, function (err, rows) {
       if (err) {
         res.send({ message: err.message });
         console.log(err);

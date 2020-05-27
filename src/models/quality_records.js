@@ -12,7 +12,7 @@ module.exports = {
   // QUALITY RECORD MODELS
 
   getQualityRecordAll: function (req, res) {
-    c.query("SELECT * FROM `quality_records`", null, { metadata: true, useArray: true }, function (err, rows) {
+    c.query("SELECT * FROM `quality_records` ORDER BY `created` DESC", null, { metadata: true, useArray: true }, function (err, rows) {
       if (err) {
         res.send({ message: err.message });
         console.log(err);
@@ -39,7 +39,7 @@ module.exports = {
     c.end();
   },
   getQualityRecord: function (req, res) {
-    c.query("SELECT * FROM `quality_records` WHERE `id`=?", [req.id], { metadata: true, useArray: true }, function (err, rows) {
+    c.query("SELECT * FROM `quality_records` WHERE `id`=? ORDER BY `created` DESC", [req.id], { metadata: true, useArray: true }, function (err, rows) {
       if (err) {
         res.send({ message: err.message });
         console.log(err);
@@ -67,7 +67,35 @@ module.exports = {
   },
   getQualityRecordForm: function (req, res) {
     const request = [req.id.toUpperCase()]
-    c.query("SELECT * FROM `quality_records` WHERE `form_id`=?", request, { metadata: true, useArray: true }, function (err, rows) {
+    c.query("SELECT * FROM `quality_records` WHERE `form_id`=? ORDER BY `created` DESC", request, { metadata: true, useArray: true }, function (err, rows) {
+      if (err) {
+        res.send({ message: err.message });
+        console.log(err);
+        return
+      }
+
+      var data = [];
+      rows.forEach(function (items) {
+        data.push({
+          id: items[0],
+          form_id: items[1],
+          pic: items[2],
+          name: items[3],
+          created: items[4],
+          file: items[5]
+        });
+      });
+      if (data.length < 1) {
+        res.status(404).send({ message: 'Data not found.' });
+      } else {
+        res.json(data);
+      }
+    });
+    c.end();
+  },
+  getQualityRecordFormPIC: function (req, res) {
+    const request = [req.id.toUpperCase(), req.id2]
+    c.query("SELECT * FROM `quality_records` WHERE `form_id`=? AND `pic`=? ORDER BY `created` DESC", request, { metadata: true, useArray: true }, function (err, rows) {
       if (err) {
         res.send({ message: err.message });
         console.log(err);
@@ -98,7 +126,7 @@ module.exports = {
       "%" + req.id + "%",
       "%" + req.id + "%"
     ]
-    c.query("SELECT DISTINCT p.`id`, p.`form_id`, p.`pic`, p.`name`, p.`created`, p.`file` FROM `quality_records` p INNER JOIN `forms` f ON (f.`name` LIKE ? OR f.`name`='*') AND LEFT(p.`id`,6)=LEFT(f.`id`,6) OR p.`name` LIKE ? AND p.`id` LIKE '%/P%'", request, { metadata: true, useArray: true }, function (err, rows) {
+    c.query("SELECT DISTINCT p.`id`, p.`form_id`, p.`pic`, p.`name`, p.`created`, p.`file` FROM `quality_records` p INNER JOIN `forms` f ON (f.`name` LIKE ? OR f.`name`='*') AND LEFT(p.`id`,6)=LEFT(f.`id`,6) OR p.`name` LIKE ? AND p.`id` LIKE '%/P%' ORDER BY p.`created` DESC", request, { metadata: true, useArray: true }, function (err, rows) {
       if (err) {
         res.send({ message: err.message });
         console.log(err);

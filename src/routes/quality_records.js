@@ -46,6 +46,10 @@ router.get('/form/:id', (req, res) => {
   db.getQualityRecordForm(req.params, res)
 })
 
+router.get('/form/:id/pic/:id2', (req, res) => {
+  db.getQualityRecordFormPIC(req.params, res)
+})
+
 router.get('/pic/:id', jwtMW, (req, res) => {
   db.getQualityRecordPIC(req.params, res)
 })

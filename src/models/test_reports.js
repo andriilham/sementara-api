@@ -12,7 +12,7 @@ module.exports = {
   // TEST REPORT MODELS
 
   getTestReportAll: function (req, res) {
-    c.query("SELECT * FROM `test_reports`", null, { metadata: true, useArray: true }, function (err, rows) {
+    c.query("SELECT * FROM `test_reports` ORDER BY `created` DESC", null, { metadata: true, useArray: true }, function (err, rows) {
       if (err) {
         res.send({ message: err.message });
         console.log(err);
@@ -41,7 +41,7 @@ module.exports = {
     c.end();
   },
   getTestReport: function (req, res) {
-    c.query("SELECT * FROM `test_reports` WHERE `id`=?", [req.id], { metadata: true, useArray: true }, function (err, rows) {
+    c.query("SELECT * FROM `test_reports` WHERE `id`=? ORDER BY `created` DESC", [req.id], { metadata: true, useArray: true }, function (err, rows) {
       if (err) {
         res.send({ message: err.message });
         console.log(err);
@@ -71,7 +71,7 @@ module.exports = {
   },
   getTestReportSearch: function (req, res) {
     const request = ["%" + req.id.toUpperCase() + "%"]
-    c.query("SELECT * FROM `test_reports` WHERE `id` LIKE ?", request, { metadata: true, useArray: true }, function (err, rows) {
+    c.query("SELECT * FROM `test_reports` WHERE `id` LIKE ? ORDER BY `created` DESC", request, { metadata: true, useArray: true }, function (err, rows) {
       if (err) {
         res.send({ message: err.message });
         console.log(err);
@@ -101,7 +101,7 @@ module.exports = {
   },
   getTestReportSearch2: function (req, res) {
     const request = ["%" + req.id.toUpperCase() + "%", "%" + req.id2.toUpperCase() + "%"]
-    c.query("SELECT * FROM `test_reports` WHERE `id` LIKE ? OR `id` LIKE ?", request, { metadata: true, useArray: true }, function (err, rows) {
+    c.query("SELECT * FROM `test_reports` WHERE `id` LIKE ? OR `id` LIKE ? ORDER BY `created` DESC", request, { metadata: true, useArray: true }, function (err, rows) {
       if (err) {
         res.send({ message: err.message });
         console.log(err);
@@ -131,7 +131,7 @@ module.exports = {
   },
   getTestReportTestReference: function (req, res) {
     const request = ["%" + req.id + "%"]
-    c.query("SELECT * FROM `test_reports` WHERE `test_reference_id` LIKE ?", request, { metadata: true, useArray: true }, function (err, rows) {
+    c.query("SELECT * FROM `test_reports` WHERE `test_reference_id` LIKE ? ORDER BY `created` DESC", request, { metadata: true, useArray: true }, function (err, rows) {
       if (err) {
         res.send({ message: err.message });
         console.log(err);

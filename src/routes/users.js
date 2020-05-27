@@ -60,7 +60,11 @@ router.post('/', jwtMW, (req, res) => {
 })
 
 router.put('/:id', jwtMW, (req, res) => {
-  db.updateUser(req.body, res)
+  db.updateUser(req, res)
+})
+
+router.put('/role/:id', jwtMW, (req, res) => {
+  db.updateUserRole(req, res)
 })
 
 router.put('/photo/:id', jwtMW, (req, res) => {

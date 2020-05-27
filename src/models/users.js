@@ -12,7 +12,7 @@ module.exports = {
   // USERS MODELS
 
   getUserAll: function (req, res) {
-    c.query("SELECT * FROM `users`", null, { metadata: true, useArray: true }, function (err, rows) {
+    c.query("SELECT * FROM `users` ORDER BY `role`", null, { metadata: true, useArray: true }, function (err, rows) {
       if (err) {
         res.send({ message: err.message });
         console.log(err);
@@ -102,7 +102,7 @@ module.exports = {
   },
   getUserSearch: function (req, res) {
     var request = ["%" + req.id + "%", "%" + req.id + "%"];
-    c.query("SELECT * FROM `users` WHERE `id` LIKE ? OR `name` LIKE ?", request, { metadata: true, useArray: true }, function (err, rows) {
+    c.query("SELECT * FROM `users` WHERE `id` LIKE ? OR `name` LIKE ? ORDER BY `role`", request, { metadata: true, useArray: true }, function (err, rows) {
       if (err) {
         res.send({ message: err.message });
         console.log(err);
@@ -156,12 +156,35 @@ module.exports = {
   },
   updateUser: function (req, res) {
     const waktu = new Date().toISOString();
-    var request = [req.name, req.telp, req.email, waktu, req.id];
+    var request = [req.body.name, req.body.telp, req.body.email, waktu, req.params.id];
     if (request.includes(undefined)) {
       res.send({ message: 'Bad Request: Parameters cannot empty.' });
       return
     }
     c.query("UPDATE `users` SET `name`=?, `telp`=?, `email`=?, `updated`=? WHERE `id`=?", request, { metadata: true, useArray: true }, function (err, rows) {
+      if (err) {
+        res.send({ message: err.message });
+        console.log(err);
+        return
+      }
+
+      res.json({
+        affectedRows: rows.info.affectedRows,
+        err: null,
+        message: "User has updated successfully",
+        success: true
+      });
+    });
+    c.end();
+  },
+  updateUserRole: function (req, res) {
+    const waktu = new Date().toISOString();
+    var request = [req.body.role, waktu, req.params.id];
+    if (request.includes(undefined)) {
+      res.send({ message: 'Bad Request: Parameters cannot empty.' });
+      return
+    }
+    c.query("UPDATE `users` SET `role`=?, `updated`=? WHERE `id`=?", request, { metadata: true, useArray: true }, function (err, rows) {
       if (err) {
         res.send({ message: err.message });
         console.log(err);
