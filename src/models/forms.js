@@ -191,7 +191,7 @@ module.exports = {
   },
   newForm: function (req, res) {
     var request = [req.id, req.name, req.effective_date, req.pic, req.version, req.file_pdf, req.file_doc, req.file_xls];
-    if (request.includes(undefined) || request.includes("")) {
+    if (request.includes(undefined)) {
       res.send({ message: 'Bad Request: Parameters cannot empty.' });
       return
     }
@@ -212,12 +212,12 @@ module.exports = {
     c.end();
   },
   updateForm: function (req, res) {
-    var request = [req.body.name, req.body.effective_date, req.body.pic, req.body.version, req.params.id];
-    if (request.includes(undefined) || request.includes("")) {
+    var request = [req.body.name, req.body.effective_date, req.body.pic, req.body.version, req.body.file_pdf, req.body.file_doc, req.body.file_xls, req.params.id];
+    if (request.includes(undefined)) {
       res.send({ message: 'Bad Request: Parameters cannot empty.' });
       return
     }
-    c.query("UPDATE `forms` SET `name`=?, `effective_date`=?, `pic`=?, `version`=? WHERE `id`=?", request, { metadata: true, useArray: true }, function (err, rows) {
+    c.query("UPDATE `forms` SET `name`=?, `effective_date`=?, `pic`=?, `version`=?, `file_pdf`=?, `file_doc`=?, `file_xls`=? WHERE `id`=?", request, { metadata: true, useArray: true }, function (err, rows) {
       if (err) {
         res.send({ message: err.message });
         console.log(err);
@@ -239,7 +239,7 @@ module.exports = {
       res.send({ message: 'Bad Request: Parameters cannot empty.' });
       return
     }
-    c.query("UPDATE `devices` SET `file_pdf`=? WHERE `id`=?", request, { metadata: true, useArray: true }, function (err, rows) {
+    c.query("UPDATE `forms` SET `file_pdf`=? WHERE `id`=?", request, { metadata: true, useArray: true }, function (err, rows) {
       if (err) {
         res.send({ message: err.message });
         console.log(err);
@@ -261,7 +261,7 @@ module.exports = {
       res.send({ message: 'Bad Request: Parameters cannot empty.' });
       return
     }
-    c.query("UPDATE `devices` SET `file_doc`=? WHERE `id`=?", request, { metadata: true, useArray: true }, function (err, rows) {
+    c.query("UPDATE `forms` SET `file_doc`=? WHERE `id`=?", request, { metadata: true, useArray: true }, function (err, rows) {
       if (err) {
         res.send({ message: err.message });
         console.log(err);
@@ -283,7 +283,7 @@ module.exports = {
       res.send({ message: 'Bad Request: Parameters cannot empty.' });
       return
     }
-    c.query("UPDATE `devices` SET `file_xls`=? WHERE `id`=?", request, { metadata: true, useArray: true }, function (err, rows) {
+    c.query("UPDATE `forms` SET `file_xls`=? WHERE `id`=?", request, { metadata: true, useArray: true }, function (err, rows) {
       if (err) {
         res.send({ message: err.message });
         console.log(err);
