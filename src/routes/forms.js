@@ -62,37 +62,6 @@ router.get('/procedure/:id', jwtMW, (req, res) => {
   db.getFormProcedure(req.params, res)
 })
 
-// router.post('/', jwtMW, (req, res) => {
-//   var upload = multer({
-//     storage: storageForms,
-//     limits: {
-//       fileSize: 10 * 1024 * 1024
-//     },
-//     fileFilter: fileFilter
-//   }).single('file')
-//   upload(req, res, function (err) {
-//     if (err instanceof multer.MulterError) {
-//       // A Multer error occurred when uploading.
-//       res.send(err)
-//       return
-//     } else if (err) {
-//       // An unknown error occurred when uploading.
-//       res.send(err)
-//       return
-//     } else if (req.file == undefined) {
-//       res.send({ message: 'No file selected!' })
-//       return
-//     }
-//     // Everything went fine.
-//     console.log('Upload success.')
-
-//     // File name key used while in production and filename in development
-//     req.body.file = req.file.filename
-
-//     db.newForm(req.body, res)
-//   })
-// })
-
 router.post('/', jwtMW, (req, res) => {
   var upload = multer({
     storage: storageForms,
