@@ -51,7 +51,7 @@ router.post('/', jwtMW, (req, res) => {
   var upload = multer({
     storage: storageArchives,
     limits: {
-      fileSize: 10 * 1024 * 1024
+      fileSize: 200 * 1024 * 1024
     },
     fileFilter: fileFilter
   }).single('file')
@@ -82,7 +82,7 @@ router.put('/:id', jwtMW, (req, res) => {
   var upload = multer({
     storage: storageArchives,
     limits: {
-      fileSize: 10 * 1024 * 1024
+      fileSize: 200 * 1024 * 1024
     },
     fileFilter: fileFilter
   }).single('file')
