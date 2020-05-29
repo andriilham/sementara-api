@@ -16,7 +16,7 @@ const storageArchives = multer.diskStorage({
     cb(null, 'src/uploads/archives/');
   },
   filename: function (req, file, cb) {
-    cb(null, req.body.id.replace(new RegExp("/", 'g'), "") + req.body.year + '_' + req.body.name + path.extname(file.originalname));
+    cb(null, req.body.id.replace(new RegExp("/", 'g'), "") + '_' + req.body.year + '_' + req.body.name + path.extname(file.originalname));
   }
 })
 

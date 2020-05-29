@@ -27,7 +27,8 @@ module.exports = {
           effective_date: items[2],
           pic: items[3],
           version: items[4],
-          file: items[5]
+          file: items[5],
+          file_doc: items[6]
         });
       });
       if (data.length < 1) {
@@ -54,7 +55,8 @@ module.exports = {
           effective_date: items[2],
           pic: items[3],
           version: items[4],
-          file: items[5]
+          file: items[5],
+          file_doc: items[6]
         });
       });
       if (data.length < 1) {
@@ -82,7 +84,8 @@ module.exports = {
           effective_date: items[2],
           pic: items[3],
           version: items[4],
-          file: items[5]
+          file: items[5],
+          file_doc: items[6]
         });
       });
       if (data.length < 1) {
@@ -95,7 +98,7 @@ module.exports = {
   },
   getQualityManualPIC: function (req, res) {
     const request = ["%" + req.id + "%", "%" + req.id + "%"]
-    c.query("SELECT DISTINCT p.`id`, p.`name`, p.`effective_date`, p.`pic`, p.`version`, p.`file` FROM `quality_manuals` p INNER JOIN `forms` f ON (f.`pic` LIKE ? OR f.`pic`='*') AND LEFT(p.`id`,6)=LEFT(f.`id`,6) OR p.`pic` LIKE ? AND p.`id` LIKE '%/P%'", request, { metadata: true, useArray: true }, function (err, rows) {
+    c.query("SELECT DISTINCT p.`id`, p.`name`, p.`effective_date`, p.`pic`, p.`version`, p.`file`, p.`file_doc` FROM `quality_manuals` p INNER JOIN `forms` f ON (f.`pic` LIKE ? OR f.`pic`='*') AND LEFT(p.`id`,6)=LEFT(f.`id`,6) OR p.`pic` LIKE ? AND p.`id` LIKE '%/P%'", request, { metadata: true, useArray: true }, function (err, rows) {
       if (err) {
         res.send({ message: err.message });
         console.log(err);
@@ -110,7 +113,8 @@ module.exports = {
           effective_date: items[2],
           pic: items[3],
           version: items[4],
-          file: items[5]
+          file: items[5],
+          file_doc: items[6]
         });
       });
       if (data.length < 1) {
@@ -122,12 +126,12 @@ module.exports = {
     c.end();
   },
   newQualityManual: function (req, res) {
-    var request = [req.id, req.name, req.effective_date, req.pic, req.version, req.file];
-    if (request.includes(undefined) || request.includes("")) {
+    var request = [req.id, req.name, req.effective_date, req.pic, req.version, req.file, req.file_doc];
+    if (request.includes(undefined)) {
       res.send({ message: 'Bad Request: Parameters cannot empty.' });
       return
     }
-    c.query("INSERT INTO `quality_manuals`(`id`, `name`, `effective_date`, `pic`, `version`, `file`) VALUES (?, ?, ?, ?, ?, ?)", request, { metadata: true, useArray: true }, function (err, rows) {
+    c.query("INSERT INTO `quality_manuals`(`id`, `name`, `effective_date`, `pic`, `version`, `file`, `file_doc`) VALUES (? ,?, ?, ?, ?, ?, ?)", request, { metadata: true, useArray: true }, function (err, rows) {
       if (err) {
         res.send({ message: err.message });
         console.log(err);
@@ -144,12 +148,12 @@ module.exports = {
     c.end();
   },
   updateQualityManual: function (req, res) {
-    var request = [req.body.name, req.body.effective_date, req.body.pic, req.body.version, req.body.file, req.params.id];
-    if (request.includes(undefined) || request.includes("")) {
+    var request = [req.body.name, req.body.effective_date, req.body.pic, req.body.version, req.body.file, req.body.file_doc, req.params.id];
+    if (request.includes(undefined)) {
       res.send({ message: 'Bad Request: Parameters cannot empty.' });
       return
     }
-    c.query("UPDATE `quality_manuals` SET `name`=?, `effective_date`=?, `pic`=?, `version`=?, `file`=? WHERE `id`=?", request, { metadata: true, useArray: true }, function (err, rows) {
+    c.query("UPDATE `quality_manuals` SET `name`=?, `effective_date`=?, `pic`=?, `version`=?, `file`=?, `file_doc`=? WHERE `id`=?", request, { metadata: true, useArray: true }, function (err, rows) {
       if (err) {
         res.send({ message: err.message });
         console.log(err);

@@ -9,10 +9,10 @@ const c = new Client({
 module.exports = {
 
   /////////////////////////////////////////////////////////////////////////////////////////////
-  // ROLE MODELS
+  // INFO MODELS
 
-  getRoleAll: function (req, res) {
-    c.query("SELECT * FROM `roles`", null, { metadata: true, useArray: true }, function (err, rows) {
+  getInfoAll: function (req, res) {
+    c.query("SELECT * FROM `infos`", null, { metadata: true, useArray: true }, function (err, rows) {
       if (err) {
         res.send({ message: err.message });
         console.log(err);
@@ -23,7 +23,8 @@ module.exports = {
       rows.forEach(function (items) {
         data.push({
           id: items[0],
-          name: items[1]
+          name: items[1],
+          value: items[2]
         });
       });
       if (data.length < 1) {
@@ -34,8 +35,8 @@ module.exports = {
     });
     c.end();
   },
-  getRole: function (req, res) {
-    c.query("SELECT * FROM `roles` WHERE id=?", [req.id], { metadata: true, useArray: true }, function (err, rows) {
+  getInfo: function (req, res) {
+    c.query("SELECT * FROM `infos` WHERE id=?", [req.id], { metadata: true, useArray: true }, function (err, rows) {
       if (err) {
         res.send({ message: err.message });
         console.log(err);
@@ -46,7 +47,8 @@ module.exports = {
       rows.forEach(function (items) {
         data.push({
           id: items[0],
-          name: items[1]
+          name: items[1],
+          value: items[2]
         });
       });
       if (data.length < 1) {
@@ -57,13 +59,13 @@ module.exports = {
     });
     c.end();
   },
-  newRole: function (req, res) {
-    var request = [req.id, req.name];
+  newInfo: function (req, res) {
+    var request = [req.id, req.name, req.value];
     if (request.includes(undefined) || request.includes("")) {
       res.send({ message: 'Bad Request: Parameters cannot empty.' });
       return
     }
-    c.query("INSERT INTO `roles` (`id`, `name`) VALUES (?, ?)", request, { metadata: true, useArray: true }, function (err, rows) {
+    c.query("INSERT INTO `infos` (`id`, `name`, `value`) VALUES (?, ?, ?)", request, { metadata: true, useArray: true }, function (err, rows) {
       if (err) {
         res.send({ message: err.message });
         console.log(err);
@@ -73,19 +75,19 @@ module.exports = {
       res.json({
         affectedRows: rows.info.affectedRows,
         err: null,
-        message: "Role has registered successfully",
+        message: "Info has registered successfully",
         success: true
       });
     });
     c.end();
   },
-  updateRole: function (req, res) {
-    var request = [req.body.name, req.params.id];
+  updateInfo: function (req, res) {
+    var request = [req.body.name, req.body.value, req.params.id];
     if (request.includes(undefined) || request.includes("")) {
       res.send({ message: 'Bad Request: Parameters cannot empty.' });
       return
     }
-    c.query("UPDATE `roles` SET `name`=? WHERE `id`=?", request, { metadata: true, useArray: true }, function (err, rows) {
+    c.query("UPDATE `infos` SET `name`=? `value`=? WHERE `id`=?", request, { metadata: true, useArray: true }, function (err, rows) {
       if (err) {
         res.send({ message: err.message });
         console.log(err);
@@ -95,19 +97,19 @@ module.exports = {
       res.json({
         affectedRows: rows.info.affectedRows,
         err: null,
-        message: "Role has updated successfully",
+        message: "Info has updated successfully",
         success: true
       });
     });
     c.end();
   },
-  deleteRole: function (req, res) {
+  deleteInfo: function (req, res) {
     var request = [req.id];
     if (request.includes(undefined) || request.includes("")) {
       res.send({ message: 'Bad Request: Parameters cannot empty.' });
       return
     }
-    c.query("DELETE FROM `roles` WHERE `id`=?", request, { metadata: true, useArray: true }, function (err, rows) {
+    c.query("DELETE FROM `infos` WHERE `id`=?", request, { metadata: true, useArray: true }, function (err, rows) {
       if (err) {
         res.send({ message: err.message });
         console.log(err);
@@ -120,15 +122,15 @@ module.exports = {
         res.json({
           affectedRows: rows.info.affectedRows,
           err: null,
-          message: "Role has deleted successfully",
+          message: "Info has deleted successfully",
           success: true
         });
       }
     });
     c.end();
   },
-  deleteRoleAll: function (req, res) {
-    c.query("DELETE FROM `roles`", null, { metadata: true, useArray: true }, function (err, rows) {
+  deleteInfoAll: function (req, res) {
+    c.query("DELETE FROM `infos`", null, { metadata: true, useArray: true }, function (err, rows) {
       if (err) {
         res.send({ message: err.message });
         console.log(err);
@@ -140,7 +142,7 @@ module.exports = {
       } else {
         res.json({
           affectedRows: rows.info.affectedRows,
-          message: "All Role has deleted successfully :[",
+          message: "All Info has deleted successfully :[",
           success: true
         });
       }
