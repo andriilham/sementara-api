@@ -16,8 +16,8 @@ const storageTestReferences = multer.diskStorage({
     cb(null, 'src/uploads/test_references/');
   },
   filename: function (req, file, cb) {
-    const version = req.body.version || req.body.year;
-    cb(null, req.body.id.replace(new RegExp("/", 'g'), "") + '_v' + version + '_' + req.body.name + path.extname(file.originalname));
+    const version = req.body.version ? req.body.version : req.body.year;
+    cb(null, req.body.id.replace(new RegExp("/", 'g'), "") + '_v' + version + '_' + req.body.name.replace(new RegExp("[^\\w\\s]", 'g'), "") + path.extname(file.originalname));
   }
 })
 

@@ -153,9 +153,8 @@ module.exports = {
     c.end();
   },
   newQualityRecord: function (req, res) {
-    const waktu = new Date().toISOString();
     var request = [
-      'R' + new Date(waktu).valueOf().toString(32).toUpperCase(),
+      req.id,
       req.form_id,
       req.pic,
       req.name,

@@ -16,7 +16,7 @@ const storageDIDEs = multer.diskStorage({
     cb(null, 'src/uploads/dide/');
   },
   filename: function (req, file, cb) {
-    cb(null, req.body.id.replace(new RegExp("/", 'g'), "") + '_v' + req.body.version + '_' + req.body.name + path.extname(file.originalname));
+    cb(null, req.body.id.replace(new RegExp("/", 'g'), "") + '_v' + req.body.version + '_' + req.body.name.replace(new RegExp("[^\\w\\s]", 'g'), "") + path.extname(file.originalname));
   }
 })
 

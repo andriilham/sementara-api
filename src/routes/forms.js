@@ -16,7 +16,7 @@ const storageForms = multer.diskStorage({
     cb(null, 'src/uploads/forms/');
   },
   filename: function (req, file, cb) {
-    cb(null, req.body.id.replace(new RegExp("/", 'g'), "") + '_v' + req.body.version + '_' + req.body.name.replace(new RegExp(" ", 'g'), "-") + path.extname(file.originalname));
+    cb(null, req.body.id.replace(new RegExp("/", 'g'), "") + '_v' + req.body.version + '_' + req.body.name.replace(new RegExp("[^\\w\\s]", 'g'), "") + path.extname(file.originalname));
   }
 })
 

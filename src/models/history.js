@@ -68,8 +68,8 @@ module.exports = {
     c.end();
   },
   getHistoryReference: function (req, res) {
-    const request = ["%" + req.id.toUpperCase() + "%"]
-    c.query("SELECT h.`reference_id`, e.`name`, s.`name`, s.`info`, s.`step_number`, h.`message`, h.`created` FROM `history` h LEFT OUTER JOIN `steps` s ON h.`step_id`=s.`id` LEFT OUTER JOIN `users` e ON h.`user_id`=e.`id` WHERE h.`reference_id` LIKE ? AND h.`step_id` NOT LIKE '%4%' ORDER BY h.`created` DESC LIMIT 10", request, { metadata: true, useArray: true }, function (err, rows) {
+    const request = [req.id.toUpperCase()]
+    c.query("SELECT h.`reference_id`, e.`name`, s.`name`, s.`info`, s.`step_number`, h.`message`, h.`created` FROM `history` h LEFT OUTER JOIN `steps` s ON h.`step_id`=s.`id` LEFT OUTER JOIN `users` e ON h.`user_id`=e.`id` WHERE h.`reference_id`=? AND h.`step_id` NOT LIKE '%4%' ORDER BY h.`created` DESC LIMIT 10", request, { metadata: true, useArray: true }, function (err, rows) {
       if (err) {
         res.send({ message: err.message });
         console.log(err);
