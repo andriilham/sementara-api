@@ -17,7 +17,8 @@ const storageTestReferences = multer.diskStorage({
   },
   filename: function (req, file, cb) {
     const version = req.body.version ? req.body.version : req.body.year;
-    cb(null, req.body.id.replace(new RegExp("/", 'g'), "") + '_v' + version + '_' + req.body.name.replace(new RegExp("[^\\w\\s]", 'g'), "") + path.extname(file.originalname));
+    const fieldname = file.fieldname === "file_wm" ? "_WM" : "";
+    cb(null, req.body.id.replace(new RegExp("/", 'g'), "") + '_v' + version + '_' + req.body.name.replace(new RegExp("[^\\w\\s]", 'g'), "") + fieldname + path.extname(file.originalname));
   }
 })
 
@@ -64,7 +65,7 @@ router.post('/', jwtMW, (req, res) => {
       fileSize: 20 * 1024 * 1024
     },
     fileFilter: fileFilter
-  }).fields([{ name: 'file', maxCount: 1 }, { name: 'file_doc', maxCount: 1 }])
+  }).fields([{ name: 'file', maxCount: 1 }, { name: 'file_doc', maxCount: 1 }, { name: 'file_wm', maxCount: 1 }])
   upload(req, res, function (err) {
     if (err instanceof multer.MulterError) {
       // A Multer error occurred when uploading.
@@ -74,7 +75,7 @@ router.post('/', jwtMW, (req, res) => {
       // An unknown error occurred when uploading.
       res.send(err)
       return
-    } else if (req.files == undefined && (req.body.file === undefined || req.body.file_doc === undefined)) {
+    } else if (req.files == undefined && (req.body.file === undefined || req.body.file_doc === undefined || req.body.file_wm === undefined)) {
       res.send({ message: 'No file selected!' })
       return
     }
@@ -84,6 +85,7 @@ router.post('/', jwtMW, (req, res) => {
     // File name key used while in production and filename in development
     req.body.file = req.files.file ? req.files.file[0].filename : req.body.file
     req.body.file_doc = req.files.file_doc ? req.files.file_doc[0].filename : req.body.file_doc
+    req.body.file_wm = req.files.file_wm ? req.files.file_wm[0].filename : req.body.file_wm
 
     db.newTestReference(req.body, res)
   })
@@ -96,7 +98,7 @@ router.put('/:id', jwtMW, (req, res) => {
       fileSize: 20 * 1024 * 1024
     },
     fileFilter: fileFilter
-  }).fields([{ name: 'file', maxCount: 1 }, { name: 'file_doc', maxCount: 1 }])
+  }).fields([{ name: 'file', maxCount: 1 }, { name: 'file_doc', maxCount: 1 }, { name: 'file_wm', maxCount: 1 }])
   upload(req, res, function (err) {
     if (err instanceof multer.MulterError) {
       // A Multer error occurred when uploading.
@@ -106,7 +108,7 @@ router.put('/:id', jwtMW, (req, res) => {
       // An unknown error occurred when uploading.
       res.send(err)
       return
-    } else if (req.files == undefined && (req.body.file === undefined || req.body.file_doc === undefined)) {
+    } else if (req.files == undefined && (req.body.file === undefined || req.body.file_doc === undefined || req.body.file_wm === undefined)) {
       res.send({ message: 'No file selected!' })
       return
     }
@@ -116,6 +118,7 @@ router.put('/:id', jwtMW, (req, res) => {
     // File name key used while in production and filename in development
     req.body.file = req.files.file ? req.files.file[0].filename : req.body.file
     req.body.file_doc = req.files.file_doc ? req.files.file_doc[0].filename : req.body.file_doc
+    req.body.file_wm = req.files.file_wm ? req.files.file_wm[0].filename : req.body.file_wm
 
     db.updateTestReference(req, res)
   })

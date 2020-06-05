@@ -28,7 +28,8 @@ module.exports = {
           version: items[3],
           standard_level_id: items[4],
           file: items[5],
-          file_doc: items[6]
+          file_doc: items[6],
+          file_wm: items[7]
         });
       });
       if (data.length < 1) {
@@ -56,7 +57,8 @@ module.exports = {
           version: items[3],
           standard_level_id: items[4],
           file: items[5],
-          file_doc: items[6]
+          file_doc: items[6],
+          file_wm: items[7]
         });
       });
       if (data.length < 1) {
@@ -85,7 +87,8 @@ module.exports = {
           version: items[3],
           standard_level_id: items[4],
           file: items[5],
-          file_doc: items[6]
+          file_doc: items[6],
+          file_wm: items[7]
         });
       });
       if (data.length < 1) {
@@ -114,7 +117,8 @@ module.exports = {
           version: items[3],
           standard_level_id: items[4],
           file: items[5],
-          file_doc: items[6]
+          file_doc: items[6],
+          file_wm: items[7]
         });
       });
       if (data.length < 1) {
@@ -143,7 +147,8 @@ module.exports = {
           version: items[3],
           standard_level_id: items[4],
           file: items[5],
-          file_doc: items[6]
+          file_doc: items[6],
+          file_wm: items[7]
         });
       });
       if (data.length < 1) {
@@ -155,12 +160,12 @@ module.exports = {
     c.end();
   },
   newTestReference: function (req, res) {
-    var request = [req.id, req.name, req.year, req.version, req.standard_level_id, req.file, req.file_doc];
+    var request = [req.id, req.name, req.year, req.version, req.standard_level_id, req.file, req.file_doc, req.file_wm];
     if (request.includes(undefined)) {
       res.send({ message: 'Bad Request: Parameters cannot empty.' });
       return
     }
-    c.query("INSERT INTO `test_references`(`id`, `name`, `year`, `version`, `standard_level_id`, `file`, `file_doc`) VALUES (?, ?, ?, ?, ?, ?, ?)", request, { metadata: true, useArray: true }, function (err, rows) {
+    c.query("INSERT INTO `test_references`(`id`, `name`, `year`, `version`, `standard_level_id`, `file`, `file_doc`, `file_wm`) VALUES (?, ?, ?, ?, ?, ?, ?, ?)", request, { metadata: true, useArray: true }, function (err, rows) {
       if (err) {
         res.send({ message: err.message });
         console.log(err);
@@ -177,12 +182,12 @@ module.exports = {
     c.end();
   },
   updateTestReference: function (req, res) {
-    var request = [req.body.name, req.body.year, req.body.version, req.body.standard_level_id, req.body.file, req.body.file_doc, req.params.id];
+    var request = [req.body.name, req.body.year, req.body.version, req.body.standard_level_id, req.body.file, req.body.file_doc, req.body.file_wm, req.params.id];
     if (request.includes(undefined)) {
       res.send({ message: 'Bad Request: Parameters cannot empty.' });
       return
     }
-    c.query("UPDATE `test_references` SET `name`=?, `year`=?, `version`=?, `standard_level_id`=?, `file`=?, `file_doc`=? WHERE `id`=?", request, { metadata: true, useArray: true }, function (err, rows) {
+    c.query("UPDATE `test_references` SET `name`=?, `year`=?, `version`=?, `standard_level_id`=?, `file`=?, `file_doc`=?, `file_wm`=? WHERE `id`=?", request, { metadata: true, useArray: true }, function (err, rows) {
       if (err) {
         res.send({ message: err.message });
         console.log(err);
