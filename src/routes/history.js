@@ -40,7 +40,7 @@ router.get('/request-step/:id', (req, res) => {
   db.getHistoryRequestStep(req.params, res)
 })
 
-router.post('/', jwtMW, (req, res) => {
+router.post('/', (req, res) => {
   db.newHistory(req.body, res)
 })
 

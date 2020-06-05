@@ -191,7 +191,7 @@ module.exports = {
         console.log(err);
         return
       }
-      if (data.length < 1) {
+      if (rows.length < 1) {
         res.send({ message: "Password is incorrect, please try again." });
       } else {
         c.query("UPDATE `users` SET `password`=?, `updated`=? WHERE `id`=?", request2, { metadata: true, useArray: true }, function (err, rows) {
