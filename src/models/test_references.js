@@ -19,18 +19,19 @@ module.exports = {
         return
       }
 
+      const col = Object.keys(rows.info.metadata)
       var data = [];
       rows.forEach(function (items) {
         data.push({
-          id: items[0],
-          name: items[1],
-          year: items[2],
-          version: items[3],
-          standard_level_id: items[4],
-          file: items[5],
-          file_doc: items[6],
-          file_wm: items[7]
-        });
+          [col[0]]: items[0],
+          [col[1]]: items[1],
+          [col[2]]: items[2],
+          [col[3]]: items[3],
+          [col[4]]: items[4],
+          [col[5]]: items[5],
+          [col[6]]: items[6],
+          [col[7]]: items[7]
+        })
       });
       if (data.length < 1) {
         res.status(404).send({ message: 'Data not found.' });
@@ -48,18 +49,19 @@ module.exports = {
         return
       }
 
+      const col = Object.keys(rows.info.metadata)
       var data = [];
       rows.forEach(function (items) {
         data.push({
-          id: items[0],
-          name: items[1],
-          year: items[2],
-          version: items[3],
-          standard_level_id: items[4],
-          file: items[5],
-          file_doc: items[6],
-          file_wm: items[7]
-        });
+          [col[0]]: items[0],
+          [col[1]]: items[1],
+          [col[2]]: items[2],
+          [col[3]]: items[3],
+          [col[4]]: items[4],
+          [col[5]]: items[5],
+          [col[6]]: items[6],
+          [col[7]]: items[7]
+        })
       });
       if (data.length < 1) {
         res.status(404).send({ message: 'Data not found.' });
@@ -78,18 +80,19 @@ module.exports = {
         return
       }
 
+      const col = Object.keys(rows.info.metadata)
       var data = [];
       rows.forEach(function (items) {
         data.push({
-          id: items[0],
-          name: items[1],
-          year: items[2],
-          version: items[3],
-          standard_level_id: items[4],
-          file: items[5],
-          file_doc: items[6],
-          file_wm: items[7]
-        });
+          [col[0]]: items[0],
+          [col[1]]: items[1],
+          [col[2]]: items[2],
+          [col[3]]: items[3],
+          [col[4]]: items[4],
+          [col[5]]: items[5],
+          [col[6]]: items[6],
+          [col[7]]: items[7]
+        })
       });
       if (data.length < 1) {
         res.status(404).send({ message: 'Data not found.' });
@@ -108,18 +111,19 @@ module.exports = {
         return
       }
 
+      const col = Object.keys(rows.info.metadata)
       var data = [];
       rows.forEach(function (items) {
         data.push({
-          id: items[0],
-          name: items[1],
-          year: items[2],
-          version: items[3],
-          standard_level_id: items[4],
-          file: items[5],
-          file_doc: items[6],
-          file_wm: items[7]
-        });
+          [col[0]]: items[0],
+          [col[1]]: items[1],
+          [col[2]]: items[2],
+          [col[3]]: items[3],
+          [col[4]]: items[4],
+          [col[5]]: items[5],
+          [col[6]]: items[6],
+          [col[7]]: items[7]
+        })
       });
       if (data.length < 1) {
         res.status(404).send({ message: 'Data not found.' });
@@ -138,18 +142,19 @@ module.exports = {
         return
       }
 
+      const col = Object.keys(rows.info.metadata)
       var data = [];
       rows.forEach(function (items) {
         data.push({
-          id: items[0],
-          name: items[1],
-          year: items[2],
-          version: items[3],
-          standard_level_id: items[4],
-          file: items[5],
-          file_doc: items[6],
-          file_wm: items[7]
-        });
+          [col[0]]: items[0],
+          [col[1]]: items[1],
+          [col[2]]: items[2],
+          [col[3]]: items[3],
+          [col[4]]: items[4],
+          [col[5]]: items[5],
+          [col[6]]: items[6],
+          [col[7]]: items[7]
+        })
       });
       if (data.length < 1) {
         res.status(404).send({ message: 'Data not found.' });

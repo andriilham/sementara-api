@@ -12,22 +12,27 @@ module.exports = {
   // CERTIFICATE MODELS
 
   getCertificateAll: function (req, res) {
-    c.query("SELECT * FROM `certificates` ORDER BY `effective_date` DESC", null, { metadata: true, useArray: true }, function (err, rows) {
+    c.query("SELECT c.`id`, c.`test_report_id`, t.`company_name`, t.`device_name`, t.`brand`, t.`model`, c.`effective_date`, c.`due_date`, c.`file` FROM `certificates` c LEFT JOIN `test_reports` t ON c.`test_report_id`=t.`id` ORDER BY c.`effective_date` DESC", null, { metadata: true, useArray: true }, function (err, rows) {
       if (err) {
         res.send({ message: err.message });
         console.log(err);
         return
       }
 
+      const col = Object.keys(rows.info.metadata)
       var data = [];
       rows.forEach(function (items) {
         data.push({
-          id: items[0],
-          test_report_id: items[1],
-          effective_date: items[2],
-          due_date: items[3],
-          file: items[4]
-        });
+          [col[0]]: items[0],
+          [col[1]]: items[1],
+          [col[2]]: items[2],
+          [col[3]]: items[3],
+          [col[4]]: items[4],
+          [col[5]]: items[5],
+          [col[6]]: items[6],
+          [col[7]]: items[7],
+          [col[8]]: items[8]
+        })
       });
       if (data.length < 1) {
         res.status(404).send({ message: 'Data not found.' });
@@ -38,22 +43,27 @@ module.exports = {
     c.end();
   },
   getCertificate: function (req, res) {
-    c.query("SELECT * FROM `certificates` WHERE `id`=?", [req.id], { metadata: true, useArray: true }, function (err, rows) {
+    c.query("SELECT c.`id`, c.`test_report_id`, t.`company_name`, t.`device_name`, t.`brand`, t.`model`, c.`effective_date`, c.`due_date`, c.`file` FROM `certificates` c LEFT JOIN `test_reports` t ON c.`test_report_id`=t.`id` WHERE c.`id`=?", [req.id], { metadata: true, useArray: true }, function (err, rows) {
       if (err) {
         res.send({ message: err.message });
         console.log(err);
         return
       }
 
+      const col = Object.keys(rows.info.metadata)
       var data = [];
       rows.forEach(function (items) {
         data.push({
-          id: items[0],
-          test_report_id: items[1],
-          effective_date: items[2],
-          due_date: items[3],
-          file: items[4]
-        });
+          [col[0]]: items[0],
+          [col[1]]: items[1],
+          [col[2]]: items[2],
+          [col[3]]: items[3],
+          [col[4]]: items[4],
+          [col[5]]: items[5],
+          [col[6]]: items[6],
+          [col[7]]: items[7],
+          [col[8]]: items[8]
+        })
       });
       if (data.length < 1) {
         res.status(404).send({ message: 'Data not found.' });
@@ -65,22 +75,27 @@ module.exports = {
   },
   getCertificateTestReport: function (req, res) {
     const request = ["%" + req.id.toUpperCase() + "%"]
-    c.query("SELECT * FROM `certificates` WHERE `test_report_id` LIKE ?", request, { metadata: true, useArray: true }, function (err, rows) {
+    c.query("SELECT c.`id`, c.`test_report_id`, t.`company_name`, t.`device_name`, t.`brand`, t.`model`, c.`effective_date`, c.`due_date`, c.`file` FROM `certificates` c LEFT JOIN `test_reports` t ON c.`test_report_id`=t.`id` WHERE c.`test_report_id` LIKE ? ORDER BY c.`effective_date` DESC", request, { metadata: true, useArray: true }, function (err, rows) {
       if (err) {
         res.send({ message: err.message });
         console.log(err);
         return
       }
 
+      const col = Object.keys(rows.info.metadata)
       var data = [];
       rows.forEach(function (items) {
         data.push({
-          id: items[0],
-          test_report_id: items[1],
-          effective_date: items[2],
-          due_date: items[3],
-          file: items[4]
-        });
+          [col[0]]: items[0],
+          [col[1]]: items[1],
+          [col[2]]: items[2],
+          [col[3]]: items[3],
+          [col[4]]: items[4],
+          [col[5]]: items[5],
+          [col[6]]: items[6],
+          [col[7]]: items[7],
+          [col[8]]: items[8]
+        })
       });
       if (data.length < 1) {
         res.status(404).send({ message: 'Data not found.' });
@@ -92,22 +107,27 @@ module.exports = {
   },
   getCertificateTestReport2: function (req, res) {
     const request = ["%" + req.id.toUpperCase() + "%", "%" + req.id2.toUpperCase() + "%"]
-    c.query("SELECT * FROM `certificates` WHERE `test_report_id` LIKE ? OR`test_report_id` LIKE ?", request, { metadata: true, useArray: true }, function (err, rows) {
+    c.query("SELECT c.`id`, c.`test_report_id`, t.`company_name`, t.`device_name`, t.`brand`, t.`model`, c.`effective_date`, c.`due_date`, c.`file` FROM `certificates` c LEFT JOIN `test_reports` t ON c.`test_report_id`=t.`id` WHERE c.`test_report_id` LIKE ? OR c.`test_report_id` LIKE ? ORDER BY c.`effective_date` DESC", request, { metadata: true, useArray: true }, function (err, rows) {
       if (err) {
         res.send({ message: err.message });
         console.log(err);
         return
       }
 
+      const col = Object.keys(rows.info.metadata)
       var data = [];
       rows.forEach(function (items) {
         data.push({
-          id: items[0],
-          test_report_id: items[1],
-          effective_date: items[2],
-          due_date: items[3],
-          file: items[4]
-        });
+          [col[0]]: items[0],
+          [col[1]]: items[1],
+          [col[2]]: items[2],
+          [col[3]]: items[3],
+          [col[4]]: items[4],
+          [col[5]]: items[5],
+          [col[6]]: items[6],
+          [col[7]]: items[7],
+          [col[8]]: items[8]
+        })
       });
       if (data.length < 1) {
         res.status(404).send({ message: 'Data not found.' });

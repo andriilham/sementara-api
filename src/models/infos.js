@@ -19,13 +19,14 @@ module.exports = {
         return
       }
 
+      const col = Object.keys(rows.info.metadata)
       var data = [];
       rows.forEach(function (items) {
         data.push({
-          id: items[0],
-          name: items[1],
-          value: items[2]
-        });
+          [col[0]]: items[0],
+          [col[1]]: items[1],
+          [col[2]]: items[2]
+        })
       });
       if (data.length < 1) {
         res.status(404).send({ message: 'Data not found.' });
@@ -43,13 +44,14 @@ module.exports = {
         return
       }
 
+      const col = Object.keys(rows.info.metadata)
       var data = [];
       rows.forEach(function (items) {
         data.push({
-          id: items[0],
-          name: items[1],
-          value: items[2]
-        });
+          [col[0]]: items[0],
+          [col[1]]: items[1],
+          [col[2]]: items[2]
+        })
       });
       if (data.length < 1) {
         res.status(404).send({ message: 'Data not found.' });

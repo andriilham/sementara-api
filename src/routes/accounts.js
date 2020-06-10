@@ -49,11 +49,11 @@ router.post('/login', (req, res) => {
         token
       });
     }
-    else if (data.length === 1 && data[0].role === "0") {
+    else if (data.length === 1 && data[0].role === "9") {
       res.json({
         success: false,
         token: null,
-        err: 'Email is not verified'
+        err: "User is deactivated. Please contact web admin if something isn't right."
       });
     }
     else {
