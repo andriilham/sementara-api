@@ -161,12 +161,13 @@ module.exports = {
     c.end();
   },
   updateCertificate: function (req, res) {
-    var request = [req.body.test_report_id, req.body.effective_date, req.body.due_date, req.body.file, req.params.id];
+    // EDIT ID FOR DEFINITE RANGE OF TIME, SHOULD REMOVE THIS
+    var request = [req.body.id, req.body.test_report_id, req.body.effective_date, req.body.due_date, req.body.file, req.params.id];
     if (request.includes(undefined) || request.includes("")) {
       res.send({ message: 'Bad Request: Parameters cannot empty.' });
       return
     }
-    c.query("UPDATE `certificates` SET `test_report_id`=?, `effective_date`=?, `due_date`=?, `file`=? WHERE `id`=?", request, { metadata: true, useArray: true }, function (err, rows) {
+    c.query("UPDATE `certificates` SET `id`=?, `test_report_id`=?, `effective_date`=?, `due_date`=?, `file`=? WHERE `id`=?", request, { metadata: true, useArray: true }, function (err, rows) {
       if (err) {
         res.send({ message: err.message });
         console.log(err);

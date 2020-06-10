@@ -187,12 +187,13 @@ module.exports = {
     c.end();
   },
   updateTestReport: function (req, res) {
-    var request = [req.body.company_name, req.body.device_name, req.body.brand, req.body.model, req.body.test_reference_id, req.body.created, req.body.file, req.params.id];
+    // EDIT ID FOR DEFINITE RANGE OF TIME, SHOULD REMOVE THIS
+    var request = [req.body.id, req.body.company_name, req.body.device_name, req.body.brand, req.body.model, req.body.test_reference_id, req.body.created, req.body.file, req.params.id];
     if (request.includes(undefined)) {
       res.send({ message: 'Bad Request: Parameters cannot empty.' });
       return
     }
-    c.query("UPDATE `test_reports` SET `company_name`=?, `device_name`=?, `brand`=?, `model`=?, `test_reference_id`=?, `created`=?, `file`=? WHERE `id`=?", request, { metadata: true, useArray: true }, function (err, rows) {
+    c.query("UPDATE `test_reports` SET `id`=?, `company_name`=?, `device_name`=?, `brand`=?, `model`=?, `test_reference_id`=?, `created`=?, `file`=? WHERE `id`=?", request, { metadata: true, useArray: true }, function (err, rows) {
       if (err) {
         res.send({ message: err.message });
         console.log(err);
