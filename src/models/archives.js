@@ -154,6 +154,151 @@ module.exports = {
     });
     c.end();
   },
+  getAllArchiveSearch: function (req, res) {
+    const request = ["%" + req.id.toUpperCase() + "%", "%" + req.id.toUpperCase() + "%", "%" + req.id.toUpperCase() + "%", "%" + req.id.toUpperCase() + "%", "%" + req.id.toUpperCase() + "%"]
+    var data = [];
+    c.query("SELECT * FROM `archives` WHERE `id` LIKE ? OR `name` LIKE ? OR `year` LIKE ? OR `info` LIKE ?", request, { metadata: true, useArray: true }, function (err, rows) {
+      if (err) {
+        res.send({ message: err.message });
+        console.log(err);
+        return
+      }
+      rows.forEach(function (items) {
+        data.push({
+          id: items[0],
+          name: items[1],
+          table: 'archives'
+        })
+      });
+    });
+
+    c.query("SELECT * FROM `certificates` WHERE `id` LIKE ? OR `test_report_id` LIKE ? OR `effective_date` LIKE ?", request, { metadata: true, useArray: true }, function (err, rows) {
+      if (err) {
+        res.send({ message: err.message });
+        console.log(err);
+        return
+      }
+      rows.forEach(function (items) {
+        data.push({
+          id: items[0],
+          name: items[1],
+          table: 'certificates'
+        })
+      });
+    });
+
+    c.query("SELECT * FROM `dide` WHERE `id` LIKE ? OR `name` LIKE ? OR `publisher` LIKE ? OR `edition` LIKE ?", request, { metadata: true, useArray: true }, function (err, rows) {
+      if (err) {
+        res.send({ message: err.message });
+        console.log(err);
+        return
+      }
+      rows.forEach(function (items) {
+        data.push({
+          id: items[0],
+          name: items[1],
+          table: 'dide'
+        })
+      });
+    });
+
+    c.query("SELECT * FROM `forms` WHERE `id` LIKE ? OR `name` LIKE ? OR `effective_date` LIKE ?", request, { metadata: true, useArray: true }, function (err, rows) {
+      if (err) {
+        res.send({ message: err.message });
+        console.log(err);
+        return
+      }
+      rows.forEach(function (items) {
+        data.push({
+          id: items[0],
+          name: items[1],
+          table: 'forms'
+        })
+      });
+    });
+
+    c.query("SELECT * FROM `quality_manuals` WHERE `id` LIKE ? OR `name` LIKE ? OR `effective_date` LIKE ?", request, { metadata: true, useArray: true }, function (err, rows) {
+      if (err) {
+        res.send({ message: err.message });
+        console.log(err);
+        return
+      }
+      rows.forEach(function (items) {
+        data.push({
+          id: items[0],
+          name: items[1],
+          table: 'quality_manuals'
+        })
+      });
+    });
+
+    c.query("SELECT * FROM `quality_records` WHERE `id` LIKE ? OR `name` LIKE ? OR `form_id` LIKE ?", request, { metadata: true, useArray: true }, function (err, rows) {
+      if (err) {
+        res.send({ message: err.message });
+        console.log(err);
+        return
+      }
+      rows.forEach(function (items) {
+        data.push({
+          id: items[0],
+          name: items[3],
+          table: 'quality_records'
+        })
+      });
+    });
+
+    c.query("SELECT * FROM `test_references` WHERE `id` LIKE ? OR `name` LIKE ?", request, { metadata: true, useArray: true }, function (err, rows) {
+      if (err) {
+        res.send({ message: err.message });
+        console.log(err);
+        return
+      }
+      rows.forEach(function (items) {
+        data.push({
+          id: items[0],
+          name: items[1],
+          table: 'test_references'
+        })
+      });
+    });
+
+    c.query("SELECT * FROM `test_reports` WHERE `id` LIKE ? OR `company_name` LIKE ? OR `device_name` LIKE ? OR `brand` LIKE ? OR `model` LIKE ?", request, { metadata: true, useArray: true }, function (err, rows) {
+      if (err) {
+        res.send({ message: err.message });
+        console.log(err);
+        return
+      }
+      rows.forEach(function (items) {
+        data.push({
+          id: items[0],
+          name: items[1],
+          table: 'test_reports'
+        })
+      });
+    });
+
+    c.query("SELECT * FROM `trial_reports` WHERE `id` LIKE ? OR `name` LIKE ? OR `trial_date` LIKE ? OR `num_device` LIKE ? OR `num_pass` LIKE ?", request, { metadata: true, useArray: true }, function (err, rows) {
+      if (err) {
+        res.send({ message: err.message });
+        console.log(err);
+        return
+      }
+      rows.forEach(function (items) {
+        data.push({
+          id: items[0],
+          name: items[1],
+          table: 'trial_reports'
+        })
+      });
+
+      if (data.length < 1) {
+        res.status(404).send({ message: 'Data not found.' });
+      } else {
+        res.json(data);
+      }
+    });
+    c.end();
+  },
   newArchive: function (req, res) {
     var request = [req.id, req.name, req.year, req.info, req.standard_level_id, req.file];
     if (request.includes(undefined) || request.includes("")) {
