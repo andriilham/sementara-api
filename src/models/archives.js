@@ -157,7 +157,7 @@ module.exports = {
   getAllArchiveSearch: function (req, res) {
     const request = ["%" + req.id.toUpperCase() + "%", "%" + req.id.toUpperCase() + "%", "%" + req.id.toUpperCase() + "%", "%" + req.id.toUpperCase() + "%", "%" + req.id.toUpperCase() + "%"]
     var data = [];
-    c.query("SELECT * FROM `archives` WHERE `id` LIKE ? OR `name` LIKE ? OR `year` LIKE ? OR `info` LIKE ?", request, { metadata: true, useArray: true }, function (err, rows) {
+    c.query("SELECT `id`, `name`, `info` FROM `archives` WHERE `id` LIKE ? OR `name` LIKE ? OR `year` LIKE ? OR `info` LIKE ?", request, { metadata: true, useArray: true }, function (err, rows) {
       if (err) {
         res.send({ message: err.message });
         console.log(err);
@@ -167,12 +167,13 @@ module.exports = {
         data.push({
           id: items[0],
           name: items[1],
+          info: items[2],
           table: 'archives'
         })
       });
     });
 
-    c.query("SELECT * FROM `certificates` WHERE `id` LIKE ? OR `test_report_id` LIKE ? OR `effective_date` LIKE ?", request, { metadata: true, useArray: true }, function (err, rows) {
+    c.query("SELECT c.`id`, c.`test_report_id`, t.`company_name` FROM `certificates` c LEFT JOIN `test_reports` t ON c.`test_report_id`=t.`id` WHERE c.`id` LIKE ? OR c.`test_report_id` LIKE ? OR t.`company_name` LIKE ? OR t.`device_name` LIKE ? OR t.`brand` LIKE ? OR t.`model` LIKE ? OR c.`effective_date` LIKE ?", request, { metadata: true, useArray: true }, function (err, rows) {
       if (err) {
         res.send({ message: err.message });
         console.log(err);
@@ -182,12 +183,13 @@ module.exports = {
         data.push({
           id: items[0],
           name: items[1],
+          info: items[2],
           table: 'certificates'
         })
       });
     });
 
-    c.query("SELECT * FROM `dide` WHERE `id` LIKE ? OR `name` LIKE ? OR `publisher` LIKE ? OR `edition` LIKE ?", request, { metadata: true, useArray: true }, function (err, rows) {
+    c.query("SELECT `id`, `name`, `publisher` FROM `dide` WHERE `id` LIKE ? OR `name` LIKE ? OR `publisher` LIKE ? OR `edition` LIKE ?", request, { metadata: true, useArray: true }, function (err, rows) {
       if (err) {
         res.send({ message: err.message });
         console.log(err);
@@ -197,12 +199,13 @@ module.exports = {
         data.push({
           id: items[0],
           name: items[1],
+          info: items[2],
           table: 'dide'
         })
       });
     });
 
-    c.query("SELECT * FROM `forms` WHERE `id` LIKE ? OR `name` LIKE ? OR `effective_date` LIKE ?", request, { metadata: true, useArray: true }, function (err, rows) {
+    c.query("SELECT `id`, `name`, `effective_date` FROM `forms` WHERE `id` LIKE ? OR `name` LIKE ? OR `effective_date` LIKE ?", request, { metadata: true, useArray: true }, function (err, rows) {
       if (err) {
         res.send({ message: err.message });
         console.log(err);
@@ -212,12 +215,13 @@ module.exports = {
         data.push({
           id: items[0],
           name: items[1],
+          info: items[2],
           table: 'forms'
         })
       });
     });
 
-    c.query("SELECT * FROM `quality_manuals` WHERE `id` LIKE ? OR `name` LIKE ? OR `effective_date` LIKE ?", request, { metadata: true, useArray: true }, function (err, rows) {
+    c.query("SELECT `id`, `name`, `effective_date` FROM `quality_manuals` WHERE `id` LIKE ? OR `name` LIKE ? OR `effective_date` LIKE ?", request, { metadata: true, useArray: true }, function (err, rows) {
       if (err) {
         res.send({ message: err.message });
         console.log(err);
@@ -227,12 +231,13 @@ module.exports = {
         data.push({
           id: items[0],
           name: items[1],
+          info: items[2],
           table: 'quality_manuals'
         })
       });
     });
 
-    c.query("SELECT * FROM `quality_records` WHERE `id` LIKE ? OR `name` LIKE ? OR `form_id` LIKE ?", request, { metadata: true, useArray: true }, function (err, rows) {
+    c.query("SELECT `id`, `name`, `form_id` FROM `quality_records` WHERE `id` LIKE ? OR `name` LIKE ? OR `form_id` LIKE ?", request, { metadata: true, useArray: true }, function (err, rows) {
       if (err) {
         res.send({ message: err.message });
         console.log(err);
@@ -241,13 +246,14 @@ module.exports = {
       rows.forEach(function (items) {
         data.push({
           id: items[0],
-          name: items[3],
+          name: items[1],
+          info: items[2],
           table: 'quality_records'
         })
       });
     });
 
-    c.query("SELECT * FROM `test_references` WHERE `id` LIKE ? OR `name` LIKE ?", request, { metadata: true, useArray: true }, function (err, rows) {
+    c.query("SELECT `id`, `name`, `version` FROM `test_references` WHERE `id` LIKE ? OR `name` LIKE ?", request, { metadata: true, useArray: true }, function (err, rows) {
       if (err) {
         res.send({ message: err.message });
         console.log(err);
@@ -257,12 +263,13 @@ module.exports = {
         data.push({
           id: items[0],
           name: items[1],
+          info: items[2],
           table: 'test_references'
         })
       });
     });
 
-    c.query("SELECT * FROM `test_reports` WHERE `id` LIKE ? OR `company_name` LIKE ? OR `device_name` LIKE ? OR `brand` LIKE ? OR `model` LIKE ?", request, { metadata: true, useArray: true }, function (err, rows) {
+    c.query("SELECT `id`, `company_name`, `device_name` FROM `test_reports` WHERE `id` LIKE ? OR `company_name` LIKE ? OR `device_name` LIKE ? OR `brand` LIKE ? OR `model` LIKE ?", request, { metadata: true, useArray: true }, function (err, rows) {
       if (err) {
         res.send({ message: err.message });
         console.log(err);
@@ -272,12 +279,13 @@ module.exports = {
         data.push({
           id: items[0],
           name: items[1],
+          info: items[2],
           table: 'test_reports'
         })
       });
     });
 
-    c.query("SELECT * FROM `trial_reports` WHERE `id` LIKE ? OR `name` LIKE ? OR `trial_date` LIKE ? OR `num_device` LIKE ? OR `num_pass` LIKE ?", request, { metadata: true, useArray: true }, function (err, rows) {
+    c.query("SELECT `id`, `name`, `trial_date` FROM `trial_reports` WHERE `id` LIKE ? OR `name` LIKE ? OR `trial_date` LIKE ? OR `num_device` LIKE ? OR `num_pass` LIKE ?", request, { metadata: true, useArray: true }, function (err, rows) {
       if (err) {
         res.send({ message: err.message });
         console.log(err);
@@ -287,6 +295,7 @@ module.exports = {
         data.push({
           id: items[0],
           name: items[1],
+          info: items[2],
           table: 'trial_reports'
         })
       });

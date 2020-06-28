@@ -30,7 +30,8 @@ module.exports = {
           [col[4]]: items[4],
           [col[5]]: items[5],
           [col[6]]: items[6],
-          [col[7]]: items[7]
+          [col[7]]: items[7],
+          [col[8]]: items[8]
         })
       });
       if (data.length < 1) {
@@ -60,7 +61,8 @@ module.exports = {
           [col[4]]: items[4],
           [col[5]]: items[5],
           [col[6]]: items[6],
-          [col[7]]: items[7]
+          [col[7]]: items[7],
+          [col[8]]: items[8]
         })
       });
       if (data.length < 1) {
@@ -91,7 +93,8 @@ module.exports = {
           [col[4]]: items[4],
           [col[5]]: items[5],
           [col[6]]: items[6],
-          [col[7]]: items[7]
+          [col[7]]: items[7],
+          [col[8]]: items[8]
         })
       });
       if (data.length < 1) {
@@ -122,7 +125,8 @@ module.exports = {
           [col[4]]: items[4],
           [col[5]]: items[5],
           [col[6]]: items[6],
-          [col[7]]: items[7]
+          [col[7]]: items[7],
+          [col[8]]: items[8]
         })
       });
       if (data.length < 1) {
@@ -153,7 +157,8 @@ module.exports = {
           [col[4]]: items[4],
           [col[5]]: items[5],
           [col[6]]: items[6],
-          [col[7]]: items[7]
+          [col[7]]: items[7],
+          [col[8]]: items[8]
         })
       });
       if (data.length < 1) {
@@ -184,7 +189,8 @@ module.exports = {
           [col[4]]: items[4],
           [col[5]]: items[5],
           [col[6]]: items[6],
-          [col[7]]: items[7]
+          [col[7]]: items[7],
+          [col[8]]: items[8]
         })
       });
       if (data.length < 1) {
@@ -196,14 +202,12 @@ module.exports = {
     c.end();
   },
   newForm: function (req, res) {
-    var request = [req.id, req.name, req.effective_date, req.pic, req.version, req.file_pdf, req.file_doc, req.file_xls];
-    console.log("newForm")
-    console.log(request)
+    var request = [req.id, req.name, req.effective_date, req.pic, req.version, req.file_pdf, req.file_doc, req.file_xls, req.file_pds];
     if (request.includes(undefined)) {
       res.send({ message: 'Bad Request: Parameters cannot empty.' });
       return
     }
-    c.query("INSERT INTO `forms`(`id`, `name`, `effective_date`, `pic`, `version`, `file_pdf`, `file_doc`, `file_xls`) VALUES (?, ?, ?, ?, ?, ?, ?, ?)", request, { metadata: true, useArray: true }, function (err, rows) {
+    c.query("INSERT INTO `forms`(`id`, `name`, `effective_date`, `pic`, `version`, `file_pdf`, `file_doc`, `file_xls`, `file_pds`) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)", request, { metadata: true, useArray: true }, function (err, rows) {
       if (err) {
         res.send({ message: err.message });
         console.log(err);
@@ -220,14 +224,12 @@ module.exports = {
     c.end();
   },
   updateForm: function (req, res) {
-    var request = [req.body.name, req.body.effective_date, req.body.pic, req.body.version, req.body.file_pdf, req.body.file_doc, req.body.file_xls, req.params.id];
-    console.log("updateForm")
-    console.log(request)
+    var request = [req.body.name, req.body.effective_date, req.body.pic, req.body.version, req.body.file_pdf, req.body.file_doc, req.body.file_xls, req.body.file_pds, req.params.id];
     if (request.includes(undefined)) {
       res.send({ message: 'Bad Request: Parameters cannot empty.' });
       return
     }
-    c.query("UPDATE `forms` SET `name`=?, `effective_date`=?, `pic`=?, `version`=?, `file_pdf`=?, `file_doc`=?, `file_xls`=? WHERE `id`=?", request, { metadata: true, useArray: true }, function (err, rows) {
+    c.query("UPDATE `forms` SET `name`=?, `effective_date`=?, `pic`=?, `version`=?, `file_pdf`=?, `file_doc`=?, `file_xls`=?, `file_pds`=? WHERE `id`=?", request, { metadata: true, useArray: true }, function (err, rows) {
       if (err) {
         res.send({ message: err.message });
         console.log(err);

@@ -69,7 +69,7 @@ router.post('/', jwtMW, (req, res) => {
       fileSize: 10 * 1024 * 1024
     },
     fileFilter: fileFilter
-  }).fields([{ name: 'file_pdf', maxCount: 1 }, { name: 'file_doc', maxCount: 1 }, { name: 'file_xls', maxCount: 1 }])
+  }).fields([{ name: 'file_pdf', maxCount: 1 }, { name: 'file_doc', maxCount: 1 }, { name: 'file_xls', maxCount: 1 }, { name: 'file_pds', maxCount: 1 }])
   upload(req, res, function (err) {
     if (err instanceof multer.MulterError) {
       // A Multer error occurred when uploading.
@@ -90,6 +90,7 @@ router.post('/', jwtMW, (req, res) => {
     req.body.file_pdf = req.files.file_pdf ? req.files.file_pdf[0].filename : req.body.file_pdf
     req.body.file_doc = req.files.file_doc ? req.files.file_doc[0].filename : req.body.file_doc
     req.body.file_xls = req.files.file_xls ? req.files.file_xls[0].filename : req.body.file_xls
+    req.body.file_pds = req.files.file_pds ? req.files.file_pds[0].filename : req.body.file_pds
 
     db.newForm(req.body, res)
   })
@@ -102,7 +103,7 @@ router.put('/:id', jwtMW, (req, res) => {
       fileSize: 10 * 1024 * 1024
     },
     fileFilter: fileFilter
-  }).fields([{ name: 'file_pdf', maxCount: 1 }, { name: 'file_doc', maxCount: 1 }, { name: 'file_xls', maxCount: 1 }])
+  }).fields([{ name: 'file_pdf', maxCount: 1 }, { name: 'file_doc', maxCount: 1 }, { name: 'file_xls', maxCount: 1 }, { name: 'file_pds', maxCount: 1 }])
   upload(req, res, function (err) {
     if (err instanceof multer.MulterError) {
       // A Multer error occurred when uploading.
@@ -112,7 +113,7 @@ router.put('/:id', jwtMW, (req, res) => {
       // An unknown error occurred when uploading.
       res.send(err)
       return
-    } else if (req.files == undefined && (req.body.file_pdf === undefined || req.body.file_doc === undefined || req.body.file_xls === undefined)) {
+    } else if (req.files == undefined && (req.body.file_pdf === undefined || req.body.file_doc === undefined || req.body.file_xls === undefined || req.body.file_pds === undefined)) {
       res.send('index', { message: 'No file selected!' })
       return
     }
@@ -123,6 +124,7 @@ router.put('/:id', jwtMW, (req, res) => {
     req.body.file_pdf = req.files.file_pdf ? req.files.file_pdf[0].filename : req.body.file_pdf
     req.body.file_doc = req.files.file_doc ? req.files.file_doc[0].filename : req.body.file_doc
     req.body.file_xls = req.files.file_xls ? req.files.file_xls[0].filename : req.body.file_xls
+    req.body.file_pds = req.files.file_pds ? req.files.file_pds[0].filename : req.body.file_pds
 
     db.updateForm(req, res)
   })
