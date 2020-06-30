@@ -110,8 +110,10 @@ module.exports = {
     c.end();
   },
   newStandardLevel: function (req, res) {
-    const waktu = new Date().toISOString();
-    var request = [req.id, req.name];
+    var request = [
+      req.id,
+      req.name
+    ];
     if (request.includes(undefined) || request.includes("")) {
       res.send({ message: 'Bad Request: Parameters cannot empty.' });
       return
@@ -133,8 +135,10 @@ module.exports = {
     c.end();
   },
   updateStandardLevel: function (req, res) {
-    const waktu = new Date().toISOString();
-    var request = [req.body.name, req.params.id];
+    var request = [
+      req.body.name,
+      req.params.id
+    ];
     if (request.includes(undefined) || request.includes("")) {
       res.send({ message: 'Bad Request: Parameters cannot empty.' });
       return

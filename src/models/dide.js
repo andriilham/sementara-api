@@ -97,7 +97,14 @@ module.exports = {
     c.end();
   },
   newDIDE: function (req, res) {
-    var request = [req.id.toUpperCase(), req.name, req.publisher, req.edition, req.standard_level_id, req.doc_location];
+    var request = [
+      req.id.toUpperCase(),
+      req.name,
+      req.publisher,
+      req.edition,
+      req.standard_level_id,
+      req.doc_location
+    ];
     if (request.includes(undefined) || request.includes("")) {
       res.send({ message: 'Bad Request: Parameters cannot empty.' });
       return
@@ -119,7 +126,14 @@ module.exports = {
     c.end();
   },
   updateDIDE: function (req, res) {
-    var request = [req.body.name, req.body.publisher, req.body.edition, req.body.standard_level_id, req.body.doc_location, req.params.id];
+    var request = [
+      req.body.name,
+      req.body.publisher,
+      req.body.edition,
+      req.body.standard_level_id,
+      req.body.doc_location,
+      req.params.id
+    ];
     if (request.includes(undefined) || request.includes("")) {
       res.send({ message: 'Bad Request: Parameters cannot empty.' });
       return

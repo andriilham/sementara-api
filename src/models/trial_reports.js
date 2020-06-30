@@ -97,7 +97,14 @@ module.exports = {
     c.end();
   },
   updateTrialReport: function (req, res) {
-    var request = [req.body.name, req.body.trial_date, req.body.num_device, req.body.num_pass, req.body.file, req.params.id];
+    var request = [
+      req.body.name,
+      req.body.trial_date,
+      req.body.num_device,
+      req.body.num_pass,
+      req.body.file,
+      req.params.id
+    ];
     if (request.includes(undefined) || request.includes("")) {
       res.send({ message: 'Bad Request: Parameters cannot empty.' });
       return

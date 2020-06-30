@@ -60,7 +60,10 @@ module.exports = {
     c.end();
   },
   newRole: function (req, res) {
-    var request = [req.id, req.name];
+    var request = [
+      req.id,
+      req.name
+    ];
     if (request.includes(undefined) || request.includes("")) {
       res.send({ message: 'Bad Request: Parameters cannot empty.' });
       return
@@ -82,7 +85,10 @@ module.exports = {
     c.end();
   },
   updateRole: function (req, res) {
-    var request = [req.body.name, req.params.id];
+    var request = [
+      req.body.name,
+      req.params.id
+    ];
     if (request.includes(undefined) || request.includes("")) {
       res.send({ message: 'Bad Request: Parameters cannot empty.' });
       return

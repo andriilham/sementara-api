@@ -133,7 +133,15 @@ module.exports = {
   },
   newUser: function (req, password, res) {
     const waktu = new Date().toISOString();
-    var request = [req.id, req.name, password, req.email, req.role, waktu, waktu];
+    var request = [
+      req.id,
+      req.name,
+      password,
+      req.email,
+      req.role,
+      waktu,
+      waktu
+    ];
     if (request.includes(undefined)) {
       res.send({ message: 'Bad Request: Parameters cannot empty.' });
       return
@@ -156,7 +164,13 @@ module.exports = {
   },
   updateUser: function (req, res) {
     const waktu = new Date().toISOString();
-    var request = [req.body.name, req.body.telp, req.body.email, waktu, req.params.id];
+    var request = [
+      req.body.name,
+      req.body.telp,
+      req.body.email,
+      waktu,
+      req.params.id
+    ];
     if (request.includes(undefined)) {
       res.send({ message: 'Bad Request: Parameters cannot empty.' });
       return
@@ -179,8 +193,15 @@ module.exports = {
   },
   updateUserPassword: function (req, res) {
     const waktu = new Date().toISOString();
-    var request1 = [req.params.id, req.body.password_old];
-    var request2 = [req.body.password, waktu, req.params.id];
+    var request1 = [
+      req.params.id,
+      req.body.password_old
+    ];
+    var request2 = [
+      req.body.password,
+      waktu,
+      req.params.id
+    ];
     if (request1.includes(undefined) || request2.includes(undefined)) {
       res.send({ message: 'Bad Request: Parameters cannot empty.' });
       return
@@ -214,7 +235,11 @@ module.exports = {
   },
   updateUserRole: function (req, res) {
     const waktu = new Date().toISOString();
-    var request = [req.body.role, waktu, req.params.id];
+    var request = [
+      req.body.role,
+      waktu,
+      req.params.id
+    ];
     if (request.includes(undefined)) {
       res.send({ message: 'Bad Request: Parameters cannot empty.' });
       return
@@ -237,7 +262,11 @@ module.exports = {
   },
   updateUserPhoto: function (req, res) {
     const waktu = new Date().toISOString();
-    var request = [req.body.photo, waktu, req.params.id];
+    var request = [
+      req.body.photo,
+      waktu,
+      req.params.id
+    ];
     if (request.includes(undefined) || request.includes("")) {
       res.send({ message: 'Bad Request: Parameters cannot empty.' });
       return
@@ -260,7 +289,10 @@ module.exports = {
   },
   deactivateUser: function (req, res) {
     const waktu = new Date().toISOString();
-    var request = [waktu, req.id];
+    var request = [
+      waktu,
+      req.id
+    ];
     if (request.includes(undefined) || request.includes("")) {
       res.send({ message: 'Bad Request: Parameters cannot empty.' });
       return

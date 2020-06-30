@@ -62,7 +62,11 @@ module.exports = {
     c.end();
   },
   newInfo: function (req, res) {
-    var request = [req.id, req.name, req.value];
+    var request = [
+      req.id,
+      req.name,
+      req.value
+    ];
     if (request.includes(undefined) || request.includes("")) {
       res.send({ message: 'Bad Request: Parameters cannot empty.' });
       return
@@ -84,7 +88,11 @@ module.exports = {
     c.end();
   },
   updateInfo: function (req, res) {
-    var request = [req.body.name, req.body.value, req.params.id];
+    var request = [
+      req.body.name,
+      req.body.value,
+      req.params.id
+    ];
     if (request.includes(undefined) || request.includes("")) {
       res.send({ message: 'Bad Request: Parameters cannot empty.' });
       return

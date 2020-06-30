@@ -98,7 +98,14 @@ module.exports = {
   },
   newStep: function (req, res) {
     const waktu = new Date().toISOString();
-    var request = [req.id, req.name, req.step_number, req.info, waktu, waktu];
+    var request = [
+      req.id,
+      req.name,
+      req.step_number,
+      req.info,
+      waktu,
+      waktu
+    ];
     if (request.includes(undefined) || request.includes("")) {
       res.send({ message: 'Bad Request: Parameters cannot empty.' });
       return
@@ -121,7 +128,13 @@ module.exports = {
   },
   updateStep: function (req, res) {
     const waktu = new Date().toISOString();
-    var request = [req.name, req.step_number, req.info, waktu, req.id];
+    var request = [
+      req.name,
+      req.step_number,
+      req.info,
+      waktu,
+      req.id
+    ];
     if (request.includes(undefined) || request.includes("")) {
       res.send({ message: 'Bad Request: Parameters cannot empty.' });
       return

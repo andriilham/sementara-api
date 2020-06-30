@@ -130,7 +130,15 @@ module.exports = {
     c.end();
   },
   newQualityManual: function (req, res) {
-    var request = [req.id, req.name, req.effective_date, req.pic, req.version, req.file, req.file_doc];
+    var request = [
+      req.id,
+      req.name,
+      req.effective_date,
+      req.pic,
+      req.version,
+      req.file,
+      req.file_doc
+    ];
     if (request.includes(undefined)) {
       res.send({ message: 'Bad Request: Parameters cannot empty.' });
       return
@@ -152,7 +160,15 @@ module.exports = {
     c.end();
   },
   updateQualityManual: function (req, res) {
-    var request = [req.body.name, req.body.effective_date, req.body.pic, req.body.version, req.body.file, req.body.file_doc, req.params.id];
+    var request = [
+      req.body.name,
+      req.body.effective_date,
+      req.body.pic,
+      req.body.version,
+      req.body.file,
+      req.body.file_doc,
+      req.params.id
+    ];
     if (request.includes(undefined)) {
       res.send({ message: 'Bad Request: Parameters cannot empty.' });
       return

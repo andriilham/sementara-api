@@ -202,7 +202,17 @@ module.exports = {
     c.end();
   },
   newForm: function (req, res) {
-    var request = [req.id, req.name, req.effective_date, req.pic, req.version, req.file_pdf, req.file_doc, req.file_xls, req.file_pds];
+    var request = [
+      req.id,
+      req.name,
+      req.effective_date,
+      req.pic,
+      req.version,
+      req.file_pdf,
+      req.file_doc,
+      req.file_xls,
+      req.file_pds
+    ];
     if (request.includes(undefined)) {
       res.send({ message: 'Bad Request: Parameters cannot empty.' });
       return
@@ -224,7 +234,17 @@ module.exports = {
     c.end();
   },
   updateForm: function (req, res) {
-    var request = [req.body.name, req.body.effective_date, req.body.pic, req.body.version, req.body.file_pdf, req.body.file_doc, req.body.file_xls, req.body.file_pds, req.params.id];
+    var request = [
+      req.body.name,
+      req.body.effective_date,
+      req.body.pic,
+      req.body.version,
+      req.body.file_pdf,
+      req.body.file_doc,
+      req.body.file_xls,
+      req.body.file_pds,
+      req.params.id
+    ];
     if (request.includes(undefined)) {
       res.send({ message: 'Bad Request: Parameters cannot empty.' });
       return

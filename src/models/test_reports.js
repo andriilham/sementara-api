@@ -165,7 +165,16 @@ module.exports = {
     c.end();
   },
   newTestReport: function (req, res) {
-    var request = [req.id, req.company_name, req.device_name, req.brand, req.model, req.test_reference_id, req.created, req.file];
+    var request = [
+      req.id,
+      req.company_name,
+      req.device_name,
+      req.brand,
+      req.model,
+      req.test_reference_id,
+      req.created,
+      req.file
+    ];
     if (request.includes(undefined)) {
       res.send({ message: 'Bad Request: Parameters cannot empty.' });
       return
@@ -188,7 +197,17 @@ module.exports = {
   },
   updateTestReport: function (req, res) {
     // EDIT ID FOR DEFINITE RANGE OF TIME, SHOULD REMOVE THIS
-    var request = [req.body.id, req.body.company_name, req.body.device_name, req.body.brand, req.body.model, req.body.test_reference_id, req.body.created, req.body.file, req.params.id];
+    var request = [
+      req.body.id,
+      req.body.company_name,
+      req.body.device_name,
+      req.body.brand,
+      req.body.model,
+      req.body.test_reference_id,
+      req.body.created,
+      req.body.file,
+      req.params.id
+    ];
     if (request.includes(undefined)) {
       res.send({ message: 'Bad Request: Parameters cannot empty.' });
       return

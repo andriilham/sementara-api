@@ -309,7 +309,14 @@ module.exports = {
     c.end();
   },
   newArchive: function (req, res) {
-    var request = [req.id, req.name, req.year, req.info, req.standard_level_id, req.file];
+    var request = [
+      req.id,
+      req.name,
+      req.year,
+      req.info,
+      req.standard_level_id,
+      req.file
+    ];
     if (request.includes(undefined) || request.includes("")) {
       res.send({ message: 'Bad Request: Parameters cannot empty.' });
       return
@@ -331,7 +338,14 @@ module.exports = {
     c.end();
   },
   updateArchive: function (req, res) {
-    var request = [req.body.name, req.body.year, req.body.info, req.body.standard_level_id, req.body.file, req.params.id];
+    var request = [
+      req.body.name,
+      req.body.year,
+      req.body.info,
+      req.body.standard_level_id,
+      req.body.file,
+      req.params.id
+    ];
     if (request.includes(undefined) || request.includes("")) {
       res.send({ message: 'Bad Request: Parameters cannot empty.' });
       return

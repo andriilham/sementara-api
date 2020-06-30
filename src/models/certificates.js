@@ -138,7 +138,13 @@ module.exports = {
     c.end();
   },
   newCertificate: function (req, res) {
-    var request = [req.id, req.test_report_id, req.effective_date, req.due_date, req.file];
+    var request = [
+      req.id,
+      req.test_report_id,
+      req.effective_date,
+      req.due_date,
+      req.file
+    ];
     console.log(request)
     if (request.includes(undefined) || request.includes("")) {
       res.send({ message: 'Bad Request: Parameters cannot empty.' });
@@ -162,7 +168,14 @@ module.exports = {
   },
   updateCertificate: function (req, res) {
     // EDIT ID FOR DEFINITE RANGE OF TIME, SHOULD REMOVE THIS
-    var request = [req.body.id, req.body.test_report_id, req.body.effective_date, req.body.due_date, req.body.file, req.params.id];
+    var request = [
+      req.body.id,
+      req.body.test_report_id,
+      req.body.effective_date,
+      req.body.due_date,
+      req.body.file,
+      req.params.id
+    ];
     if (request.includes(undefined) || request.includes("")) {
       res.send({ message: 'Bad Request: Parameters cannot empty.' });
       return
