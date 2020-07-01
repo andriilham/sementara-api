@@ -12,7 +12,7 @@ module.exports = {
   // REQUEST MODELS
 
   getRequestAll: function (req, res) {
-    c.query("SELECT r.`id`, r.`requester_id`, u1.`name`, r.`table_id`, r.`document_id`, r.`type`, u2.`name`, r.`approval1_id`, r.`approval1_status`, u3.`name`, r.`approval2_id`, r.`approval2_status`, r.`query` FROM `requests` r LEFT OUTER JOIN `users` u1 ON r.`requester_id`=u1.`id` LEFT OUTER JOIN `roles` u2 ON r.`approval1_id`=u2.`id` LEFT OUTER JOIN `roles` u3 ON r.`approval2_id`=u3.`id`", null, { metadata: true, useArray: true }, function (err, rows) {
+    c.query("SELECT r.`id`, u1.`name`, r.`requester_id`, r.`table_id`, r.`document_id`, r.`type`, u2.`name`, r.`approval1_id`, r.`approval1_status`, u3.`name`, r.`approval2_id`, r.`approval2_status`, r.`query` FROM `requests` r LEFT OUTER JOIN `users` u1 ON r.`requester_id`=u1.`id` LEFT OUTER JOIN `roles` u2 ON r.`approval1_id`=u2.`id` LEFT OUTER JOIN `roles` u3 ON r.`approval2_id`=u3.`id`", null, { metadata: true, useArray: true }, function (err, rows) {
       if (err) {
         res.send({ message: err.message });
         console.log(err);
@@ -78,16 +78,18 @@ module.exports = {
   },
   getRequestNotification: function (req, res) {
     var request = [
-      req.id,
+      req.role,
+      req.role,
       req.id,
     ];
     var data = {
       total: '',
       add: '',
       edit: '',
-      delete: ''
+      delete: '',
+      myRequests: ''
     }
-    c.query("SELECT * FROM `requests` WHERE `approval1_id`=? OR `approval2_id`=?", request, { metadata: true, useArray: true }, function (err, rows) {
+    c.query("SELECT * FROM `requests` WHERE (`approval1_id`=? AND `approval1_status`='0') OR (`approval2_id`=? AND `approval2_status`='0' AND `approval1_status`='1')", request, { metadata: true, useArray: true }, function (err, rows) {
       if (err) {
         res.send({ message: err.message });
         console.log(err);
@@ -95,7 +97,7 @@ module.exports = {
       }
       data.total = rows.info.numRows;
 
-      c.query("SELECT * FROM `requests` WHERE (`approval1_id`=? OR `approval2_id`=?) AND `type`='1'", request, { metadata: true, useArray: true }, function (err, rows) {
+      c.query("SELECT * FROM `requests` WHERE ((`approval1_id`=? AND `approval1_status`='0') OR (`approval2_id`=? AND `approval2_status`='0' AND `approval1_status`='1')) AND `type`='1'", request, { metadata: true, useArray: true }, function (err, rows) {
         if (err) {
           res.send({ message: err.message });
           console.log(err);
@@ -104,7 +106,7 @@ module.exports = {
         data.add = rows.info.numRows;
       });
 
-      c.query("SELECT * FROM `requests` WHERE (`approval1_id`=? OR `approval2_id`=?) AND `type`='2'", request, { metadata: true, useArray: true }, function (err, rows) {
+      c.query("SELECT * FROM `requests` WHERE ((`approval1_id`=? AND `approval1_status`='0') OR (`approval2_id`=? AND `approval2_status`='0' AND `approval1_status`='1')) AND `type`='2'", request, { metadata: true, useArray: true }, function (err, rows) {
         if (err) {
           res.send({ message: err.message });
           console.log(err);
@@ -113,7 +115,16 @@ module.exports = {
         data.edit = rows.info.numRows;
       });
 
-      c.query("SELECT * FROM `requests` WHERE (`approval1_id`=? OR `approval2_id`=?) AND `type`='3'", request, { metadata: true, useArray: true }, function (err, rows) {
+      c.query("SELECT * FROM `requests` WHERE ((`approval1_id`=? AND `approval1_status`='0') OR (`approval2_id`=? AND `approval2_status`='0' AND `approval1_status`='1')) AND `requester_id`=?", request, { metadata: true, useArray: true }, function (err, rows) {
+        if (err) {
+          res.send({ message: err.message });
+          console.log(err);
+          return
+        }
+        data.myRequests = rows.info.numRows;
+      });
+
+      c.query("SELECT * FROM `requests` WHERE ((`approval1_id`=? AND `approval1_status`='0') OR (`approval2_id`=? AND `approval2_status`='0' AND `approval1_status`='1')) AND `type`='3'", request, { metadata: true, useArray: true }, function (err, rows) {
         if (err) {
           res.send({ message: err.message });
           console.log(err);
@@ -132,10 +143,11 @@ module.exports = {
   },
   getRequestbyRole: function (req, res) {
     var request = [
-      req.id,
+      req.role,
+      req.role,
       req.id,
     ];
-    c.query("SELECT r.`id`, r.`requester_id`, u1.`name`, r.`table_id`, r.`document_id`, r.`type`, u2.`name`, r.`approval1_id`, r.`approval1_status`, u3.`name`, r.`approval2_id`, r.`approval2_status`, r.`query` FROM `requests` r LEFT OUTER JOIN `users` u1 ON r.`requester_id`=u1.`id` LEFT OUTER JOIN `roles` u2 ON r.`approval1_id`=u2.`id` LEFT OUTER JOIN `roles` u3 ON r.`approval2_id`=u3.`id` WHERE r.`approval1_id`=? OR r.`approval2_id`=?", request, { metadata: true, useArray: true }, function (err, rows) {
+    c.query("SELECT r.`id`, u1.`name`, r.`requester_id`, r.`table_id`, r.`document_id`, r.`type`, u2.`name`, r.`approval1_id`, r.`approval1_status`, u3.`name`, r.`approval2_id`, r.`approval2_status`, r.`query` FROM `requests` r LEFT OUTER JOIN `users` u1 ON r.`requester_id`=u1.`id` LEFT OUTER JOIN `roles` u2 ON r.`approval1_id`=u2.`id` LEFT OUTER JOIN `roles` u3 ON r.`approval2_id`=u3.`id` WHERE r.`approval1_id`=? OR (r.`approval2_id`=? AND r.`approval1_status`='1') OR r.`requester_id`=?", request, { metadata: true, useArray: true }, function (err, rows) {
       if (err) {
         res.send({ message: err.message });
         console.log(err);

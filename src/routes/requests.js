@@ -20,11 +20,11 @@ router.get('/:id', (req, res) => {
   db.getRequest(req.params, res)
 })
 
-router.get('/notification/:id', jwtMW, (req, res) => {
+router.get('/notification/:id/:role', jwtMW, (req, res) => {
   db.getRequestNotification(req.params, res)
 })
 
-router.get('/role/:id', jwtMW, (req, res) => {
+router.get('/role/:id/:role', jwtMW, (req, res) => {
   db.getRequestbyRole(req.params, res)
 })
 

@@ -82,13 +82,13 @@ router.post('/', jwtMW, (req, res) => {
     // File name key used while in production and filename in development
     req.body.file = req.file ? req.file.filename : req.body.file
 
-    if (req.body.role === '1' || req.body.role.includes('2A')) {
-      db.newQualityRecord(req.body, res)
-    } else {
+    if (req.body.role !== undefined && req.body.role > '2B') {
       var query = JSON.parse(req.body.query)
       query.file = req.body.file
       req.body.query = JSON.stringify(query)
       db_req.newRequest(req.body, res)
+    } else {
+      db.newQualityRecord(req.body, res)
     }
   })
 })
@@ -120,13 +120,13 @@ router.put('/:id', jwtMW, (req, res) => {
     // File name key used while in production and filename in development
     req.body.file = req.file ? req.file.filename : req.body.file
 
-    if (req.body.role === '1' || req.body.role.includes('2A')) {
-      db.updateQualityRecord(req, res)
-    } else {
+    if (req.body.role !== undefined && req.body.role > '2B') {
       var query = JSON.parse(req.body.query)
       query.file = req.body.file
       req.body.query = JSON.stringify(query)
       db_req.newRequest(req.body, res)
+    } else {
+      db.updateQualityRecord(req, res)
     }
   })
 })
