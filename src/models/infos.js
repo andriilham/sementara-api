@@ -25,7 +25,10 @@ module.exports = {
         data.push({
           [col[0]]: items[0],
           [col[1]]: items[1],
-          [col[2]]: items[2]
+          [col[2]]: items[2],
+          [col[3]]: items[3],
+          [col[4]]: items[4],
+          [col[5]]: items[5]
         })
       });
       if (data.length < 1) {
@@ -50,7 +53,10 @@ module.exports = {
         data.push({
           [col[0]]: items[0],
           [col[1]]: items[1],
-          [col[2]]: items[2]
+          [col[2]]: items[2],
+          [col[3]]: items[3],
+          [col[4]]: items[4],
+          [col[5]]: items[5]
         })
       });
       if (data.length < 1) {
@@ -65,13 +71,16 @@ module.exports = {
     var request = [
       req.id,
       req.name,
+      req.access_page,
+      req.access_read,
+      req.access_write,
       req.value
     ];
     if (request.includes(undefined) || request.includes("")) {
       res.send({ message: 'Bad Request: Parameters cannot empty.' });
       return
     }
-    c.query("INSERT INTO `infos` (`id`, `name`, `value`) VALUES (?, ?, ?)", request, { metadata: true, useArray: true }, function (err, rows) {
+    c.query("INSERT INTO `infos` (`id`, `name`, `access_page`, `access_read`, `access_write`, `value`) VALUES (?, ?, ?, ?, ?, ?)", request, { metadata: true, useArray: true }, function (err, rows) {
       if (err) {
         res.send({ message: err.message });
         console.log(err);
@@ -90,6 +99,9 @@ module.exports = {
   updateInfo: function (req, res) {
     var request = [
       req.body.name,
+      req.body.access_page,
+      req.body.access_read,
+      req.body.access_write,
       req.body.value,
       req.params.id
     ];
@@ -97,7 +109,7 @@ module.exports = {
       res.send({ message: 'Bad Request: Parameters cannot empty.' });
       return
     }
-    c.query("UPDATE `infos` SET `name`=?, `value`=? WHERE `id`=?", request, { metadata: true, useArray: true }, function (err, rows) {
+    c.query("UPDATE `infos` SET `name`=?, `access_page`=?, `access_read`=?, `access_write`=?, `value`=? WHERE `id`=?", request, { metadata: true, useArray: true }, function (err, rows) {
       if (err) {
         res.send({ message: err.message });
         console.log(err);
