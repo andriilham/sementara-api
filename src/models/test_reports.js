@@ -30,7 +30,8 @@ module.exports = {
           [col[4]]: items[4],
           [col[5]]: items[5],
           [col[6]]: items[6],
-          [col[7]]: items[7]
+          [col[7]]: items[7],
+          [col[8]]: items[8]
         })
       });
       if (data.length < 1) {
@@ -60,7 +61,8 @@ module.exports = {
           [col[4]]: items[4],
           [col[5]]: items[5],
           [col[6]]: items[6],
-          [col[7]]: items[7]
+          [col[7]]: items[7],
+          [col[8]]: items[8]
         })
       });
       if (data.length < 1) {
@@ -73,7 +75,7 @@ module.exports = {
   },
   getTestReportSearch: function (req, res) {
     const request = ["%" + req.id.toUpperCase() + "%"]
-    c.query("SELECT * FROM `test_reports` WHERE `id` LIKE ? ORDER BY `created` DESC", request, { metadata: true, useArray: true }, function (err, rows) {
+    c.query("SELECT * FROM `test_reports` WHERE `standard_level_id` LIKE ? ORDER BY `created` DESC", request, { metadata: true, useArray: true }, function (err, rows) {
       if (err) {
         res.send({ message: err.message });
         console.log(err);
@@ -91,7 +93,8 @@ module.exports = {
           [col[4]]: items[4],
           [col[5]]: items[5],
           [col[6]]: items[6],
-          [col[7]]: items[7]
+          [col[7]]: items[7],
+          [col[8]]: items[8]
         })
       });
       if (data.length < 1) {
@@ -104,7 +107,7 @@ module.exports = {
   },
   getTestReportSearch2: function (req, res) {
     const request = ["%" + req.id.toUpperCase() + "%", "%" + req.id2.toUpperCase() + "%"]
-    c.query("SELECT * FROM `test_reports` WHERE `id` LIKE ? OR `id` LIKE ? ORDER BY `created` DESC", request, { metadata: true, useArray: true }, function (err, rows) {
+    c.query("SELECT * FROM `test_reports` WHERE `standard_level_id` LIKE ? OR `standard_level_id` LIKE ? ORDER BY `created` DESC", request, { metadata: true, useArray: true }, function (err, rows) {
       if (err) {
         res.send({ message: err.message });
         console.log(err);
@@ -122,7 +125,8 @@ module.exports = {
           [col[4]]: items[4],
           [col[5]]: items[5],
           [col[6]]: items[6],
-          [col[7]]: items[7]
+          [col[7]]: items[7],
+          [col[8]]: items[8]
         })
       });
       if (data.length < 1) {
@@ -153,7 +157,8 @@ module.exports = {
           [col[4]]: items[4],
           [col[5]]: items[5],
           [col[6]]: items[6],
-          [col[7]]: items[7]
+          [col[7]]: items[7],
+          [col[8]]: items[8]
         })
       });
       if (data.length < 1) {
@@ -167,6 +172,7 @@ module.exports = {
   newTestReport: function (req, res) {
     var request = [
       req.id,
+      req.standard_level_id,
       req.company_name,
       req.device_name,
       req.brand,
@@ -179,7 +185,7 @@ module.exports = {
       res.send({ message: 'Bad Request: Parameters cannot empty.' });
       return
     }
-    c.query("INSERT INTO `test_reports`(`id`, `company_name`, `device_name`, `brand`, `model`, `test_reference_id`, `created`, `file`) VALUES (?, ?, ?, ?, ?, ?, ?, ?)", request, { metadata: true, useArray: true }, function (err, rows) {
+    c.query("INSERT INTO `test_reports`(`id`, `standard_level_id`, `company_name`, `device_name`, `brand`, `model`, `test_reference_id`, `created`, `file`) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)", request, { metadata: true, useArray: true }, function (err, rows) {
       if (err) {
         res.send({ message: err.message });
         console.log(err);
@@ -199,6 +205,7 @@ module.exports = {
     // EDIT ID FOR DEFINITE RANGE OF TIME, SHOULD REMOVE THIS
     var request = [
       req.body.id,
+      req.body.standard_level_id,
       req.body.company_name,
       req.body.device_name,
       req.body.brand,
@@ -212,7 +219,7 @@ module.exports = {
       res.send({ message: 'Bad Request: Parameters cannot empty.' });
       return
     }
-    c.query("UPDATE `test_reports` SET `id`=?, `company_name`=?, `device_name`=?, `brand`=?, `model`=?, `test_reference_id`=?, `created`=?, `file`=? WHERE `id`=?", request, { metadata: true, useArray: true }, function (err, rows) {
+    c.query("UPDATE `test_reports` SET `id`=?, `standard_level_id`=?, `company_name`=?, `device_name`=?, `brand`=?, `model`=?, `test_reference_id`=?, `created`=?, `file`=? WHERE `id`=?", request, { metadata: true, useArray: true }, function (err, rows) {
       if (err) {
         res.send({ message: err.message });
         console.log(err);

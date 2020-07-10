@@ -115,7 +115,7 @@ module.exports = {
         data.edit = rows.info.numRows;
       });
 
-      c.query("SELECT * FROM `requests` WHERE ((`approval1_id`=? AND `approval1_status`='0') OR (`approval2_id`=? AND `approval2_status`='0' AND `approval1_status`='1')) AND `requester_id`=?", request, { metadata: true, useArray: true }, function (err, rows) {
+      c.query("SELECT * FROM `requests` WHERE (`approval1_status`='0' OR (`approval2_status`='0' AND `approval1_status`='1')) AND `requester_id`=?", [req.id], { metadata: true, useArray: true }, function (err, rows) {
         if (err) {
           res.send({ message: err.message });
           console.log(err);
