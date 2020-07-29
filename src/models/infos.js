@@ -99,9 +99,6 @@ module.exports = {
   updateInfo: function (req, res) {
     var request = [
       req.body.name,
-      req.body.access_page,
-      req.body.access_read,
-      req.body.access_write,
       req.body.value,
       req.params.id
     ];
@@ -109,7 +106,7 @@ module.exports = {
       res.send({ message: 'Bad Request: Parameters cannot empty.' });
       return
     }
-    c.query("UPDATE `infos` SET `name`=?, `access_page`=?, `access_read`=?, `access_write`=?, `value`=? WHERE `id`=?", request, { metadata: true, useArray: true }, function (err, rows) {
+    c.query("UPDATE `infos` SET `name`=?, `value`=? WHERE `id`=?", request, { metadata: true, useArray: true }, function (err, rows) {
       if (err) {
         res.send({ message: err.message });
         console.log(err);
