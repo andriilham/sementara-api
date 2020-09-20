@@ -25,10 +25,7 @@ const HASH_ALGORITHM = process.env.APP_HASH_ALGORITHM
 
 router.post('/login', (req, res) => {
   const { email } = req.body;
-  console.log("login")
-
   const password = crypto.createHmac(HASH_ALGORITHM, CIPHER_SECRET).update(req.body.password).digest(CIPHER_BASE);
-  console.log(password)
 
   db.cekLogin(email, password, function (err, data) {
     if (data.length === 1 && (data[0].role !== "9")) {

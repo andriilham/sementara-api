@@ -3,7 +3,6 @@ const express = require('express')
 var router = express.Router()
 const multer = require('multer')
 var db = require('../models/quality_records')
-var db_req = require('../models/requests')
 const exjwt = require('express-jwt')
 var path = require('path')
 
@@ -82,14 +81,7 @@ router.post('/', jwtMW, (req, res) => {
     // File name key used while in production and filename in development
     req.body.file = req.file ? req.file.filename : req.body.file
 
-    if (req.body.role !== undefined && req.body.role > '2B') {
-      var query = JSON.parse(req.body.query)
-      query.file = req.body.file
-      req.body.query = JSON.stringify(query)
-      db_req.newRequest(req.body, res)
-    } else {
-      db.newQualityRecord(req.body, res)
-    }
+    db.newQualityRecord(req.body, res)
   })
 })
 
@@ -111,7 +103,7 @@ router.put('/:id', jwtMW, (req, res) => {
       res.send(err)
       return
     } else if (req.file == undefined && req.body.file === undefined) {
-      res.send('index', { message: 'No file selected!' })
+      res.send({ message: 'No file selected!' })
       return
     }
     // Everything went fine.
@@ -120,14 +112,7 @@ router.put('/:id', jwtMW, (req, res) => {
     // File name key used while in production and filename in development
     req.body.file = req.file ? req.file.filename : req.body.file
 
-    if (req.body.role !== undefined && req.body.role > '2B') {
-      var query = JSON.parse(req.body.query)
-      query.file = req.body.file
-      req.body.query = JSON.stringify(query)
-      db_req.newRequest(req.body, res)
-    } else {
-      db.updateQualityRecord(req, res)
-    }
+    db.updateQualityRecord(req, res)
   })
 })
 

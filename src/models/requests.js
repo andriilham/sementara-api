@@ -295,6 +295,54 @@ module.exports = {
     });
     c.end();
   },
+  updateRequestReject1: function (req, res) {
+    var request = [
+      req.id
+    ];
+    if (request.includes(undefined)) {
+      res.send({ message: 'Bad Request: Parameters cannot empty.' });
+      return
+    }
+    c.query("UPDATE `requests` SET `approval1_status`='9' WHERE `id`=?", request, { metadata: true, useArray: true }, function (err, rows) {
+      if (err) {
+        res.send({ message: err.message });
+        console.log(err);
+        return
+      }
+
+      res.json({
+        affectedRows: rows.info.affectedRows,
+        err: null,
+        message: "Request has been rejected",
+        success: true
+      });
+    });
+    c.end();
+  },
+  updateRequestReject2: function (req, res) {
+    var request = [
+      req.id
+    ];
+    if (request.includes(undefined)) {
+      res.send({ message: 'Bad Request: Parameters cannot empty.' });
+      return
+    }
+    c.query("UPDATE `requests` SET `approval2_status`='9' WHERE `id`=?", request, { metadata: true, useArray: true }, function (err, rows) {
+      if (err) {
+        res.send({ message: err.message });
+        console.log(err);
+        return
+      }
+
+      res.json({
+        affectedRows: rows.info.affectedRows,
+        err: null,
+        message: "Request has been rejected",
+        success: true
+      });
+    });
+    c.end();
+  },
   deleteRequest: function (req, res) {
     var request = [req.id];
     if (request.includes(undefined) || request.includes("")) {

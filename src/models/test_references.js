@@ -30,7 +30,8 @@ module.exports = {
           [col[4]]: items[4],
           [col[5]]: items[5],
           [col[6]]: items[6],
-          [col[7]]: items[7]
+          [col[7]]: items[7],
+          [col[8]]: items[8]
         })
       });
       if (data.length < 1) {
@@ -60,7 +61,8 @@ module.exports = {
           [col[4]]: items[4],
           [col[5]]: items[5],
           [col[6]]: items[6],
-          [col[7]]: items[7]
+          [col[7]]: items[7],
+          [col[8]]: items[8]
         })
       });
       if (data.length < 1) {
@@ -91,7 +93,8 @@ module.exports = {
           [col[4]]: items[4],
           [col[5]]: items[5],
           [col[6]]: items[6],
-          [col[7]]: items[7]
+          [col[7]]: items[7],
+          [col[8]]: items[8]
         })
       });
       if (data.length < 1) {
@@ -122,7 +125,8 @@ module.exports = {
           [col[4]]: items[4],
           [col[5]]: items[5],
           [col[6]]: items[6],
-          [col[7]]: items[7]
+          [col[7]]: items[7],
+          [col[8]]: items[8]
         })
       });
       if (data.length < 1) {
@@ -153,7 +157,40 @@ module.exports = {
           [col[4]]: items[4],
           [col[5]]: items[5],
           [col[6]]: items[6],
-          [col[7]]: items[7]
+          [col[7]]: items[7],
+          [col[8]]: items[8]
+        })
+      });
+      if (data.length < 1) {
+        res.status(404).send({ message: 'Data not found.' });
+      } else {
+        res.json(data);
+      }
+    });
+    c.end();
+  },
+  getTestReferenceSearchStatus: function (req, res) {
+    const request = ["%" + req.id.toUpperCase() + "%", req.status]
+    c.query("SELECT * FROM `test_references` WHERE `standard_level_id` LIKE ? AND `active`=? ORDER BY `id`", request, { metadata: true, useArray: true }, function (err, rows) {
+      if (err) {
+        res.send({ message: err.message });
+        console.log(err);
+        return
+      }
+
+      const col = Object.keys(rows.info.metadata)
+      var data = [];
+      rows.forEach(function (items) {
+        data.push({
+          [col[0]]: items[0],
+          [col[1]]: items[1],
+          [col[2]]: items[2],
+          [col[3]]: items[3],
+          [col[4]]: items[4],
+          [col[5]]: items[5],
+          [col[6]]: items[6],
+          [col[7]]: items[7],
+          [col[8]]: items[8]
         })
       });
       if (data.length < 1) {
@@ -171,6 +208,7 @@ module.exports = {
       req.year,
       req.version,
       req.standard_level_id,
+      req.active,
       req.file,
       req.file_doc,
       req.file_wm
@@ -179,7 +217,7 @@ module.exports = {
       res.send({ message: 'Bad Request: Parameters cannot empty.' });
       return
     }
-    c.query("INSERT INTO `test_references`(`id`, `name`, `year`, `version`, `standard_level_id`, `file`, `file_doc`, `file_wm`) VALUES (?, ?, ?, ?, ?, ?, ?, ?)", request, { metadata: true, useArray: true }, function (err, rows) {
+    c.query("INSERT INTO `test_references`(`id`, `name`, `year`, `version`, `standard_level_id`, `active`, `file`, `file_doc`, `file_wm`) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)", request, { metadata: true, useArray: true }, function (err, rows) {
       if (err) {
         res.send({ message: err.message });
         console.log(err);
@@ -201,6 +239,7 @@ module.exports = {
       req.body.year,
       req.body.version,
       req.body.standard_level_id,
+      req.body.active,
       req.body.file,
       req.body.file_doc,
       req.body.file_wm,
@@ -210,7 +249,7 @@ module.exports = {
       res.send({ message: 'Bad Request: Parameters cannot empty.' });
       return
     }
-    c.query("UPDATE `test_references` SET `name`=?, `year`=?, `version`=?, `standard_level_id`=?, `file`=?, `file_doc`=?, `file_wm`=? WHERE `id`=?", request, { metadata: true, useArray: true }, function (err, rows) {
+    c.query("UPDATE `test_references` SET `name`=?, `year`=?, `version`=?, `standard_level_id`=?, `active`=?, `file`=?, `file_doc`=?, `file_wm`=? WHERE `id`=?", request, { metadata: true, useArray: true }, function (err, rows) {
       if (err) {
         res.send({ message: err.message });
         console.log(err);

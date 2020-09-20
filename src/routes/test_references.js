@@ -58,11 +58,15 @@ router.get('/search/:id/:id2', jwtMW, (req, res) => {
   db.getTestReferenceSearch2(req.params, res)
 })
 
+router.get('/search-status/:id/:status', jwtMW, (req, res) => {
+  db.getTestReferenceSearchStatus(req.params, res)
+})
+
 router.post('/', jwtMW, (req, res) => {
   var upload = multer({
     storage: storageTestReferences,
     limits: {
-      fileSize: 20 * 1024 * 1024
+      fileSize: 200 * 1024 * 1024
     },
     fileFilter: fileFilter
   }).fields([{ name: 'file', maxCount: 1 }, { name: 'file_doc', maxCount: 1 }, { name: 'file_wm', maxCount: 1 }])
@@ -95,7 +99,7 @@ router.put('/:id', jwtMW, (req, res) => {
   var upload = multer({
     storage: storageTestReferences,
     limits: {
-      fileSize: 20 * 1024 * 1024
+      fileSize: 200 * 1024 * 1024
     },
     fileFilter: fileFilter
   }).fields([{ name: 'file', maxCount: 1 }, { name: 'file_doc', maxCount: 1 }, { name: 'file_wm', maxCount: 1 }])

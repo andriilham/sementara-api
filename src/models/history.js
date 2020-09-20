@@ -214,7 +214,6 @@ module.exports = {
       req.message,
       waktu
     ];
-    console.log(request)
     if (request.includes(undefined)) {
       res.send({ message: 'Bad Request: Parameters cannot empty.' });
       return

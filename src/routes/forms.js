@@ -47,6 +47,10 @@ router.get('/:id', (req, res) => {
   db.getForm(req.params, res)
 })
 
+router.get('/active/:id', jwtMW, (req, res) => {
+  db.getFormActive(req.params, res)
+})
+
 router.get('/type/:id', jwtMW, (req, res) => {
   db.getFormType(req.params, res)
 })
