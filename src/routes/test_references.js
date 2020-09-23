@@ -50,11 +50,11 @@ router.get('/type/:id', jwtMW, (req, res) => {
   db.getTestReferenceType(req.params, res)
 })
 
-router.get('/search/:id', jwtMW, (req, res) => {
+router.get('/search/:status/:id', jwtMW, (req, res) => {
   db.getTestReferenceSearch(req.params, res)
 })
 
-router.get('/search/:id/:id2', jwtMW, (req, res) => {
+router.get('/search/:status/:id/:id2', jwtMW, (req, res) => {
   db.getTestReferenceSearch2(req.params, res)
 })
 
@@ -126,6 +126,10 @@ router.put('/:id', jwtMW, (req, res) => {
 
     db.updateTestReference(req, res)
   })
+})
+
+router.put('/obsolete/:id', jwtMW, (req, res) => {
+  db.updateTestReferenceObsolete(req.params, res)
 })
 
 /////////////////////////////////////////////////////////////////////////////////////////////

@@ -106,8 +106,8 @@ module.exports = {
     c.end();
   },
   getTestReferenceSearch: function (req, res) {
-    const request = ["%" + req.id.toUpperCase() + "%"]
-    c.query("SELECT * FROM `test_references` WHERE `standard_level_id` LIKE ? ORDER BY `id`", request, { metadata: true, useArray: true }, function (err, rows) {
+    const request = ["%" + req.id.toUpperCase() + "%", req.status]
+    c.query("SELECT * FROM `test_references` WHERE `standard_level_id` LIKE ? AND `active`=? ORDER BY `id`", request, { metadata: true, useArray: true }, function (err, rows) {
       if (err) {
         res.send({ message: err.message });
         console.log(err);
@@ -138,8 +138,8 @@ module.exports = {
     c.end();
   },
   getTestReferenceSearch2: function (req, res) {
-    const request = ["%" + req.id.toUpperCase() + "%", "%" + req.id2.toUpperCase() + "%"]
-    c.query("SELECT * FROM `test_references` WHERE `standard_level_id` LIKE ? OR `standard_level_id` LIKE ? ORDER BY `id`", request, { metadata: true, useArray: true }, function (err, rows) {
+    const request = ["%" + req.id.toUpperCase() + "%", "%" + req.id2.toUpperCase() + "%", req.status]
+    c.query("SELECT * FROM `test_references` WHERE `standard_level_id` LIKE ? OR `standard_level_id` LIKE ? AND `active`=? ORDER BY `id`", request, { metadata: true, useArray: true }, function (err, rows) {
       if (err) {
         res.send({ message: err.message });
         console.log(err);
@@ -260,6 +260,28 @@ module.exports = {
         affectedRows: rows.info.affectedRows,
         err: null,
         message: "Test Reference has updated successfully",
+        success: true
+      });
+    });
+    c.end();
+  },
+  updateTestReferenceObsolete: function (req, res) {
+    var request = [req.id];
+    if (request.includes(undefined) || request.includes("")) {
+      res.send({ message: 'Bad Request: Parameters cannot empty.' });
+      return
+    }
+    c.query("UPDATE `test_references` SET `active`='0' WHERE `id`=?", request, { metadata: true, useArray: true }, function (err, rows) {
+      if (err) {
+        res.send({ message: err.message });
+        console.log(err);
+        return
+      }
+
+      res.json({
+        affectedRows: rows.info.affectedRows,
+        err: null,
+        message: "Test Reference has set as obsolete",
         success: true
       });
     });
