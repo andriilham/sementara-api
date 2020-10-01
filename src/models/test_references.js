@@ -31,7 +31,8 @@ module.exports = {
           [col[5]]: items[5],
           [col[6]]: items[6],
           [col[7]]: items[7],
-          [col[8]]: items[8]
+          [col[8]]: items[8],
+          [col[9]]: items[9]
         })
       });
       if (data.length < 1) {
@@ -62,7 +63,8 @@ module.exports = {
           [col[5]]: items[5],
           [col[6]]: items[6],
           [col[7]]: items[7],
-          [col[8]]: items[8]
+          [col[8]]: items[8],
+          [col[9]]: items[9]
         })
       });
       if (data.length < 1) {
@@ -94,7 +96,8 @@ module.exports = {
           [col[5]]: items[5],
           [col[6]]: items[6],
           [col[7]]: items[7],
-          [col[8]]: items[8]
+          [col[8]]: items[8],
+          [col[9]]: items[9]
         })
       });
       if (data.length < 1) {
@@ -126,7 +129,8 @@ module.exports = {
           [col[5]]: items[5],
           [col[6]]: items[6],
           [col[7]]: items[7],
-          [col[8]]: items[8]
+          [col[8]]: items[8],
+          [col[9]]: items[9]
         })
       });
       if (data.length < 1) {
@@ -158,7 +162,8 @@ module.exports = {
           [col[5]]: items[5],
           [col[6]]: items[6],
           [col[7]]: items[7],
-          [col[8]]: items[8]
+          [col[8]]: items[8],
+          [col[9]]: items[9]
         })
       });
       if (data.length < 1) {
@@ -204,6 +209,7 @@ module.exports = {
   newTestReference: function (req, res) {
     var request = [
       req.id,
+      req.document_id,
       req.name,
       req.year,
       req.version,
@@ -217,7 +223,7 @@ module.exports = {
       res.send({ message: 'Bad Request: Parameters cannot empty.' });
       return
     }
-    c.query("INSERT INTO `test_references`(`id`, `name`, `year`, `version`, `standard_level_id`, `active`, `file`, `file_doc`, `file_wm`) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)", request, { metadata: true, useArray: true }, function (err, rows) {
+    c.query("INSERT INTO `test_references`(`id`, `document_id`, `name`, `year`, `version`, `standard_level_id`, `active`, `file`, `file_doc`, `file_wm`) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", request, { metadata: true, useArray: true }, function (err, rows) {
       if (err) {
         res.send({ message: err.message });
         console.log(err);
