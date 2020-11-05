@@ -205,7 +205,7 @@ module.exports = {
       });
     });
 
-    c.query("SELECT `id`, `name`, `effective_date` FROM `forms` WHERE `id` LIKE ? OR `name` LIKE ? OR `effective_date` LIKE ?", request, { metadata: true, useArray: true }, function (err, rows) {
+    c.query("SELECT `document_id`, `name`, `effective_date` FROM `quality_documents` WHERE `id` LIKE ? OR `name` LIKE ? OR `effective_date` LIKE ?", request, { metadata: true, useArray: true }, function (err, rows) {
       if (err) {
         res.send({ message: err.message });
         console.log(err);
@@ -216,23 +216,7 @@ module.exports = {
           id: items[0],
           name: items[1],
           info: items[2],
-          table: 'forms'
-        })
-      });
-    });
-
-    c.query("SELECT `id`, `name`, `effective_date` FROM `quality_manuals` WHERE `id` LIKE ? OR `name` LIKE ? OR `effective_date` LIKE ?", request, { metadata: true, useArray: true }, function (err, rows) {
-      if (err) {
-        res.send({ message: err.message });
-        console.log(err);
-        return
-      }
-      rows.forEach(function (items) {
-        data.push({
-          id: items[0],
-          name: items[1],
-          info: items[2],
-          table: 'quality_manuals'
+          table: 'quality_documents'
         })
       });
     });
@@ -253,7 +237,7 @@ module.exports = {
       });
     });
 
-    c.query("SELECT `id`, `name`, `version` FROM `test_references` WHERE `id` LIKE ? OR `name` LIKE ?", request, { metadata: true, useArray: true }, function (err, rows) {
+    c.query("SELECT `document_id`, `name`, `version` FROM `test_references` WHERE `id` LIKE ? OR `name` LIKE ?", request, { metadata: true, useArray: true }, function (err, rows) {
       if (err) {
         res.send({ message: err.message });
         console.log(err);

@@ -60,29 +60,3 @@ or
 ``` bash
 $ yarn start
 ```
-
-## Status Info
-Info about Status ID, any configuration may change in future update.
-
-#### User status
-```
-0. Not verified
-1. Super Admin
-2A1. Quality Manager 
-2A2. Document Controller 1
-2B. Document Controller 2
-2C. Bagian Urel
-3A. SM
-3B. Lab Manager DEQA
-3C. Lab Manager IQA
-4B1. Lab Device
-4B2. Lab Energy
-4C1. Lab Kabel
-4C2. Lab Transmisi
-4C3. Lab Kalibrasi
-5. Guest
-6. Reserved
-7. Reserved
-8. Reserved
-9. Deactivated
-```

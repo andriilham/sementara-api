@@ -1,15 +1,15 @@
 # See https://help.github.com/ignore-files/ for more about ignoring files.
 
 # uploads
-# /src/uploads/archives/**
-# /src/uploads/certificates/**
-# /src/uploads/dide/**
-# /src/uploads/quality_documents/**
-# /src/uploads/quality_records/**
-# /src/uploads/test_references/**
-# /src/uploads/test_reports/**
-# /src/uploads/trial_reports/**
-# /src/uploads/users/**
+/src/uploads/archives/**
+/src/uploads/certificates/**
+/src/uploads/dide/**
+/src/uploads/quality_documents/**
+/src/uploads/quality_records/**
+/src/uploads/test_references/**
+/src/uploads/test_reports/**
+/src/uploads/trial_reports/**
+/src/uploads/users/**
 
 # dependencies
 /node_modules
