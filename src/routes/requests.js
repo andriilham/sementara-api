@@ -13,10 +13,11 @@ const jwtMW = exjwt({
 
 const storageRequests = multer.diskStorage({
   destination: function (req, file, cb) {
-    cb(null, `src/uploads/${req.table_id}/`);
+    cb(null, `src/uploads/${req.body.table_id}/`);
   },
   filename: function (req, file, cb) {
-    cb(null, req.body.form_id.replace(new RegExp("[^\\w\\s]", 'g'), "") + '_' + req.body.name.replace(new RegExp("[^\\w\\s]", 'g'), "") + '_' + new Date().valueOf() + path.extname(file.originalname));
+    var query = JSON.parse(req.body.query)
+    cb(null, query.form_id.replace(new RegExp("[^\\w\\s]", 'g'), "") + '_' + query.name.replace(new RegExp("[^\\w\\s]", 'g'), "") + '_' + new Date().valueOf() + path.extname(file.originalname));
   }
 })
 
