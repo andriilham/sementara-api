@@ -74,7 +74,7 @@ router.post('/', jwtMW, (req, res) => {
   var upload = multer({
     storage: storageQualityDocuments,
     limits: {
-      fileSize: 20 * 1024 * 1024
+      fileSize: 50 * 1024 * 1024
     },
     fileFilter: fileFilter
   }).fields([{ name: 'file_pdf', maxCount: 1 }, { name: 'file_doc', maxCount: 1 }, { name: 'file_xls', maxCount: 1 }, { name: 'file_pds', maxCount: 1 }])
@@ -108,7 +108,7 @@ router.put('/:id', jwtMW, (req, res) => {
   var upload = multer({
     storage: storageQualityDocuments,
     limits: {
-      fileSize: 20 * 1024 * 1024
+      fileSize: 50 * 1024 * 1024
     },
     fileFilter: fileFilter
   }).fields([{ name: 'file_pdf', maxCount: 1 }, { name: 'file_doc', maxCount: 1 }, { name: 'file_xls', maxCount: 1 }, { name: 'file_pds', maxCount: 1 }])

@@ -12,7 +12,7 @@ module.exports = {
   // QUALITY DOCUMENT MODELS
 
   getQualityDocumentAll: function (req, res) {
-    c.query("SELECT * FROM `quality_documents` ORDER BY `id`", null, { metadata: true, useArray: true }, function (err, rows) {
+    c.query("SELECT * FROM `quality_documents` ORDER BY `id` ORDER BY `document_id` ASC", null, { metadata: true, useArray: true }, function (err, rows) {
       if (err) {
         res.send({ message: err.message });
         console.log(err);
@@ -83,7 +83,7 @@ module.exports = {
   },
   getQualityDocumentActive: function (req, res) {
     const request = [req.id]
-    c.query("SELECT * FROM `quality_documents` WHERE `active`=?", request, { metadata: true, useArray: true }, function (err, rows) {
+    c.query("SELECT * FROM `quality_documents` WHERE `active`=? ORDER BY `document_id` ASC", request, { metadata: true, useArray: true }, function (err, rows) {
       if (err) {
         res.send({ message: err.message });
         console.log(err);
@@ -119,7 +119,7 @@ module.exports = {
   },
   getQualityDocumentType: function (req, res) {
     const request = [req.status, "%" + req.id + "%"]
-    c.query("SELECT * FROM `quality_documents` WHERE `active`=? AND `standard_level_id` LIKE ?", request, { metadata: true, useArray: true }, function (err, rows) {
+    c.query("SELECT * FROM `quality_documents` WHERE `active`=? AND `standard_level_id` LIKE ? ORDER BY `document_id` ASC", request, { metadata: true, useArray: true }, function (err, rows) {
       if (err) {
         res.send({ message: err.message });
         console.log(err);
@@ -155,7 +155,7 @@ module.exports = {
   },
   getQualityDocumentProcedureUser: function (req, res) {
     const request = ["%" + req.user + "%", req.status]
-    c.query("SELECT DISTINCT p.`id`, p.`document_id`, p.`name`, p.`effective_date`, p.`pic`, p.`users`, p.`version`, p.`standard_level_id`, p.`active`, p.`file_pdf`, p.`file_doc`, p.`file_xls`, p.`file_pds` FROM `quality_documents` p INNER JOIN `quality_documents` f ON LEFT(p.`id`,6)=LEFT(f.`id`,6) AND f.`standard_level_id`='D22' AND p.`standard_level_id`='D21' AND (f.`users` LIKE ? OR f.`users`='*') AND p.`active`=?", request, { metadata: true, useArray: true }, function (err, rows) {
+    c.query("SELECT DISTINCT p.`id`, p.`document_id`, p.`name`, p.`effective_date`, p.`pic`, p.`users`, p.`version`, p.`standard_level_id`, p.`active`, p.`file_pdf`, p.`file_doc`, p.`file_xls`, p.`file_pds` FROM `quality_documents` p INNER JOIN `quality_documents` f ON LEFT(p.`id`,6)=LEFT(f.`id`,6) AND f.`standard_level_id`='D22' AND p.`standard_level_id`='D21' AND (f.`users` LIKE ? OR f.`users`='*') AND p.`active`=? ORDER BY `document_id` ASC", request, { metadata: true, useArray: true }, function (err, rows) {
       if (err) {
         res.send({ message: err.message });
         console.log(err);
@@ -191,7 +191,7 @@ module.exports = {
   },
   getQualityDocumentFormUser: function (req, res) {
     const request = ["%" + req.id + "%", "%" + req.user + "%"]
-    c.query("SELECT * FROM `quality_documents` WHERE `document_id` LIKE ? AND (`users` LIKE ? OR `users`='*') AND standard_level_id='D22'", request, { metadata: true, useArray: true }, function (err, rows) {
+    c.query("SELECT * FROM `quality_documents` WHERE `document_id` LIKE ? AND (`users` LIKE ? OR `users`='*') AND standard_level_id='D22' ORDER BY `document_id` ASC", request, { metadata: true, useArray: true }, function (err, rows) {
       if (err) {
         res.send({ message: err.message });
         console.log(err);
@@ -227,7 +227,7 @@ module.exports = {
   },
   getQualityDocumentSearch: function (req, res) {
     const request = [req.status, "%" + req.id + "%"]
-    c.query("SELECT * FROM `quality_documents` WHERE `active`=? AND `document_id` LIKE ?", request, { metadata: true, useArray: true }, function (err, rows) {
+    c.query("SELECT * FROM `quality_documents` WHERE `active`=? AND `document_id` LIKE ? ORDER BY `document_id` ASC", request, { metadata: true, useArray: true }, function (err, rows) {
       if (err) {
         res.send({ message: err.message });
         console.log(err);
@@ -263,7 +263,7 @@ module.exports = {
   },
   getQualityDocumentSearchType: function (req, res) {
     const request = [req.status, "%" + req.id + "%", req.type]
-    c.query("SELECT * FROM `quality_documents` WHERE `active`=? AND `document_id` LIKE ? AND `standard_level_id`=?", request, { metadata: true, useArray: true }, function (err, rows) {
+    c.query("SELECT * FROM `quality_documents` WHERE `active`=? AND `document_id` LIKE ? AND `standard_level_id`=? ORDER BY `document_id` ASC", request, { metadata: true, useArray: true }, function (err, rows) {
       if (err) {
         res.send({ message: err.message });
         console.log(err);

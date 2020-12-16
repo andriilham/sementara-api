@@ -1,13 +1,13 @@
 {
-  "name": "the-calibrator-api",
+  "name": "neo-sidomo-api",
   "version": "0.1.0",
-  "description": "[API] the-calibrator - Centralize database and process in Calibration Laboratory",
+  "description": "[API] neo-sidomo - Sistem Dokumen Mutu Online",
   "author": "Aldi Wiranata",
   "copyright": "Copyright 2020 Telkom DDS QA Laboratory - Aldi Wiranata",
   "private": true,
   "repository": {
     "type": "git",
-    "url": "https://github.com/aldiw01/the-calibrator-api.git"
+    "url": "https://github.com/aldiw01/neo-sidomo-api.git"
   },
   "engines": {
     "node": "11.10.0"
@@ -24,7 +24,7 @@
     "nodemailer": "~6.1.1"
   },
   "bugs": {
-    "url": "https://github.com/aldiw01/the-calibrator-api/issues"
+    "url": "https://github.com/aldiw01/neo-sidomo-api/issues"
   },
   "scripts": {
     "start": "node index.js",
