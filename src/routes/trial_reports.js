@@ -44,8 +44,6 @@ router.get('/:id', (req, res) => {
 })
 
 router.post('/', jwtMW, (req, res) => {
-  const waktu = new Date().toISOString();
-  req.id = 'T' + new Date(waktu).valueOf().toString(32).toUpperCase();
   var upload = multer({
     storage: storageTrialReports,
     limits: {
@@ -71,7 +69,6 @@ router.post('/', jwtMW, (req, res) => {
 
     // File name key used while in production and filename in development
     req.body.file = req.file.filename
-    req.body.id = req.id
 
     db.newTrialReport(req.body, res)
   })
