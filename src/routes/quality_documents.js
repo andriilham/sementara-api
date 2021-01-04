@@ -16,7 +16,8 @@ const storageQualityDocuments = multer.diskStorage({
     cb(null, 'src/uploads/quality_documents/');
   },
   filename: function (req, file, cb) {
-    cb(null, req.body.document_id.replace(new RegExp("/", 'g'), "") + '_v' + req.body.version + '_' + req.body.name.replace(new RegExp("[^\\w\\s]", 'g'), "") + path.extname(file.originalname));
+    const fieldname = file.fieldname === "file_pds" ? "_file_pds" : ""
+    cb(null, req.body.document_id.replace(new RegExp("/", 'g'), "") + '_v' + req.body.version + '_' + req.body.name.replace(new RegExp("[^\\w\\s]", 'g'), "") + fieldname + path.extname(file.originalname));
   }
 })
 
@@ -94,7 +95,7 @@ router.post('/', jwtMW, (req, res) => {
     // Everything went fine.
     console.log('Upload success.')
 
-    // File name key used while in production and filename in development
+    // Check if user upload new file or already exists
     req.body.file_pdf = req.files.file_pdf ? req.files.file_pdf[0].filename : req.body.file_pdf
     req.body.file_doc = req.files.file_doc ? req.files.file_doc[0].filename : req.body.file_doc
     req.body.file_xls = req.files.file_xls ? req.files.file_xls[0].filename : req.body.file_xls
