@@ -21,14 +21,7 @@ const storageQualityRecords = multer.diskStorage({
 })
 
 function fileFilter(req, file, cb) {
-  const AVAILABLE_MIMETYPE = [
-    "application/pdf",
-  ]
-  if (AVAILABLE_MIMETYPE.includes(file.mimetype)) {
-    cb(null, true)
-  } else {
-    cb({ message: 'Only for documents (pdf).' }, false)
-  }
+  cb(null, true)
 };
 
 /////////////////////////////////////////////////////////////////////////////////////////////

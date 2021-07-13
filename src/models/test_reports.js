@@ -31,7 +31,9 @@ module.exports = {
           [col[5]]: items[5],
           [col[6]]: items[6],
           [col[7]]: items[7],
-          [col[8]]: items[8]
+          [col[8]]: items[8],
+          [col[9]]: items[9],
+          [col[10]]: items[10]
         })
       });
       if (data.length < 1) {
@@ -62,7 +64,9 @@ module.exports = {
           [col[5]]: items[5],
           [col[6]]: items[6],
           [col[7]]: items[7],
-          [col[8]]: items[8]
+          [col[8]]: items[8],
+          [col[9]]: items[9],
+          [col[10]]: items[10]
         })
       });
       if (data.length < 1) {
@@ -94,7 +98,9 @@ module.exports = {
           [col[5]]: items[5],
           [col[6]]: items[6],
           [col[7]]: items[7],
-          [col[8]]: items[8]
+          [col[8]]: items[8],
+          [col[9]]: items[9],
+          [col[10]]: items[10]
         })
       });
       if (data.length < 1) {
@@ -126,7 +132,9 @@ module.exports = {
           [col[5]]: items[5],
           [col[6]]: items[6],
           [col[7]]: items[7],
-          [col[8]]: items[8]
+          [col[8]]: items[8],
+          [col[9]]: items[9],
+          [col[10]]: items[10]
         })
       });
       if (data.length < 1) {
@@ -158,7 +166,9 @@ module.exports = {
           [col[5]]: items[5],
           [col[6]]: items[6],
           [col[7]]: items[7],
-          [col[8]]: items[8]
+          [col[8]]: items[8],
+          [col[9]]: items[9],
+          [col[10]]: items[10]
         })
       });
       if (data.length < 1) {
@@ -172,6 +182,7 @@ module.exports = {
   newTestReport: function (req, res) {
     var request = [
       req.id,
+      req.version,
       req.standard_level_id,
       req.company_name,
       req.device_name,
@@ -185,7 +196,7 @@ module.exports = {
       res.send({ message: 'Bad Request: Parameters cannot empty.' });
       return
     }
-    c.query("INSERT INTO `test_reports`(`id`, `standard_level_id`, `company_name`, `device_name`, `brand`, `model`, `test_reference_id`, `created`, `file`) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)", request, { metadata: true, useArray: true }, function (err, rows) {
+    c.query("INSERT INTO `test_reports`(`id`, `version`, `standard_level_id`, `company_name`, `device_name`, `brand`, `model`, `test_reference_id`, `created`, `file`) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", request, { metadata: true, useArray: true }, function (err, rows) {
       if (err) {
         res.send({ message: err.message });
         console.log(err);
@@ -205,6 +216,7 @@ module.exports = {
     // EDIT ID FOR DEFINITE RANGE OF TIME, SHOULD REMOVE THIS
     var request = [
       req.body.id,
+      req.body.version,
       req.body.standard_level_id,
       req.body.company_name,
       req.body.device_name,
@@ -219,7 +231,7 @@ module.exports = {
       res.send({ message: 'Bad Request: Parameters cannot empty.' });
       return
     }
-    c.query("UPDATE `test_reports` SET `id`=?, `standard_level_id`=?, `company_name`=?, `device_name`=?, `brand`=?, `model`=?, `test_reference_id`=?, `created`=?, `file`=? WHERE `id`=?", request, { metadata: true, useArray: true }, function (err, rows) {
+    c.query("UPDATE `test_reports` SET `id`=?, `version`=?, `standard_level_id`=?, `company_name`=?, `device_name`=?, `brand`=?, `model`=?, `test_reference_id`=?, `created`=?, `file`=? WHERE `id`=?", request, { metadata: true, useArray: true }, function (err, rows) {
       if (err) {
         res.send({ message: err.message });
         console.log(err);

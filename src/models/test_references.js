@@ -195,7 +195,8 @@ module.exports = {
           [col[5]]: items[5],
           [col[6]]: items[6],
           [col[7]]: items[7],
-          [col[8]]: items[8]
+          [col[8]]: items[8],
+          [col[9]]: items[9]
         })
       });
       if (data.length < 1) {
