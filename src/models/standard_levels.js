@@ -60,7 +60,7 @@ module.exports = {
     c.end();
   },
   getStandardLevelSearch: function (req, res) {
-    const request = ["%" + req.id.toUpperCase() + "%"]
+    const request = [req.id.toUpperCase() + "%"]
     c.query("SELECT * FROM `standard_levels` WHERE id LIKE ?", request, { metadata: true, useArray: true }, function (err, rows) {
       if (err) {
         res.send({ message: err.message });
@@ -85,7 +85,7 @@ module.exports = {
     c.end();
   },
   getStandardLevelSearch2: function (req, res) {
-    const request = ["%" + req.id.toUpperCase() + "%", "%" + req.id2.toUpperCase() + "%"]
+    const request = [req.id.toUpperCase() + "%", req.id2.toUpperCase() + "%"]
     c.query("SELECT * FROM `standard_levels` WHERE id LIKE ? OR id LIKE ?", request, { metadata: true, useArray: true }, function (err, rows) {
       if (err) {
         res.send({ message: err.message });

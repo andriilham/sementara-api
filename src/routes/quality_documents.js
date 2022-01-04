@@ -59,6 +59,10 @@ router.get('/procedure/:user/:status', jwtMW, (req, res) => {
   db.getQualityDocumentProcedureUser(req.params, res)
 })
 
+router.get('/procedure9001/:user/:status', jwtMW, (req, res) => {
+  db.getQualityDocumentProcedureUser9001(req.params, res)
+})
+
 router.get('/form/:id/user/:user/:status', jwtMW, (req, res) => {
   db.getQualityDocumentFormUser(req.params, res)
 })

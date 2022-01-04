@@ -155,7 +155,43 @@ module.exports = {
   },
   getQualityDocumentProcedureUser: function (req, res) {
     const request = ["%" + req.user + "%", req.status]
-    c.query("SELECT DISTINCT p.`id`, p.`document_id`, p.`name`, p.`effective_date`, p.`pic`, p.`users`, p.`version`, p.`standard_level_id`, p.`active`, p.`file_pdf`, p.`file_doc`, p.`file_xls`, p.`file_pds` FROM `quality_documents` p INNER JOIN `quality_documents` f ON LEFT(p.`id`,6)=LEFT(f.`id`,6) AND f.`standard_level_id`='D22' AND p.`standard_level_id`='D21' AND (f.`users` LIKE ? OR f.`users`='*') AND p.`active`=? ORDER BY `document_id` ASC", request, { metadata: true, useArray: true }, function (err, rows) {
+    c.query("SELECT DISTINCT p.`id`, p.`document_id`, p.`name`, p.`effective_date`, p.`pic`, p.`users`, p.`version`, p.`standard_level_id`, p.`active`, p.`file_pdf`, p.`file_doc`, p.`file_xls`, p.`file_pds` FROM `quality_documents` p INNER JOIN `quality_documents` f ON LEFT(p.`id`,6)=LEFT(f.`id`,6) AND f.`standard_level_id`='D22' AND p.`standard_level_id`='D21' AND (f.`users` LIKE ? OR f.`users`='*') AND p.`active`=? ORDER BY p.`document_id` ASC", request, { metadata: true, useArray: true }, function (err, rows) {
+      if (err) {
+        res.send({ message: err.message });
+        console.log(err);
+        return
+      }
+
+      const col = Object.keys(rows.info.metadata)
+      var data = [];
+      rows.forEach(function (items) {
+        data.push({
+          [col[0]]: items[0],
+          [col[1]]: items[1],
+          [col[2]]: items[2],
+          [col[3]]: items[3],
+          [col[4]]: items[4],
+          [col[5]]: items[5],
+          [col[6]]: items[6],
+          [col[7]]: items[7],
+          [col[8]]: items[8],
+          [col[9]]: items[9],
+          [col[10]]: items[10],
+          [col[11]]: items[11],
+          [col[12]]: items[12]
+        })
+      });
+      if (data.length < 1) {
+        res.status(404).send({ message: 'Data not found.' });
+      } else {
+        res.json(data);
+      }
+    });
+    c.end();
+  },
+  getQualityDocumentProcedureUser9001: function (req, res) {
+    const request = ["%" + req.user + "%", req.status]
+    c.query("SELECT DISTINCT p.`id`, p.`document_id`, p.`name`, p.`effective_date`, p.`pic`, p.`users`, p.`version`, p.`standard_level_id`, p.`active`, p.`file_pdf`, p.`file_doc`, p.`file_xls`, p.`file_pds` FROM `quality_documents` p INNER JOIN `quality_documents` f ON LEFT(p.`id`,6)=LEFT(f.`id`,6) AND f.`standard_level_id`='9001D22' AND p.`standard_level_id`='9001D21' AND (f.`users` LIKE ? OR f.`users`='*') AND p.`active`=? ORDER BY p.`document_id` ASC", request, { metadata: true, useArray: true }, function (err, rows) {
       if (err) {
         res.send({ message: err.message });
         console.log(err);
