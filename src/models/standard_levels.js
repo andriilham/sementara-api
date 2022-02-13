@@ -24,7 +24,8 @@ module.exports = {
       rows.forEach(function (items) {
         data.push({
           [col[0]]: items[0],
-          [col[1]]: items[1]
+          [col[1]]: items[1],
+          [col[2]]: items[2]
         })
       });
       if (data.length < 1) {
@@ -48,7 +49,8 @@ module.exports = {
       rows.forEach(function (items) {
         data.push({
           [col[0]]: items[0],
-          [col[1]]: items[1]
+          [col[1]]: items[1],
+          [col[2]]: items[2]
         })
       });
       if (data.length < 1) {
@@ -73,7 +75,8 @@ module.exports = {
       rows.forEach(function (items) {
         data.push({
           [col[0]]: items[0],
-          [col[1]]: items[1]
+          [col[1]]: items[1],
+          [col[2]]: items[2]
         })
       });
       if (data.length < 1) {
@@ -98,7 +101,8 @@ module.exports = {
       rows.forEach(function (items) {
         data.push({
           [col[0]]: items[0],
-          [col[1]]: items[1]
+          [col[1]]: items[1],
+          [col[2]]: items[2]
         })
       });
       if (data.length < 1) {
@@ -112,13 +116,14 @@ module.exports = {
   newStandardLevel: function (req, res) {
     var request = [
       req.id,
-      req.name
+      req.name,
+      req.info
     ];
     if (request.includes(undefined) || request.includes("")) {
       res.send({ message: 'Bad Request: Parameters cannot empty.' });
       return
     }
-    c.query("INSERT INTO `standard_levels` (`id`, `name`) VALUES (?, ?)", request, { metadata: true, useArray: true }, function (err, rows) {
+    c.query("INSERT INTO `standard_levels` (`id`, `name`, `info`) VALUES (?, ?, ?)", request, { metadata: true, useArray: true }, function (err, rows) {
       if (err) {
         res.send({ message: err.message });
         console.log(err);
@@ -137,13 +142,14 @@ module.exports = {
   updateStandardLevel: function (req, res) {
     var request = [
       req.body.name,
+      req.body.info,
       req.params.id
     ];
     if (request.includes(undefined) || request.includes("")) {
       res.send({ message: 'Bad Request: Parameters cannot empty.' });
       return
     }
-    c.query("UPDATE `standard_levels` SET `name`=? WHERE `id`=?", request, { metadata: true, useArray: true }, function (err, rows) {
+    c.query("UPDATE `standard_levels` SET `name`=?, `info`=? WHERE `id`=?", request, { metadata: true, useArray: true }, function (err, rows) {
       if (err) {
         res.send({ message: err.message });
         console.log(err);

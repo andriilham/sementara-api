@@ -35,7 +35,8 @@ module.exports = {
           [col[9]]: items[9],
           [col[10]]: items[10],
           [col[11]]: items[11],
-          [col[12]]: items[12]
+          [col[12]]: items[12],
+          [col[13]]: items[13]
         })
       });
       if (data.length < 1) {
@@ -70,7 +71,8 @@ module.exports = {
           [col[9]]: items[9],
           [col[10]]: items[10],
           [col[11]]: items[11],
-          [col[12]]: items[12]
+          [col[12]]: items[12],
+          [col[13]]: items[13]
         })
       });
       if (data.length < 1) {
@@ -106,7 +108,8 @@ module.exports = {
           [col[9]]: items[9],
           [col[10]]: items[10],
           [col[11]]: items[11],
-          [col[12]]: items[12]
+          [col[12]]: items[12],
+          [col[13]]: items[13]
         })
       });
       if (data.length < 1) {
@@ -118,7 +121,7 @@ module.exports = {
     c.end();
   },
   getQualityDocumentType: function (req, res) {
-    const request = [req.status, "%" + req.id + "%"]
+    const request = [req.status, req.id + "%"]
     c.query("SELECT * FROM `quality_documents` WHERE `active`=? AND `standard_level_id` LIKE ? ORDER BY `document_id` ASC", request, { metadata: true, useArray: true }, function (err, rows) {
       if (err) {
         res.send({ message: err.message });
@@ -142,7 +145,8 @@ module.exports = {
           [col[9]]: items[9],
           [col[10]]: items[10],
           [col[11]]: items[11],
-          [col[12]]: items[12]
+          [col[12]]: items[12],
+          [col[13]]: items[13]
         })
       });
       if (data.length < 1) {
@@ -154,8 +158,9 @@ module.exports = {
     c.end();
   },
   getQualityDocumentProcedureUser: function (req, res) {
-    const request = ["%" + req.user + "%", req.status]
-    c.query("SELECT DISTINCT p.`id`, p.`document_id`, p.`name`, p.`effective_date`, p.`pic`, p.`users`, p.`version`, p.`standard_level_id`, p.`active`, p.`file_pdf`, p.`file_doc`, p.`file_xls`, p.`file_pds` FROM `quality_documents` p INNER JOIN `quality_documents` f ON LEFT(p.`id`,6)=LEFT(f.`id`,6) AND f.`standard_level_id`='D22' AND p.`standard_level_id`='D21' AND (f.`users` LIKE ? OR f.`users`='*') AND p.`active`=? ORDER BY p.`document_id` ASC", request, { metadata: true, useArray: true }, function (err, rows) {
+    const type = req.type === undefined ? "" : req.type;
+    const request = [type + "D22", type + "D21", "%" + req.user + "%"]
+    c.query("SELECT DISTINCT p.`id`, p.`document_id`, p.`parent`, p.`name`, p.`effective_date`, p.`pic`, p.`users`, p.`version`, p.`standard_level_id`, p.`active`, p.`file_pdf`, p.`file_doc`, p.`file_xls`, p.`file_pds` FROM `quality_documents` p INNER JOIN `quality_documents` f ON f.`parent`=p.`document_id` AND f.`standard_level_id`=? AND p.`standard_level_id`=? AND (f.`users` LIKE ? OR f.`users`='*') AND p.`active`='1' AND f.`active`='1' ORDER BY p.`document_id` ASC", request, { metadata: true, useArray: true }, function (err, rows) {
       if (err) {
         res.send({ message: err.message });
         console.log(err);
@@ -178,43 +183,8 @@ module.exports = {
           [col[9]]: items[9],
           [col[10]]: items[10],
           [col[11]]: items[11],
-          [col[12]]: items[12]
-        })
-      });
-      if (data.length < 1) {
-        res.status(404).send({ message: 'Data not found.' });
-      } else {
-        res.json(data);
-      }
-    });
-    c.end();
-  },
-  getQualityDocumentProcedureUser9001: function (req, res) {
-    const request = ["%" + req.user + "%", req.status]
-    c.query("SELECT DISTINCT p.`id`, p.`document_id`, p.`name`, p.`effective_date`, p.`pic`, p.`users`, p.`version`, p.`standard_level_id`, p.`active`, p.`file_pdf`, p.`file_doc`, p.`file_xls`, p.`file_pds` FROM `quality_documents` p INNER JOIN `quality_documents` f ON LEFT(p.`id`,6)=LEFT(f.`id`,6) AND f.`standard_level_id`='9001D22' AND p.`standard_level_id`='9001D21' AND (f.`users` LIKE ? OR f.`users`='*') AND p.`active`=? ORDER BY p.`document_id` ASC", request, { metadata: true, useArray: true }, function (err, rows) {
-      if (err) {
-        res.send({ message: err.message });
-        console.log(err);
-        return
-      }
-
-      const col = Object.keys(rows.info.metadata)
-      var data = [];
-      rows.forEach(function (items) {
-        data.push({
-          [col[0]]: items[0],
-          [col[1]]: items[1],
-          [col[2]]: items[2],
-          [col[3]]: items[3],
-          [col[4]]: items[4],
-          [col[5]]: items[5],
-          [col[6]]: items[6],
-          [col[7]]: items[7],
-          [col[8]]: items[8],
-          [col[9]]: items[9],
-          [col[10]]: items[10],
-          [col[11]]: items[11],
-          [col[12]]: items[12]
+          [col[12]]: items[12],
+          [col[13]]: items[13]
         })
       });
       if (data.length < 1) {
@@ -226,8 +196,8 @@ module.exports = {
     c.end();
   },
   getQualityDocumentFormUser: function (req, res) {
-    const request = ["%" + req.id + "%", "%" + req.user + "%"]
-    c.query("SELECT * FROM `quality_documents` WHERE `document_id` LIKE ? AND `users` LIKE ? AND `standard_level_id`='D22' AND active='1' ORDER BY `document_id` ASC", request, { metadata: true, useArray: true }, function (err, rows) {
+    const request = [req.id, req.type, "%" + req.user + "%", req.status]
+    c.query("SELECT * FROM `quality_documents` WHERE `parent`=? AND `standard_level_id`=? AND `users` LIKE ? AND active=? ORDER BY `document_id` ASC", request, { metadata: true, useArray: true }, function (err, rows) {
       if (err) {
         res.send({ message: err.message });
         console.log(err);
@@ -250,7 +220,8 @@ module.exports = {
           [col[9]]: items[9],
           [col[10]]: items[10],
           [col[11]]: items[11],
-          [col[12]]: items[12]
+          [col[12]]: items[12],
+          [col[13]]: items[13]
         })
       });
       if (data.length < 1) {
@@ -286,7 +257,8 @@ module.exports = {
           [col[9]]: items[9],
           [col[10]]: items[10],
           [col[11]]: items[11],
-          [col[12]]: items[12]
+          [col[12]]: items[12],
+          [col[13]]: items[13]
         })
       });
       if (data.length < 1) {
@@ -298,8 +270,8 @@ module.exports = {
     c.end();
   },
   getQualityDocumentSearchType: function (req, res) {
-    const request = [req.status, "%" + req.id + "%", req.type]
-    c.query("SELECT * FROM `quality_documents` WHERE `active`=? AND `document_id` LIKE ? AND `standard_level_id`=? ORDER BY `document_id` ASC", request, { metadata: true, useArray: true }, function (err, rows) {
+    const request = [req.status, req.id, req.type]
+    c.query("SELECT * FROM `quality_documents` WHERE `active`=? AND `parent`=? AND `standard_level_id`=? ORDER BY `document_id` ASC", request, { metadata: true, useArray: true }, function (err, rows) {
       if (err) {
         res.send({ message: err.message });
         console.log(err);
@@ -322,7 +294,8 @@ module.exports = {
           [col[9]]: items[9],
           [col[10]]: items[10],
           [col[11]]: items[11],
-          [col[12]]: items[12]
+          [col[12]]: items[12],
+          [col[13]]: items[13]
         })
       });
       if (data.length < 1) {
@@ -338,6 +311,7 @@ module.exports = {
     var request = [
       id.replace(new RegExp("[^\\w]", 'g'), ""),
       req.document_id,
+      req.parent === undefined ? "" : req.parent,
       req.name,
       req.effective_date,
       req.pic,
@@ -354,7 +328,7 @@ module.exports = {
       res.send({ message: 'Bad Request: Parameters cannot empty.' });
       return
     }
-    c.query("INSERT INTO `quality_documents`(`id`, `document_id`, `name`, `effective_date`, `pic`, `users`, `version`, `standard_level_id`, `active`, `file_pdf`, `file_doc`, `file_xls`, `file_pds`) VALUES (? ,?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", request, { metadata: true, useArray: true }, function (err, rows) {
+    c.query("INSERT INTO `quality_documents`(`id`, `document_id`, `parent`, `name`, `effective_date`, `pic`, `users`, `version`, `standard_level_id`, `active`, `file_pdf`, `file_doc`, `file_xls`, `file_pds`) VALUES (? ,?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", request, { metadata: true, useArray: true }, function (err, rows) {
       if (err) {
         res.send({ message: err.message });
         console.log(err);

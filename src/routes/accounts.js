@@ -5,6 +5,7 @@ var db = require('../models/accounts')
 const jwt = require('jsonwebtoken')
 const exjwt = require('express-jwt')
 const crypto = require("crypto")
+const axios = require("axios")
 
 // Instantiating the express-jwt middleware
 const jwtMW = exjwt({
@@ -24,43 +25,141 @@ const HASH_ALGORITHM = process.env.APP_HASH_ALGORITHM
 // API Accounts => /api/accounts/
 
 router.post('/login', (req, res) => {
-  const { email } = req.body;
+  const { id } = req.body;
   const password = crypto.createHmac(HASH_ALGORITHM, CIPHER_SECRET).update(req.body.password).digest(CIPHER_BASE);
+  const request = {
+    username: req.body.id,
+    password: req.body.password
+  }
 
-  db.cekLogin(email, password, function (err, data) {
-    if (data.length === 1 && (data[0].role !== "9")) {
-      //If all credentials are correct do this
-      let token = jwt.sign({
-        id: data[0].id,
-        name: data[0].name,
-        role: data[0].role,
-        telp: data[0].telp,
-        email: data[0].email,
-        photo: data[0].photo,
-        registered: data[0].registered,
-        updated: data[0].updated
-      }, SECRET, { expiresIn: 43210 }); // Sigining the token
-      res.json({
-        success: true,
-        err: null,
-        token
+  axios.post(process.env.APP_LDAP_ENDPOINT, request,
+    {
+      headers: {
+        'Content-Type': 'application/json',
+        'AppsName': process.env.APP_LDAP_NAME,
+        'AppsToken': process.env.APP_LDAP_TOKEN
+      }
+    })
+    .then(response => {
+      if (response.data.login === 1) {
+        db.getUser(req.body, function (data) {
+          if (data.length === 1 && data[0].role !== "9") {
+            //If all credentials are correct do this
+            let token = jwt.sign({
+              id: data[0].id,
+              name: data[0].name,
+              role: data[0].role,
+              telp: data[0].telp,
+              email: data[0].email,
+              photo: data[0].photo,
+              registered: data[0].registered,
+              updated: data[0].updated
+            }, SECRET, { expiresIn: 43210 }); // Sigining the token
+            res.json({
+              success: true,
+              err: null,
+              token
+            });
+          }
+          else if (data.length === 1 && data[0].role === "9") {
+            res.json({
+              success: false,
+              token: null,
+              err: "User is deactivated. Please contact web admin if something isn't right."
+            });
+          }
+          else {
+            res.json({
+              success: false,
+              token: null,
+              err: 'Your account is not registered, please contact web admin for further information'
+            });
+          }
+        })
+      }
+      else {
+        // res.json({
+        //   success: false,
+        //   token: null,
+        //   err: `LDAP - ${response.data.note}`
+        // });
+
+        db.cekLogin(id, password, function (data) {
+          if (data.length === 1 && (data[0].role !== "9")) {
+            //If all credentials are correct do this
+            let token = jwt.sign({
+              id: data[0].id,
+              name: data[0].name,
+              role: data[0].role,
+              telp: data[0].telp,
+              email: data[0].email,
+              photo: data[0].photo,
+              registered: data[0].registered,
+              updated: data[0].updated
+            }, SECRET, { expiresIn: 43210 }); // Sigining the token
+            res.json({
+              success: true,
+              err: null,
+              token
+            });
+          }
+          else if (data.length === 1 && data[0].role === "9") {
+            res.json({
+              success: false,
+              token: null,
+              err: "User is deactivated. Please contact web admin if something isn't right."
+            });
+          }
+          else {
+            res.json({
+              success: false,
+              token: null,
+              err: 'Username or password is incorrect'
+            });
+          }
+        });
+      }
+    })
+    .catch((err) => {
+      // res.send({ err: err.message });
+      console.log(err.message);
+      // return
+
+      db.cekLogin(id, password, function (data) {
+        if (data.length === 1 && (data[0].role !== "9")) {
+          //If all credentials are correct do this
+          let token = jwt.sign({
+            id: data[0].id,
+            name: data[0].name,
+            role: data[0].role,
+            telp: data[0].telp,
+            email: data[0].email,
+            photo: data[0].photo,
+            registered: data[0].registered,
+            updated: data[0].updated
+          }, SECRET, { expiresIn: 43210 }); // Sigining the token
+          res.json({
+            success: true,
+            err: null,
+            token
+          });
+        }
+        else if (data.length === 1 && data[0].role === "9") {
+          res.json({
+            success: false,
+            token: null,
+            err: "User is deactivated. Please contact web admin if something isn't right."
+          });
+        }
+        else {
+          res.json({
+            success: false,
+            token: null,
+            err: 'Username or password is incorrect'
+          });
+        }
       });
-    }
-    else if (data.length === 1 && data[0].role === "9") {
-      res.json({
-        success: false,
-        token: null,
-        err: "User is deactivated. Please contact web admin if something isn't right."
-      });
-    }
-    else {
-      res.json({
-        success: false,
-        token: null,
-        err: 'Username or password is incorrect'
-      });
-    }
-  });
+    });
 });
 
 /////////////////////////////////////////////////////////////////////////////////////////////

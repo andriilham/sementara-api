@@ -55,15 +55,15 @@ router.get('/type/:status/:id', (req, res) => {
   db.getQualityDocumentType(req.params, res)
 })
 
-router.get('/procedure/:user/:status', jwtMW, (req, res) => {
+router.get('/procedure/:user/:type', jwtMW, (req, res) => {
   db.getQualityDocumentProcedureUser(req.params, res)
 })
 
-router.get('/procedure9001/:user/:status', jwtMW, (req, res) => {
-  db.getQualityDocumentProcedureUser9001(req.params, res)
+router.get('/procedure/:user', jwtMW, (req, res) => {
+  db.getQualityDocumentProcedureUser(req.params, res)
 })
 
-router.get('/form/:id/user/:user/:status', jwtMW, (req, res) => {
+router.get('/form/:id/:type/:user/:status', jwtMW, (req, res) => {
   db.getQualityDocumentFormUser(req.params, res)
 })
 

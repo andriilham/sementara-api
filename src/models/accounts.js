@@ -11,13 +11,12 @@ module.exports = {
   /////////////////////////////////////////////////////////////////////////////////////////////
   // ACCOUNT MODELS
 
-  cekLogin: function (id, pass, callback) {
+  cekLogin: function (id, pass, res) {
     var req = [id, pass];
     c.query("SELECT * FROM `users` WHERE `id`=? AND `password`=?", req, { metadata: true, useArray: true }, function (err, rows) {
       if (err) {
-        res.send({ message: err.message });
         console.log(err);
-        return
+        return res(err)
       }
 
       var data = [];
@@ -35,7 +34,39 @@ module.exports = {
           });
         });
       }
-      callback(err, data);
+      res(data);
+    });
+    c.end();
+  },
+
+  getUser: function (req, res) {
+    var req = [req.id];
+    c.query("SELECT * FROM `users` WHERE `id`=?", req, { metadata: true, useArray: true }, function (err, rows) {
+      if (err) {
+        console.log(err);
+        return res(err)
+      }
+
+      var data = [];
+      if (rows.info.numRows !== '0') {
+        rows.forEach(function (items) {
+          data.push({
+            id: items[0],
+            name: items[1],
+            role: items[3],
+            telp: items[4],
+            email: items[5],
+            photo: items[6],
+            registered: items[7],
+            updated: items[8]
+          });
+        });
+      }
+      if (data.length < 1) {
+        res(0);
+      } else {
+        res(data);
+      }
     });
     c.end();
   },
