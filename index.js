@@ -3,6 +3,12 @@ require('dotenv/config')
 const express = require('express')
 const bodyParser = require('body-parser')
 const routes = require('./src/routes')
+const fs = require('fs')
+const https = require('https')
+
+// Define SSL Certificate
+const certificate = fs.readFileSync(process.env.APP_SSL_CRT, 'utf8');
+const privateKey = fs.readFileSync(process.env.APP_SSL_KEY, 'utf8');
 
 // Instantiating the express app
 const app = express();
@@ -37,22 +43,15 @@ app.get('*', function (req, res) {
 	res.status(404).send('Sorry, are you lost m8?');
 });
 
-// app.use(function (err, req, res, next) {
-// 	if (err instanceof NotFound) {
-// 		// Render a page here
-// 		res.render('404.jade');
-// 	} else {
-// 		next(err);
-// 	}
+// Starting the app on PORT 8900
+const PORT = process.env.PORT || 8900;
+// app.listen(PORT, () => {
+// 	// eslint-disable-next-line
+// 	console.log(`Magic happens on port ${PORT}`);
 // });
 
-app.get('/', (req, res) => {
-	res.redirect('http://the-calibrator.netlify.com');
-});
-
-// Starting the app on PORT 3000
-const PORT = process.env.PORT || 8900;
-app.listen(PORT, () => {
+const httpsServer = https.createServer({ key: privateKey, cert: certificate }, app);
+httpsServer.listen(PORT, () => {
 	// eslint-disable-next-line
 	console.log(`Magic happens on port ${PORT}`);
 });

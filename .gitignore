@@ -11,6 +11,9 @@
 /src/uploads/trial_reports/**
 /src/uploads/users/**
 
+# ssl
+/sslcert
+
 # dependencies
 /node_modules
 package-lock.json
