@@ -11,7 +11,7 @@ router.use('/', express.static(path.join(__dirname, '../uploads')))
 
 router.post('/watermark/:filename', (req, res) => {
   const filename = req.params.filename;
-  const watermark = `Downloaded by: ${req.body.name} / ${req.body.nik}`;
+  const watermark = `SIDOMO - Sistem Informasi Dokumen Mutu Online DCS - Downloaded by: ${req.body.name} / ${req.body.nik}`;
   let ext = path.parse(filename).ext;
 
   if (ext !== '.pdf') {
@@ -47,7 +47,7 @@ router.post('/watermark/:filename', (req, res) => {
     );
     stamper.setRotation(270);
     stamper.setPosition(30, 0, false)
-    stamper.setSize(PDFNet.Stamper.SizeType.e_font_size, 14, 0)
+    stamper.setSize(PDFNet.Stamper.SizeType.e_font_size, 12, 0)
     await stamper.stampText(pdfdoc, watermark, pgSet);
 
     await pdfdoc.save(outputPath, PDFNet.SDFDoc.SaveOptions.e_linearized);
