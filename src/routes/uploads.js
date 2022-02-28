@@ -3,6 +3,7 @@ var router = express.Router()
 const path = require('path')
 const fs = require('fs');
 const { PDFNet } = require('@pdftron/pdfnet-node');
+const moment = require('moment')
 
 /////////////////////////////////////////////////////////////////////////////////////////////
 // API Get Image
@@ -11,7 +12,7 @@ router.use('/', express.static(path.join(__dirname, '../uploads')))
 
 router.post('/watermark/:filename', (req, res) => {
   const filename = req.params.filename;
-  const watermark = `SIDOMO - Sistem Informasi Dokumen Mutu Online DCS - Downloaded by: ${req.body.name} / ${req.body.nik}`;
+  const watermark = `SIDOMO DCS - Downloaded by: ${req.body.name} (${req.body.nik}) on ${moment().format('DD/MM/YYYY, HH:mm:ss Z')}`;
   let ext = path.parse(filename).ext;
 
   if (ext !== '.pdf') {
@@ -46,7 +47,7 @@ router.post('/watermark/:filename', (req, res) => {
       await pdfdoc.getPageCount(),
     );
     stamper.setRotation(270);
-    stamper.setPosition(30, 0, false)
+    stamper.setPosition(10, 0, false)
     stamper.setSize(PDFNet.Stamper.SizeType.e_font_size, 12, 0)
     await stamper.stampText(pdfdoc, watermark, pgSet);
 

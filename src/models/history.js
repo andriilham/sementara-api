@@ -67,6 +67,36 @@ module.exports = {
     });
     c.end();
   },
+  getHistoryNotification: function (req, res) {
+    const date = new Date().valueOf() - (req.id * 24 * 60 * 60 * 1000);
+    const request = [new Date(date).toISOString()];
+    c.query("SELECT h.`reference_id`, e.`name`, s.`name`, s.`info`, s.`step_number`, h.`message`, h.`created` FROM `history` h LEFT OUTER JOIN `steps` s ON h.`step_id`=s.`id` LEFT OUTER JOIN `users` e ON h.`user_id`=e.`id` WHERE h.`step_id` LIKE 'QUD%' AND h.`step_id` NOT LIKE '%4%' AND h.`created` > ? ORDER BY h.`created` DESC", request, { metadata: true, useArray: true }, function (err, rows) {
+      if (err) {
+        res.send({ message: err.message });
+        console.log(err);
+        return
+      }
+
+      var data = [];
+      rows.forEach(function (items) {
+        data.push({
+          reference_id: items[0],
+          name: items[1],
+          action: items[2],
+          info: items[3],
+          step_number: items[4],
+          message: items[5],
+          created: items[6]
+        });
+      });
+      if (data.length < 1) {
+        res.status(404).send({ message: 'Data not found.' });
+      } else {
+        res.json(data);
+      }
+    });
+    c.end();
+  },
   getHistoryReference: function (req, res) {
     const request = [req.id.toUpperCase()]
     c.query("SELECT h.`reference_id`, e.`name`, s.`name`, s.`info`, s.`step_number`, h.`message`, h.`created` FROM `history` h LEFT OUTER JOIN `steps` s ON h.`step_id`=s.`id` LEFT OUTER JOIN `users` e ON h.`user_id`=e.`id` WHERE h.`reference_id`=? AND h.`step_id` NOT LIKE '%4%' ORDER BY h.`created` DESC LIMIT 10", request, { metadata: true, useArray: true }, function (err, rows) {

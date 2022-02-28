@@ -20,6 +20,10 @@ router.get('/:id', (req, res) => {
   db.getHistory(req.params, res)
 })
 
+router.get('/notification/:id', (req, res) => {
+  db.getHistoryNotification(req.params, res)
+})
+
 router.get('/reference/:id', jwtMW, (req, res) => {
   db.getHistoryReference(req.params, res)
 })
