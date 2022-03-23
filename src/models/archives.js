@@ -126,7 +126,7 @@ module.exports = {
     c.end();
   },
   getArchiveSearch2: function (req, res) {
-    const request = ["%" + req.id.toUpperCase() + "%", "%" + req.id2.toUpperCase() + "%"]
+    const request = [req.id.toUpperCase() + "%", req.id2.toUpperCase() + "%"]
     c.query("SELECT * FROM `archives` WHERE `standard_level_id` LIKE ? OR `standard_level_id` LIKE ? ORDER BY `year` DESC", request, { metadata: true, useArray: true }, function (err, rows) {
       if (err) {
         res.send({ message: err.message });
