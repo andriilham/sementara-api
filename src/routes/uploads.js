@@ -24,7 +24,7 @@ router.post('/watermark/:filename', (req, res) => {
   const outputPath = path.resolve(
     __dirname,
     '../uploads',
-    `${filename}_watermarked.pdf`,
+    `${filename.slice(0, -4)}_watermarked.pdf`,
   );
 
   const main = async () => {
@@ -60,16 +60,16 @@ router.post('/watermark/:filename', (req, res) => {
       fs.readFile(outputPath, (err, data) => {
         if (err) {
           res.statusCode = 500;
-          res.end(err);
+          res.send(err);
         } else {
           res.setHeader('Content-type', 'application/pdf');
-          res.end(data);
+          res.send(data);
         }
       });
     })
-    .catch(error => {
-      res.statusCode = 500;
-      res.end(error);
+    .catch(err => {
+      // res.statusCode = 500;
+      res.send(err);
     });
 });
 

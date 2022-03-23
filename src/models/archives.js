@@ -154,6 +154,32 @@ module.exports = {
     });
     c.end();
   },
+  getArchiveSOP: function (req, res) {
+    c.query("SELECT * FROM `archives` WHERE `id`='SOP9001' OR `id`='SOP17025' AND `standard_level_id` LIKE '%P2%'", null, { metadata: true, useArray: true }, function (err, rows) {
+      if (err) {
+        res.send({ message: err.message });
+        console.log(err);
+        return
+      }
+
+      const col = Object.keys(rows.info.metadata)
+      var data = [];
+      rows.forEach(function (items) {
+        data.push({
+          [col[0]]: items[0],
+          [col[1]]: items[1],
+          [col[3]]: items[3],
+          [col[5]]: items[5]
+        })
+      });
+      if (data.length < 1) {
+        res.status(404).send({ message: 'Data not found.' });
+      } else {
+        res.json(data);
+      }
+    });
+    c.end();
+  },
   getAllArchiveSearch: function (req, res) {
     const request = ["%" + req.id.toUpperCase() + "%", "%" + req.id.toUpperCase() + "%", "%" + req.id.toUpperCase() + "%", "%" + req.id.toUpperCase() + "%", "%" + req.id.toUpperCase() + "%"]
     var data = [];
