@@ -12,7 +12,8 @@ router.use('/', express.static(path.join(__dirname, '../uploads')))
 
 router.post('/watermark/:filename', (req, res) => {
   const filename = req.params.filename;
-  const watermark = `SIDOMO DCS - Downloaded by: ${req.body.name} (${req.body.nik}) on ${moment().format('DD/MM/YYYY, HH:mm:ss Z')}`;
+  const status = req.body.status === '1' ? 'ACTIVE' : 'OBSOLETE';
+  const watermark = `SIDOMO DCS --- Diunduh oleh: ${req.body.name} (${req.body.nik}) pada ${moment().format('DD/MM/YYYY, HH:mm:ss Z')} --- Status dokumen ${status} pada saat diunduh`;
   let ext = path.parse(filename).ext;
 
   if (ext !== '.pdf') {
@@ -68,6 +69,7 @@ router.post('/watermark/:filename', (req, res) => {
       });
     })
     .catch(err => {
+      PDFNet.shutdown();
       // res.statusCode = 500;
       res.send(err);
     });
