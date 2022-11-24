@@ -1,9 +1,17 @@
-const Client = require('mariasql');
-const c = new Client({
-  host: process.env.APP_DATABASE_HOST,
-  user: process.env.APP_DATABASE_USER,
-  password: process.env.APP_DATABASE_PASSWORD,
-  db: process.env.APP_DATABASE_DB
+// const Client = require('mariasql');
+// const c = new Client({
+//   host: process.env.APP_DATABASE_HOST,
+//   user: process.env.APP_DATABASE_USER,
+//   password: process.env.APP_DATABASE_PASSWORD,
+//   db: process.env.APP_DATABASE_DB
+// });
+
+const Client = require('mysql');
+const c = Client.createConnection({
+	host: process.env.APP_DATABASE_HOST,
+	user: process.env.APP_DATABASE_USER,
+	password: process.env.APP_DATABASE_PASSWORD,
+	database: process.env.APP_DATABASE_DB
 });
 
 module.exports = {
